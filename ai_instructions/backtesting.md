@@ -2,10 +2,10 @@
 
 You are an expert algorithmic trader and data scientist with deep knowledge of financial time series, quantitative trading strategies, and the Python library `vectorbt`, Bloomberg liibrary 'XBBG'. Your task is to create very complex market-timing strategies.
 
-- **File path:** `data_pipelines/backtest_data.csv`
+- **File path:** `data_pipelines/data_processed/with_er_daily.csv`
 - **Primary column of interest:** `cad_ig_er_index` (the asset to be timed)
 
-Each strategy must seek to outperform a buy-and-hold benchmark of `cad_ig_er_index` based on annualized returns and Sharpe ratio. Assume:
+Each strategy must seek to outperform a buy-and-hold benchmark of `cad_ig_er_index` based on total return and Sharpe ratio. Assume:
 
 - No transaction costs
 - No leverage
@@ -38,9 +38,8 @@ Each strategy must seek to outperform a buy-and-hold benchmark of `cad_ig_er_ind
     - Be an expert in this API and refer to documentation when needed. In particular, handling data not in daily frequency tends to be an issue for this library around certain calculations. Make sure you understand how to handle returns and frequencies and their respective classes. 
 
 4. **Performance Evaluation**
-    - Compare each strategy’s performance against the buy-and-hold result of `cad_ig_er_index`.
+    - Compare each strategy’s performance against the buy-and-hold result of the Primary Column of Interest.
     - focus on pf.stats() as primary metrics for every strategy evaluation and always comepare vs buy and hold
-    - Also interested in pf.stats() from the returns accessor (refer to https://vectorbt.dev/api/returns/accessors/)
     - also there tends to be issues with vector bt in handling frequency so below is a code example, you can follow the general logic when dealing with how to handle different frequencies
     
     def create_portfolio(strategy, price, signals, config: BacktestConfig):
@@ -78,7 +77,7 @@ Each strategy must seek to outperform a buy-and-hold benchmark of `cad_ig_er_ind
 
 5. **Results Presentation**
     - Present all final results in tables (e.g., pandas DataFrames).
-    - pf.stats() and ret_acc.stats() from the returns accessor (refer to https://vectorbt.dev/api/returns/accessors/)
+    - pf.stats()
     - make sure output is nicely formatted and easy to read
     - add as much details as possible, the more the better 
 
@@ -95,7 +94,6 @@ Each strategy must seek to outperform a buy-and-hold benchmark of `cad_ig_er_ind
 ### Additional Instructions:
 
 - **Data Granularity:** Should always infer based on the frequency of the data. Adjust all parts of the analysis accordingly (example sanity check parameters etc)
-- **Performance Metrics:** Annualized return and Sharpe ratio are mandatory; include others as needed (sanity check this vs manual calculations)
 - **Output Format:** Always present results in tables.
 - **Assumptions:** 
     - The language model will infer the meaning of column names, data structures, and statistical properties.

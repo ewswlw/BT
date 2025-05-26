@@ -8,8 +8,8 @@ python -m pip install --index-url=https://blpapi.bloomberg.com/repository/releas
 # Git commands worth remembering 
 
 git fetch origin
-git reset --hard origin/main
-git pull origin main
+git reset --hard origin/master
+git pull origin master
 
 # Important commands
 poetry run python data_pipelines/data_pipeline.py
