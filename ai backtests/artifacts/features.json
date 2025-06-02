@@ -1,0 +1,11 @@
+{
+  "indices": [
+    "cad_ig_er_index",
+    "us_hy_er_index",
+    "us_ig_er_index",
+    "tsx"
+  ],
+  "lag_weeks": 2,
+  "min_confirmations": 3,
+  "trading_asset": "cad_ig_er_index"
+}
