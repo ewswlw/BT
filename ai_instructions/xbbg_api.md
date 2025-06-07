@@ -17,3 +17,6 @@ poetry run python data_pipelines/data_pipeline.py
 
 # Notbooks to pdfs
 poetry run jupyter nbconvert --to webpdf "your_notebook.ipynb"
+
+# new command to run poetry now
+poetry env activate

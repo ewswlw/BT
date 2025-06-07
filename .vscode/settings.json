@@ -1,0 +1,9 @@
+{
+    "python.interpreter.path": "C:\\Users\\Eddy\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\tajana-DqbFjsyH-py3.11\\Scripts\\python.exe",
+    "python.defaultInterpreterPath": "C:\\Users\\Eddy\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\tajana-DqbFjsyH-py3.11\\Scripts\\python.exe",
+    "python.terminal.activateEnvironment": true,
+    "python.formatting.provider": "black",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true
+} 

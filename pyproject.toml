@@ -7,8 +7,7 @@ license = "MIT"
 readme = "README.md"
 packages = [
     { include = "data_pipelines" },
-    { include = "src" },
-    { include = "research_experiments" }
+    { include = "src" }
 ]
 
 [tool.poetry.dependencies]

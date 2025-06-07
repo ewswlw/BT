@@ -360,7 +360,7 @@ CONFIG = {
     "vbt_freq": "W", # Matches resample_frequency, but 'W' is vbt's standard for weekly
 
     # --- Reporting ---
-    "report_output_dir": "ai backtests/tearsheets",
+    "report_output_dir": "cad ig er index weekly backtests/tearsheets",
     "report_filename_html_ga": "Genetic_Algo_Weekly_vs_BuyHold_Refactored.html",
     "report_title_ga": "Genetic Algorithm Weekly vs Buy and Hold (Refactored)"
 }

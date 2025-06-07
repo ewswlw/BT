@@ -31,7 +31,7 @@ CONFIG = {
         "fees": 0.0,
         "slippage": 0.0
     },
-    "report_output_dir": "ai backtests/tearsheets",
+    "report_output_dir": "cad ig er index weekly backtests/tearsheets",
     "report_filename_html": "Multi_asset_momentum_refactored.html",
     "report_title": "Multi-asset Momentum vs Buy and Hold (Refactored)"
 }

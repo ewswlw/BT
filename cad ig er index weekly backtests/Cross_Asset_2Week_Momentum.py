@@ -30,7 +30,7 @@ CONFIG = {
     "report_output_dir": "ai backtests/tearsheets",
     "report_filename_html": "Cross_Asset_2Week_Momentum.html",
     "report_title": "Cross-Asset 2-Week Momentum vs Buy and Hold",
-    "artifacts_dir": "ai backtests/artifacts"
+    "artifacts_dir": "cad ig er index weekly backtests/tearsheets"
 }
 
 # === CORE LOGIC FUNCTIONS ===
