@@ -1,0 +1,2 @@
+strategy_total_return,benchmark_total_return,outperformance_ratio,strategy_sharpe,benchmark_sharpe,max_drawdown,win_rate,total_trades,wf_avg_return,wf_consistency,perturbation_degradation,noise_degradation,p_value,ci_lower,ci_upper,statistical_significance
+0.8701424166570451,0.303289460235721,1.434940183064781,2.0502381954368407,0.600567763835807,-0.016470110287512156,0.5663551401869159,848,0.08894982722092741,0.9913282799747665,0.006881720430107507,0.046021505376344175,2.892909385665124e-07,1.803570197314097,8.325147078684825,True
