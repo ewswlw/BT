@@ -1,339 +1,526 @@
-# VectorBT Frequency Configuration Bug Report
+# VectorBT & QuantStats Common Issues Guide for AI
 
-**Created:** 2024-12-19 (Time discovered during development session)  
-**Author:** Development Team  
-**Severity:** High - Critical Impact on Performance Metrics  
-**Status:** ✅ RESOLVED  
-
----
-
-## 📋 Executive Summary
-
-A critical bug was discovered in the VectorBT portfolio backtesting configuration where **monthly data was incorrectly configured with daily frequency (`freq='D'`)**, causing significant distortions in trade duration calculations and potentially affecting all time-based performance metrics.
-
-### Impact Assessment
-- **Metric Accuracy**: All time-based metrics were incorrectly scaled
-- **Trade Durations**: Showing impossible results (2.8 days for monthly data)
-- **Performance Reports**: Risk ratios potentially miscalculated
-- **Strategy Validation**: False confidence in results due to incorrect metrics
+**Purpose:** Educational guide for AI assistants to recognize and fix common VectorBT and QuantStats configuration issues  
+**Scope:** Frequency handling, performance calculations, and validation patterns  
+**Status:** Living Document - Updated with Each Discovery  
 
 ---
 
-## 🔍 Issue Discovery
+## 📋 Overview
 
-### User Observation
-During review of VectorBT backtest results, the user astutely observed:
+This guide documents recurring patterns in VectorBT and QuantStats usage that frequently cause incorrect results. These issues typically manifest when AI assistants help users with backtesting code, especially when dealing with non-daily data frequencies.
 
-> **"Avg Losing Trade Duration: 2 days 20:34:17.142857142 - how can this be possible if frequency of data is monthly?"**
+## 🎯 AI Learning Objectives
 
-This observation was **100% correct** and led to the discovery of a fundamental configuration error.
+After reviewing this guide, AI assistants should be able to:
+1. **Recognize frequency mismatch symptoms** in backtesting output
+2. **Identify calculation inconsistencies** between different libraries
+3. **Apply correct frequency configurations** for various data types
+4. **Implement validation checks** to catch issues early
+5. **Provide accurate troubleshooting** for performance metric discrepancies
 
-### Root Cause Analysis
+---
 
-**Problem**: Monthly data (683 data points from 1968-2025) was configured with `freq='D'` (daily frequency) in VectorBT portfolio creation.
+## 🚨 Pattern #1: VectorBT Frequency Mismatch
 
-**Code Location**: Multiple instances across backtesting scripts:
+### How to Recognize This Issue
+
+**Key Symptom**: Trade durations that are impossible for the data frequency
+- Monthly data showing trade durations of 2-3 days
+- Weekly data showing durations of hours
+- Any duration shorter than the underlying data frequency
+
+**User Quote Pattern**: *"How can this be possible if frequency of data is [X]?"*
+
+**When This Occurs**: When VectorBT portfolio objects are created without explicit frequency matching the data
+
+### Root Cause Pattern
+
+**Common Mistake**: Using default or incorrect frequency in VectorBT portfolio creation:
+
 ```python
-# INCORRECT CONFIGURATION ❌
+# ❌ PROBLEMATIC PATTERNS:
 portfolio = vbt.Portfolio.from_orders(
     close=price_data,
     size=strategy_signal,
-    size_type='targetpercent',
-    freq='D'  # ❌ WRONG: Monthly data with daily freq
+    freq='D'  # ❌ Daily freq for monthly data
+)
+
+portfolio = vbt.Portfolio.from_signals(
+    close=prices,
+    entries=entries,
+    exits=exits
+    # ❌ No freq specified - defaults to 'D'
 )
 ```
 
----
+### AI Recognition Checklist
 
-## 🧪 Technical Analysis
+**Instantly Suspicious Results**:
+- Period showing data point count instead of actual time span
+- Trade durations impossible for data frequency
+- Sharpe ratios > 3.0 (often inflated due to frequency errors)
+- Drawdown durations that seem too short
 
-### Before Fix - Erroneous Results
-```
-Period: 683 days 00:00:00  # ❌ Should be ~20,490 days (57 years)
-Avg Winning Trade Duration: 34 days 22:17:08.571428571  # ❌ Impossible for monthly data
-Avg Losing Trade Duration: 2 days 20:34:17.142857142   # ❌ Less than 1 month!
-Max Drawdown Duration: 32 days 00:00:00                # ❌ ~1 month duration
-Sharpe Ratio: 4.319                                    # ❌ Likely inflated
-```
-
-### After Fix - Correct Results
-```
-Period: 20490 days 00:00:00  # ✅ Correct: 56.8 years
-Avg Winning Trade Duration: 1047 days 20:34:17.142857152  # ✅ ~2.9 years
-Avg Losing Trade Duration: 85 days 17:08:34.285714286     # ✅ ~2.8 months  
-Max Drawdown Duration: 960 days 00:00:00                  # ✅ ~2.6 years
-Sharpe Ratio: 0.789                                       # ✅ Properly scaled
-```
-
----
-
-## 🛠️ Solution Implementation
-
-### Attempted Solutions
-
-1. **First Attempt**: Using `freq='M'` 
-   ```python
-   freq='M'  # ❌ FAILED: VectorBT doesn't accept 'M' frequency
-   ```
-   **Error**: `ValueError: Units 'M', 'Y', and 'y' are no longer supported`
-
-2. **Successful Solution**: Using `pd.Timedelta(days=30)`
-   ```python
-   freq=pd.Timedelta(days=30)  # ✅ SUCCESS: Approximate monthly frequency
-   ```
-
-### Final Code Implementation
-
+**Expected vs Actual Comparison**:
 ```python
-# ✅ CORRECTED CONFIGURATION
+# For monthly data spanning 57 years:
+# ❌ Wrong: Period: 683 days (just the data point count)
+# ✅ Correct: Period: 20,490 days (~57 years)
+
+# For monthly trading:
+# ❌ Wrong: Avg trade duration: 2-30 days 
+# ✅ Correct: Avg trade duration: 90+ days (3+ months)
+```
+
+### AI Solution Pattern
+
+**Step 1: Identify Data Frequency**
+```python
+# AI should determine data frequency first:
+data_freq = 'monthly' if len(data) < 500 and timespan > 10_years else 'daily'
+trading_freq = infer_frequency_from_data(data.index)
+```
+
+**Step 2: Apply Correct VectorBT Frequency**
+```python
+# ✅ CORRECT FREQUENCY MAPPING:
+freq_mapping = {
+    'daily': 'D',
+    'weekly': pd.Timedelta(days=7),
+    'monthly': pd.Timedelta(days=30),
+    'quarterly': pd.Timedelta(days=90),
+    'yearly': pd.Timedelta(days=365)
+}
+
+# ✅ CORRECTED PORTFOLIO CREATION:
 portfolio = vbt.Portfolio.from_orders(
     close=price_data,
-    size=optimal_signal,
-    size_type='targetpercent',
-    freq=pd.Timedelta(days=30)  # ✅ CORRECT: Monthly approximation
-)
-
-bnh_portfolio = vbt.Portfolio.from_holding(
-    price_data, 
-    freq=pd.Timedelta(days=30)  # ✅ CORRECT: Consistent frequency
+    size=signals,
+    freq=freq_mapping[data_frequency]  # Match to data
 )
 ```
 
----
-
-## 📊 Impact on Strategy Performance
-
-### Strategy Still Outperforms (Validated Results)
-Even with correct frequency calculations, the **Volatility Buy Strategy** maintains exceptional performance:
-
-| Metric | Strategy | Buy & Hold | Status |
-|--------|----------|------------|---------|
-| **Total Return** | 16,254.90% | 5,586.92% | ✅ Strategy Wins |
-| **Excess Return** | +10,667.98% | - | ✅ Massive Outperformance |
-| **Max Drawdown** | 30.17% | 52.56% | ✅ Lower Risk |
-| **Sharpe Ratio** | 0.789 | 0.548 | ✅ Better Risk-Adj Return |
-| **Trade Durations** | 2.9 years avg win | - | ✅ Realistic |
-
----
-
-## 🗂️ Files Modified
-
-### Primary Files Updated
-1. **`spx daily trender/test_contrarian.py`**
-   - Fixed portfolio creation frequency
-   - Fixed buy-and-hold comparison frequency
-   
-2. **`spx daily trender/test.py`**
-   - Fixed all VectorBT portfolio instances (4 locations)
-   - Updated walk-forward analysis
-   - Updated out-of-sample validation
-
-### Code Locations Fixed
-```python
-# Lines updated in both files:
-# 1. Main portfolio creation
-# 2. Buy-and-hold portfolio creation  
-# 3. Walk-forward test portfolios
-# 4. Out-of-sample validation portfolios
-```
-
----
-
-## 🔧 Technical Root Causes
-
-### Why This Bug Occurred
-1. **Assumption Error**: Assumed VectorBT would auto-detect frequency from data
-2. **Default Behavior**: VectorBT defaults to `freq='D'` if not specified
-3. **Silent Failure**: No error thrown - calculations just proceeded incorrectly
-4. **Template Reuse**: Copied daily trading template for monthly data
-
-### VectorBT Frequency Limitations
+**Step 3: VectorBT Frequency Limitations**
 ```python
 # ❌ NOT SUPPORTED by VectorBT:
-freq='M'    # Monthly - ambiguous duration
-freq='Y'    # Yearly - ambiguous duration  
-freq='Q'    # Quarterly - ambiguous duration
+freq='M'    # Monthly - deprecated in pandas
+freq='Y'    # Yearly - deprecated  
+freq='Q'    # Quarterly - deprecated
 
-# ✅ SUPPORTED alternatives:
-freq=pd.Timedelta(days=30)    # Approximate monthly
+# ✅ ALTERNATIVES that work:
+freq=pd.Timedelta(days=30)    # Monthly approximation
 freq=pd.Timedelta(weeks=4)    # 4-week approximation
 freq='30D'                    # 30-day string format
 ```
 
----
+### AI Validation Protocol
 
-## 📈 Lessons Learned
+**Post-Fix Verification Checklist**:
+1. **Period Check**: Does total period match actual time span?
+2. **Duration Reality**: Are trade durations >= minimum possible for frequency?
+3. **Ratio Sanity**: Are Sharpe ratios in reasonable range (0.1-2.0)?
+4. **Consistency**: Do all portfolio objects use same frequency?
 
-### Development Best Practices
-1. **Frequency Validation**: Always validate frequency matches data periodicity
-2. **Sanity Checks**: Review trade durations for logical consistency
-3. **User Review**: External review caught what automated tests missed
-4. **Documentation**: Document frequency assumptions explicitly
-
-### VectorBT Specific Guidelines
-1. **Explicit Frequency**: Always set frequency explicitly, never rely on defaults
-2. **Timedelta Usage**: Use `pd.Timedelta()` for non-standard frequencies
-3. **Consistency**: Ensure all portfolio objects use same frequency
-4. **Validation**: Cross-check period calculations with expected timeframes
-
----
-
-## 🚀 Quality Assurance
-
-### Testing Performed
-- [x] Both scripts execute without errors
-- [x] Trade durations now logically consistent with monthly data
-- [x] Period calculations show correct total timespan (56.8 years)
-- [x] Strategy performance validated across corrected metrics
-- [x] Files work from any execution directory (absolute paths)
-
-### Verification Steps
+**Expected Improvement After Fix**:
 ```python
-# ✅ Quick validation for future use:
-print(f"Period: {portfolio.wrapper.index[-1] - portfolio.wrapper.index[0]}")
-print(f"Expected: ~57 years for 1968-2025 data")
-print(f"Avg trade duration should be >> 30 days for monthly data")
+# Realistic metrics after frequency correction:
+# - Period: Actual calendar time, not data point count
+# - Trade durations: Multiple periods (e.g., 3+ months for monthly data)
+# - Sharpe ratios: Moderate values (0.3-1.5 typically)
+# - Performance: May decrease but becomes accurate
+```
+
+### AI Implementation Checklist
+
+**When Creating VectorBT Portfolios**:
+- [ ] Explicitly set frequency for ALL portfolio objects
+- [ ] Use consistent frequency across all portfolios  
+- [ ] Validate trade durations make sense for data frequency
+- [ ] Cross-check period calculations with expected timespan
+
+---
+
+## 🚨 Pattern #2: Volatility Annualization Factor Mismatch
+
+### How to Recognize This Issue
+
+**Key Symptom**: Volatility calculations using wrong annualization factor for data frequency
+
+**Common Mistake Pattern**:
+```python
+# ❌ WRONG: Using daily annualization for monthly data
+df['Vol_20'] = df['Returns'].rolling(20).std() * np.sqrt(252)  # Daily factor
+annual_vol = strategy_returns.std() * np.sqrt(252)             # Daily factor
+annual_return = strategy_returns.mean() * 252                  # Daily factor
+```
+
+### AI Solution Pattern
+
+**Correct Annualization by Frequency**:
+```python
+# ✅ CORRECT: Match annualization to data frequency
+annualization_factors = {
+    'daily': {'vol': np.sqrt(252), 'ret': 252},
+    'weekly': {'vol': np.sqrt(52), 'ret': 52},
+    'monthly': {'vol': np.sqrt(12), 'ret': 12},
+    'quarterly': {'vol': np.sqrt(4), 'ret': 4},
+    'yearly': {'vol': np.sqrt(1), 'ret': 1}
+}
+
+# Apply correct factor based on detected frequency
+freq = detect_data_frequency(data)
+vol_factor = annualization_factors[freq]['vol']
+ret_factor = annualization_factors[freq]['ret']
+
+annual_vol = returns.std() * vol_factor
+annual_return = returns.mean() * ret_factor
+```
+
+### AI Recognition Checklist
+
+**When to Suspect Annualization Errors**:
+- Monthly data with `sqrt(252)` anywhere in volatility calculations
+- Extremely high volatility values (>100% for typical strategies)
+- Returns that seem inflated relative to reasonable expectations
+
+---
+
+## 🚨 Pattern #3: VectorBT Returns Accessor Frequency Compatibility
+
+### How to Recognize This Issue
+
+**Key Symptom**: VectorBT returns accessor throwing pandas frequency deprecation warnings
+
+**Error Pattern**:
+```
+FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+FutureWarning: 'Y' is deprecated and will be removed in a future version, please use 'YE' instead.
+```
+
+### AI Solution Pattern
+
+**Set Global VectorBT Frequency at Import**:
+```python
+# ✅ CORRECT: Set frequency compatibility at import
+try:
+    import vectorbt as vbt
+    VECTORBT_AVAILABLE = True
+    # Set frequency for monthly data compatibility
+    vbt.settings.array_wrapper['freq'] = '30d'  # Monthly approximation
+except ImportError:
+    VECTORBT_AVAILABLE = False
+```
+
+**Use Returns Accessor with Error Handling**:
+```python
+try:
+    # VectorBT returns accessor with global frequency setting
+    stats = returns_series.vbt.returns.stats()
+    print(stats)
+except Exception as e:
+    # Fallback to manual calculations
+    print(f"VectorBT accessor failed: {e}")
+    print(f"Mean: {returns_series.mean():.4f}")
+    print(f"Std: {returns_series.std():.4f}")
 ```
 
 ---
 
-## 📋 Action Items
+## 🛠️ AI Best Practices Framework
 
-### Immediate ✅ COMPLETED
-- [x] Fix frequency in both contrarian and main test scripts
-- [x] Validate corrected performance metrics  
-- [x] Test execution from multiple directories
-- [x] Document issue and solution
-
-### Future Recommendations
-- [ ] Create frequency validation utility function
-- [ ] Add automated tests for frequency consistency
-- [ ] Review other VectorBT usage across codebase
-- [ ] Create template with proper frequency handling
-
----
-
-## 🏷️ Tags
-`vectorbt` `backtesting` `bug-fix` `frequency` `monthly-data` `performance-metrics` `quality-assurance` `user-feedback`
-
----
-
-## 📞 References
-
-**Discovery Session**: 2024-12-19  
-**User Feedback**: "How can this be possible if frequency of data is monthly?"  
-**VectorBT Documentation**: [Frequency Handling](https://vectorbt.dev/)  
-**Strategy Performance**: Volatility Buy Strategy - 16,254% total return  
-
----
-
-## VectorBT Configuration Notes and Bug Fixes
-
-## Bug #1: Incorrect Frequency Configuration (Discovered & Fixed)
-
-### Discovery Date: [Based on conversation context]
-
-**Problem**: VectorBT was configured with daily frequency (`freq='D'`) for monthly data, causing impossible trade durations and incorrect time-based metrics.
-
-### Original Issue:
+### Frequency Detection Function
 ```python
-# In VectorBT portfolio creation
-pf = vbt.Portfolio.from_signals(
-    close=df['Close'],
+def detect_data_frequency(data_index):
+    """AI helper to detect data frequency from index"""
+    median_diff = pd.Series(data_index).diff().median()
+    
+    if median_diff <= pd.Timedelta(days=1):
+        return 'daily'
+    elif median_diff <= pd.Timedelta(days=8):
+        return 'weekly'  
+    elif median_diff <= pd.Timedelta(days=32):
+        return 'monthly'
+    elif median_diff <= pd.Timedelta(days=95):
+        return 'quarterly'
+    else:
+        return 'yearly'
+```
+
+### Universal VectorBT Setup Function
+```python
+def setup_vectorbt_for_frequency(frequency):
+    """AI helper to configure VectorBT for any frequency"""
+    freq_settings = {
+        'daily': 'D',
+        'weekly': '7d', 
+        'monthly': '30d',
+        'quarterly': '90d',
+        'yearly': '365d'
+    }
+    
+    if frequency in freq_settings:
+        vbt.settings.array_wrapper['freq'] = freq_settings[frequency]
+        return freq_settings[frequency]
+    else:
+        raise ValueError(f"Unsupported frequency: {frequency}")
+```
+
+### Validation Template
+```python
+def validate_portfolio_metrics(portfolio, expected_timespan_years, data_frequency):
+    """AI validation template for VectorBT portfolios"""
+    
+    # Extract key metrics
+    period_days = (portfolio.wrapper.index[-1] - portfolio.wrapper.index[0]).days
+    avg_trade_duration = portfolio.stats()['Avg Winning Trade Duration']
+    
+    # Validation checks
+    checks = {
+        'period_realistic': abs(period_days / 365.25 - expected_timespan_years) < 1,
+        'trade_duration_valid': validate_trade_duration(avg_trade_duration, data_frequency),
+        'sharpe_reasonable': 0.1 <= portfolio.stats()['Sharpe Ratio'] <= 3.0
+    }
+    
+    return all(checks.values()), checks
+
+def validate_trade_duration(duration, frequency):
+    """Check if trade duration makes sense for data frequency"""
+    min_durations = {
+        'daily': pd.Timedelta(days=1),
+        'weekly': pd.Timedelta(days=7),
+        'monthly': pd.Timedelta(days=30),
+        'quarterly': pd.Timedelta(days=90)
+    }
+    
+    return duration >= min_durations.get(frequency, pd.Timedelta(days=1))
+```
+
+---
+
+## 🚨 Pattern #4: QuantStats CAGR Calculation Error with Monthly Data
+
+### How to Recognize This Issue
+
+**Key Symptom**: Significant discrepancy between QuantStats CAGR and VectorBT/manual calculations
+
+**User Quote Pattern**: *"why is the CAGR% so diff vs Annualized Return [%]"*
+
+**Typical Discrepancy**: QuantStats showing ~30% lower CAGR than correct calculation
+
+### Root Cause Pattern
+
+**Common Mistake**: Using QuantStats `cagr()` function without frequency specification:
+```python
+# ❌ PROBLEMATIC: QuantStats assumes daily frequency
+def calculate_metrics(returns):
+    metrics = {}
+    metrics['cagr'] = qs.stats.cagr(returns)  # ❌ No frequency specified
+    return metrics
+```
+
+**Failed Attempts**:
+```python
+# ❌ These don't work as expected:
+qs.stats.cagr(returns, periods=12)        # Often makes results worse
+qs.stats.cagr(returns, periods=252)       # Still incorrect for monthly
+```
+
+### AI Solution Pattern
+
+**Manual CAGR Calculation for Non-Daily Data**:
+```python
+def calculate_correct_cagr(returns, data_frequency):
+    """AI helper for accurate CAGR calculation"""
+    
+    # Frequency mappings
+    periods_per_year = {
+        'daily': 252,
+        'weekly': 52, 
+        'monthly': 12,
+        'quarterly': 4,
+        'yearly': 1
+    }
+    
+    # Get total return using QuantStats (this part works correctly)
+    total_return = qs.stats.comp(returns)
+    
+    # Calculate years manually based on data frequency
+    years = len(returns) / periods_per_year[data_frequency]
+    
+    # Manual CAGR calculation
+    cagr = (1 + total_return) ** (1/years) - 1
+    
+    return cagr
+
+# ✅ CORRECT implementation:
+def calculate_comprehensive_metrics(returns, data_frequency):
+    metrics = {}
+    
+    # Use manual CAGR for non-daily data
+    if data_frequency != 'daily':
+        metrics['cagr'] = calculate_correct_cagr(returns, data_frequency)
+    else:
+        metrics['cagr'] = qs.stats.cagr(returns)  # QuantStats OK for daily
+    
+    # Other QuantStats functions typically work fine
+    metrics['total_return'] = qs.stats.comp(returns)
+    metrics['sharpe'] = qs.stats.sharpe(returns)
+    metrics['max_drawdown'] = qs.stats.max_drawdown(returns)
+    
+    return metrics
+```
+
+### AI Cross-Validation Template
+
+**Always verify CAGR across multiple methods**:
+```python
+def validate_cagr_calculation(returns, data_frequency, vbt_result=None):
+    """AI validation template for CAGR calculations"""
+    
+    # Method 1: Manual calculation (most reliable)
+    total_ret = qs.stats.comp(returns)
+    periods_per_year = {'daily': 252, 'weekly': 52, 'monthly': 12, 'quarterly': 4}
+    years = len(returns) / periods_per_year[data_frequency]
+    manual_cagr = (1 + total_ret) ** (1/years) - 1
+    
+    # Method 2: QuantStats (potentially problematic)
+    qs_cagr = qs.stats.cagr(returns)
+    
+    # Method 3: VectorBT (if available)
+    results = {
+        'manual_cagr': manual_cagr,
+        'quantstats_cagr': qs_cagr,
+        'difference_pct': abs(manual_cagr - qs_cagr) / manual_cagr * 100
+    }
+    
+    if vbt_result:
+        results['vectorbt_cagr'] = vbt_result
+        results['vbt_manual_diff'] = abs(manual_cagr - vbt_result) / manual_cagr * 100
+    
+    # Flag if QuantStats differs significantly from manual
+    results['quantstats_reliable'] = results['difference_pct'] < 5.0
+    
+    return results
+```
+
+### AI Warning Triggers
+
+**When to Suspect QuantStats CAGR Issues**:
+- Monthly, weekly, quarterly, or yearly data frequency
+- CAGR difference > 10% between QuantStats and VectorBT
+- QuantStats CAGR seems "too conservative" relative to total returns
+- User questioning discrepancies between different calculation methods
+
+---
+
+## 🎯 AI Implementation Workflow
+
+### Complete AI Setup Template
+```python
+def setup_backtesting_environment(data, user_frequency_hint=None):
+    """Complete AI setup for VectorBT + QuantStats backtesting"""
+    
+    # Step 1: Auto-detect or confirm data frequency
+    detected_freq = detect_data_frequency(data.index)
+    if user_frequency_hint and user_frequency_hint != detected_freq:
+        print(f"⚠️  User says {user_frequency_hint}, detected {detected_freq}")
+        frequency = user_frequency_hint  # Trust user input
+    else:
+        frequency = detected_freq
+    
+    # Step 2: Setup VectorBT for detected frequency
+    vbt_freq = setup_vectorbt_for_frequency(frequency)
+    
+    # Step 3: Prepare calculation functions
+    def safe_cagr(returns):
+        if frequency == 'daily':
+            return qs.stats.cagr(returns)  # QuantStats OK for daily
+        else:
+            return calculate_correct_cagr(returns, frequency)  # Manual for others
+    
+    def safe_annualization(returns):
+        factors = annualization_factors[frequency]
+        return {
+            'annual_vol': returns.std() * factors['vol'],
+            'annual_ret': returns.mean() * factors['ret']
+        }
+    
+    return {
+        'frequency': frequency,
+        'vbt_freq': vbt_freq,
+        'cagr_func': safe_cagr,
+        'annualize_func': safe_annualization,
+        'validation_func': lambda pf, years: validate_portfolio_metrics(pf, years, frequency)
+    }
+
+# Usage in AI code:
+setup = setup_backtesting_environment(price_data, user_frequency_hint='monthly')
+
+# Create portfolios with correct frequency
+strategy_pf = vbt.Portfolio.from_signals(
+    close=prices,
     entries=entries,
     exits=exits,
-    freq='D',  # ❌ WRONG: Daily frequency for monthly data
-    init_cash=100
+    freq=setup['vbt_freq']  # Automatically correct
 )
+
+# Calculate CAGR safely
+strategy_cagr = setup['cagr_func'](strategy_returns)
+
+# Validate results
+is_valid, checks = setup['validation_func'](strategy_pf, expected_years=57)
+if not is_valid:
+    print(f"⚠️  Validation failed: {checks}")
 ```
 
-**Symptom**: "Avg Losing Trade Duration: 2 days 20:34:17.142857142" - impossible for monthly data
+## 🔍 AI Quick Diagnostic Checklist
 
-### Solution Applied:
-```python
-# Corrected VectorBT configuration
-pf = vbt.Portfolio.from_signals(
-    close=df['Close'],
-    entries=entries,
-    exits=exits,
-    freq=pd.Timedelta(days=30),  # ✅ CORRECT: ~Monthly frequency
-    init_cash=100
-)
-```
+**Before delivering any backtesting results, AI should verify:**
 
-### Technical Analysis:
-- **Root Cause**: VectorBT uses frequency parameter for time-based calculations (durations, annualized returns, etc.)
-- **Impact**: All duration metrics were scaled incorrectly by ~30x factor
-- **Verification**: Post-fix showed realistic durations (avg winning: 1,047 days ≈ 2.9 years)
+### Frequency Consistency ✅
+- [ ] VectorBT portfolio frequency matches data frequency
+- [ ] All portfolio objects use same frequency setting
+- [ ] Annualization factors match data frequency
+- [ ] CAGR calculation appropriate for frequency
 
-### Files Fixed:
-1. `test_contrarian.py` - Lines with VectorBT portfolio creation (4 instances)
-2. `test.py` - Lines with VectorBT portfolio creation (4 instances)
+### Sanity Checks ✅
+- [ ] Trade durations >= minimum possible for frequency
+- [ ] Total period matches expected timespan
+- [ ] Sharpe ratios in reasonable range (0.1-3.0)
+- [ ] Performance metrics consistent across libraries
 
-### Key Learnings:
-- Always verify VectorBT frequency parameter matches data frequency
-- `freq='M'` doesn't work (ambiguous), use `pd.Timedelta(days=30)` for monthly
-- Duration-based metrics are critical validation points for frequency correctness
+### Cross-Validation ✅
+- [ ] CAGR difference < 5% between manual and library calculations
+- [ ] VectorBT and manual results align
+- [ ] No suspicious outliers in performance metrics
+- [ ] User intuition checks pass ("does this make sense?")
+
+### Error Prevention ✅
+- [ ] No `freq='M'`, `freq='Y'` in VectorBT (use Timedelta)
+- [ ] No `sqrt(252)` for non-daily data
+- [ ] No `qs.stats.cagr()` for non-daily without verification
+- [ ] Proper error handling for all library calls
+
+## 🚀 Summary for AI Assistants
+
+**Key Takeaway**: When helping users with VectorBT and QuantStats backtesting, always think "frequency first" - most issues stem from frequency mismatches between data, calculations, and library assumptions.
+
+**Golden Rules**:
+1. **Detect data frequency explicitly** - never assume
+2. **Configure VectorBT frequency to match data** - never use defaults
+3. **Use manual CAGR for non-daily data** - don't trust QuantStats
+4. **Validate results with sanity checks** - impossible durations are red flags
+5. **Cross-check between libraries** - consistency is key
+
+**User Warning Signs to Watch For**:
+- *"How can this be possible if frequency is..."*
+- *"Why is CAGR so different from..."*
+- *"These durations seem too short/long..."*
+- *"The numbers don't match between..."*
+
+When you see these patterns, immediately investigate frequency configuration issues using this guide.
 
 ---
 
-## Bug #2: Incorrect Volatility Annualization Factor (Discovered & Fixed)
-
-### Discovery Date: [Current timestamp based on conversation]
-
-**Problem**: Code was using `sqrt(252)` (daily trading days annualization) for monthly data when it should use `sqrt(12)` (monthly periods per year).
-
-### Original Issues:
-```python
-# ❌ WRONG: Daily annualization for monthly data
-df['Vol_20'] = df['Returns'].rolling(20).std() * np.sqrt(252)
-annual_vol = strategy_returns.std() * np.sqrt(252)
-annual_return = strategy_returns.mean() * 252
-```
-
-**Impact**: Volatility and return calculations were inflated by incorrect annualization factors.
-
-### Solution Applied:
-```python
-# ✅ CORRECT: Monthly annualization for monthly data
-df['Vol_20'] = df['Returns'].rolling(20).std() * np.sqrt(12)
-annual_vol = strategy_returns.std() * np.sqrt(12)
-annual_return = strategy_returns.mean() * 12
-```
-
-### Technical Analysis:
-- **Root Cause**: Copy-paste from daily trading code without adjusting for monthly frequency
-- **Math**: For monthly data, annualization factor should be `sqrt(12)` for volatility and `12` for returns
-- **Verification**: Strategy still performs well post-fix, indicating robust signal regardless of precise volatility levels
-
-### Files Fixed:
-1. `test_contrarian.py` - Line 40: Vol_20 calculation
-2. `test.py` - Line 86: Vol_20 calculation  
-3. `test.py` - Line 215: annual_vol and annual_return calculations
-
-### Key Learnings:
-- Always match annualization factors to data frequency
-- Monthly data: `sqrt(12)` for volatility, `12` for returns
-- Daily data: `sqrt(252)` for volatility, `252` for returns
-- Volatility calculations affect strategy signals and performance metrics
-
-### Performance Impact:
-- Strategy total return maintained at 16,254.90% after fix
-- Sharpe ratio: 0.789 (corrected calculation)
-- Max drawdown: 30.17%
-- All metrics now properly scaled for monthly data frequency
-
----
-
-## Documentation Standards for Future Bugs:
-
-1. **Always document symptom that led to discovery**
-2. **Show before/after code with clear annotations**
-3. **Explain technical root cause and impact**
-4. **List all files modified with specific line references**
-5. **Include verification steps and performance impact**
-6. **Extract key learnings for future prevention**
-
----
-
-**END OF REPORT** 
+**END OF GUIDE** 
