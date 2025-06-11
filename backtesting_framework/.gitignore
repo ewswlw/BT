@@ -37,9 +37,6 @@ venv.bak/
 *.swo
 *~
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
 # pytest
 .pytest_cache/
 .coverage
@@ -50,16 +47,6 @@ htmlcov/
 .dmypy.json
 dmypy.json
 
-# Backtesting Framework Specific
-outputs/
-*.html
-*.csv
-*.json
-
-# Test data (keep small test files, exclude large datasets)
-data/large_datasets/
-data/*.csv
-!data/sample_data.csv
 
 # Logs
 logs/
