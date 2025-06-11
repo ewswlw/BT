@@ -1,0 +1,80 @@
+# Custom Configuration Example
+# This demonstrates the flexibility of the framework
+
+data:
+  file_path: "test_data.csv"
+  date_column: "Date"
+  resample_frequency: "W-FRI"
+  start_date: "2020-06-01"  # Custom start date
+  end_date: "2021-06-01"    # Custom end date
+  benchmark_asset: "cad_ig_er_index"
+  assets:
+    - "cad_ig_er_index"
+    - "us_hy_er_index" 
+    - "us_ig_er_index"
+    - "tsx"
+    - "cad_oas"
+    - "us_ig_oas"
+    - "us_hy_oas"
+    - "vix"
+
+portfolio:
+  initial_capital: 1000000  # $1M starting capital
+  frequency: "W"
+  fees: 0.001              # 10 bps trading costs
+  slippage: 0.0005         # 5 bps slippage
+  position_size: 0.95      # 95% allocation
+  leverage: 1.0
+
+reporting:
+  output_dir: "outputs/custom_reports"
+  generate_html: true
+  generate_pdf: false
+  include_plots: true
+  metrics_precision: 3
+
+# Enhanced feature engineering
+features:
+  momentum_periods: [1, 2, 4, 8, 12]  # Shorter momentum periods
+  volatility_windows: [4, 8, 13]
+  sma_windows: [4, 8, 13]
+  
+  include_macd: true
+  include_stochastic: true
+  include_rsi: true
+  include_bollinger: true
+  
+  include_oas_features: true
+  include_vix: true
+  include_correlations: true
+  include_relative_strength: true
+  
+  primary_asset: "cad_ig_er_index"
+
+# Modified cross-asset momentum
+cross_asset_momentum:
+  momentum_assets: ["cad_ig_er_index", "us_hy_er_index", "us_ig_er_index", "tsx"]
+  momentum_lookback_weeks: 3  # Changed from 2 to 3 weeks
+  min_confirmations: 2        # Changed from 3 to 2 confirmations
+
+# Enhanced multi-asset momentum
+multi_asset_momentum:
+  momentum_assets_map:
+    tsx: "tsx"
+    us_hy: "us_hy_er_index"
+    cad_ig: "cad_ig_er_index"
+  momentum_lookback_periods: 6     # Increased lookback
+  signal_threshold: -0.01          # More conservative threshold
+  exit_signal_shift_periods: 2     # Longer exit delay
+
+# Genetic algorithm tuning
+genetic_algorithm:
+  population_size: 30        # Smaller population for faster evolution
+  generations: 30           # Fewer generations 
+  mutation_rate: 0.15       # Higher mutation for more exploration
+  crossover_rate: 0.8       # Standard crossover
+  elitism_rate: 0.1         # Keep top 10%
+
+random_seed: 123  # Different seed for variation
+verbose: true
+log_level: "INFO" 

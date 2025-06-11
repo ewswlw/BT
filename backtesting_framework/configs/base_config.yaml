@@ -1,0 +1,119 @@
+# Base Configuration for Backtesting Framework
+
+data:
+  file_path: "c:/Users/Eddy/YTM Capital Dropbox/Eddy Winiarz/Trading/COF/Models/Unfinished Models/Eddy/Python Projects/BT/data_pipelines/data_processed/with_er_daily.csv"
+  date_column: "Date"
+  resample_frequency: "W-FRI"
+  start_date: null
+  end_date: null
+  benchmark_asset: "cad_ig_er_index"
+  trading_asset: "cad_ig_er_index"
+  assets:
+    - "cad_ig_er_index"
+    - "us_hy_er_index" 
+    - "us_ig_er_index"
+    - "tsx"
+    - "cad_oas"
+    - "us_ig_oas"
+    - "us_hy_oas"
+    - "vix"
+
+portfolio:
+  initial_capital: 100
+  frequency: "W"
+  fees: 0.0
+  slippage: 0.0
+  position_size: 1.0
+  leverage: 1.0
+
+reporting:
+  output_dir: "outputs/reports"
+  generate_html: true
+  generate_pdf: false
+  include_plots: true
+  metrics_precision: 4
+
+# Feature engineering configuration
+features:
+  # Technical features (matching genetic algo weekly.py)
+  momentum_periods: [1, 2, 3, 4, 6, 8, 12, 13, 26, 52]
+  volatility_windows: [4, 8, 13, 26]
+  sma_windows: [4, 8, 13, 26]
+  
+  # Technical indicators
+  include_macd: true
+  macd_fast: 12
+  macd_slow: 26
+  macd_signal: 9
+  
+  include_stochastic: true
+  stochastic_k_period: 14
+  
+  include_rsi: false
+  include_bollinger: false
+  
+  # Risk indicators (matching genetic algo weekly.py)
+  include_oas_features: true
+  oas_momentum_period: 4
+  include_vix: true
+  
+  # Cross-asset features
+  include_correlations: false
+  include_relative_strength: false
+  
+  # Primary asset for technical features
+  primary_asset: "cad_ig_er_index"
+  
+  # Fill missing values with
+  fill_na_value: 0.0
+
+# Cross-asset momentum specific (matching Cross_Asset_2Week_Momentum.py)
+cross_asset_momentum:
+  momentum_assets: ["cad_ig_er_index", "us_hy_er_index", "us_ig_er_index", "tsx"]
+  momentum_lookback_weeks: 2
+  min_confirmations: 3
+
+# Multi-asset momentum specific (matching Multi-asset momentum.py)
+multi_asset_momentum:
+  momentum_assets_map:
+    tsx: "tsx"
+    us_hy: "us_hy_er_index"
+    cad_ig: "cad_ig_er_index"
+  momentum_lookback_periods: 4
+  signal_threshold: -0.005
+  exit_signal_shift_periods: 1
+
+# Genetic Algorithm specific (matching genetic algo weekly.py)
+genetic_algorithm:
+  population_size: 120
+  max_generations: 120
+  mutation_rate: 0.40
+  crossover_rate: 0.40
+  target_return_early_stop: 0.70
+  max_clauses_per_rule: 4
+  elite_size: 25
+  fitness_drawdown_penalty_factor: 0.1
+  initial_cash_ga: 10000
+
+# Strategy selection control
+strategies:
+  enabled:
+    - "cross_asset_momentum"
+    - "multi_asset_momentum" 
+    - "genetic_algorithm"
+  # Available options: cross_asset_momentum, multi_asset_momentum, genetic_algorithm
+  run_all_by_default: true
+
+# Enhanced reporting configuration
+enhanced_reporting:
+  generate_detailed_stats_file: true
+  stats_file_name: "comprehensive_strategy_comparison.txt"
+  include_vectorbt_stats: true
+  include_quantstats_metrics: true
+  include_manual_calculations: true
+  include_drawdown_analysis: true
+
+# Common settings
+random_seed: 7  # Matching genetic algo weekly.py
+verbose: true
+log_level: "INFO" 
