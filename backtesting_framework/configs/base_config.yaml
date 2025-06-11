@@ -95,6 +95,24 @@ genetic_algorithm:
   fitness_drawdown_penalty_factor: 0.1
   initial_cash_ga: 10000
 
+# Strategy selection control
+strategies:
+  enabled:
+    - "cross_asset_momentum"
+    - "multi_asset_momentum" 
+    - "genetic_algorithm"
+  # Available options: cross_asset_momentum, multi_asset_momentum, genetic_algorithm
+  run_all_by_default: true
+
+# Enhanced reporting configuration
+enhanced_reporting:
+  generate_detailed_stats_file: true
+  stats_file_name: "comprehensive_strategy_comparison.txt"
+  include_vectorbt_stats: true
+  include_quantstats_metrics: true
+  include_manual_calculations: true
+  include_drawdown_analysis: true
+
 # Common settings
 random_seed: 7  # Matching genetic algo weekly.py
 verbose: true

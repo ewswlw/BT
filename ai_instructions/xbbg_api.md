@@ -11,6 +11,9 @@ git fetch origin
 git reset --hard origin/master
 git pull origin master
 
+# for new branch
+git pull origin bt-framework
+
 # Important commands
 poetry run python data_pipelines/data_pipeline.py
 
