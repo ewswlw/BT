@@ -59,6 +59,12 @@ class PortfolioEngine:
         entry_signals = entry_signals.reindex(price_series.index, fill_value=False)
         exit_signals = exit_signals.reindex(price_series.index, fill_value=False)
         
+        # Generate positions series for time in market calculation
+        positions = pd.Series(np.nan, index=price_series.index, dtype=float)
+        positions[entry_signals] = 1.0
+        positions[exit_signals] = 0.0
+        positions = positions.ffill().fillna(0.0) # Forward fill positions and fill leading NaNs with 0
+
         if VECTORBT_AVAILABLE:
             portfolio = self._run_vectorbt_backtest(price_series, entry_signals, exit_signals)
             returns = portfolio.returns()
@@ -70,7 +76,7 @@ class PortfolioEngine:
             )
         
         # Calculate time in market
-        time_in_market = entry_signals.mean()
+        time_in_market = positions.mean()
         
         # Calculate basic metrics
         metrics = self._calculate_basic_metrics(returns, equity_curve)
@@ -148,8 +154,17 @@ class PortfolioEngine:
         """Calculate basic performance metrics."""
         total_return = (equity_curve.iloc[-1] / equity_curve.iloc[0]) - 1
         
-        # Annualized metrics (assuming weekly data)
-        annual_factor = 52
+        # Dynamically determine annualization factor
+        if len(returns.index) > 1:
+            median_days = returns.index.to_series().diff().median().days
+            if median_days is not None and median_days > 0:
+                annual_factor = 365.25 / median_days
+            else:
+                annual_factor = 252 # Default for daily data if diff fails
+        else:
+            annual_factor = 252
+
+        # Annualized metrics
         cagr = (1 + total_return) ** (annual_factor / len(returns)) - 1
         
         # Risk metrics

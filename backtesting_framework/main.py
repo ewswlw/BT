@@ -152,55 +152,32 @@ def calculate_comprehensive_stats(result, benchmark_data, strategy_name):
     # Calculate QuantStats metrics if available
     quantstats_metrics = {}
     if QUANTSTATS_AVAILABLE:
-        try:
-            # Set up returns for quantstats
-            qs_strategy_returns = strategy_returns.dropna()
-            qs_benchmark_returns = benchmark_returns.dropna()
-            
-            # Helper function to safely extract values
-            def safe_qs_metric(func, returns_series):
-                try:
-                    result = func(returns_series)
-                    # Handle different return types from QuantStats
-                    if hasattr(result, 'values'):
-                        return float(result.values[0]) if len(result.values) > 0 else 0.0
-                    elif isinstance(result, (int, float, np.number)):
-                        return float(result)
-                    else:
-                        return 0.0
-                except Exception as e:
-                    print(f"Warning: QuantStats metric failed: {func.__name__}: {e}")
-                    return 0.0
-            
-            # Calculate various QuantStats metrics with safe extraction
-            quantstats_metrics = {
-                'prob_sharpe_ratio': safe_qs_metric(qs.stats.probabilistic_sharpe_ratio, qs_strategy_returns),
-                'smart_sharpe': safe_qs_metric(qs.stats.smart_sharpe, qs_strategy_returns),
-                'smart_sortino': safe_qs_metric(qs.stats.smart_sortino, qs_strategy_returns),
-                'omega': safe_qs_metric(qs.stats.omega, qs_strategy_returns),
-                'calmar': safe_qs_metric(qs.stats.calmar, qs_strategy_returns),
-                'gain_pain_ratio': safe_qs_metric(qs.stats.gain_to_pain_ratio, qs_strategy_returns),
-                'payoff_ratio': safe_qs_metric(qs.stats.payoff_ratio, qs_strategy_returns),
-                'profit_factor': safe_qs_metric(qs.stats.profit_factor, qs_strategy_returns),
-                'tail_ratio': safe_qs_metric(qs.stats.tail_ratio, qs_strategy_returns),
-                'common_sense_ratio': safe_qs_metric(qs.stats.common_sense_ratio, qs_strategy_returns),
-                'longest_dd_days': safe_qs_metric(qs.stats.max_drawdown_duration, qs_strategy_returns),
+        qs_strategy_returns = strategy_returns.dropna()
+        qs_benchmark_returns = benchmark_returns.dropna()
+
+        # Define a list of metrics to calculate
+        qs_metric_names = [
+            'smart_sharpe', 'smart_sortino', 'calmar', 'payoff_ratio', 
+            'profit_factor', 'tail_ratio', 'common_sense_ratio'
+        ]
+
+        for metric_name in qs_metric_names:
+            try:
+                # Get the function from qs.stats
+                metric_func = getattr(qs.stats, metric_name)
                 
-                # Benchmark metrics
-                'benchmark_prob_sharpe_ratio': safe_qs_metric(qs.stats.probabilistic_sharpe_ratio, qs_benchmark_returns),
-                'benchmark_smart_sharpe': safe_qs_metric(qs.stats.smart_sharpe, qs_benchmark_returns),
-                'benchmark_smart_sortino': safe_qs_metric(qs.stats.smart_sortino, qs_benchmark_returns),
-                'benchmark_omega': safe_qs_metric(qs.stats.omega, qs_benchmark_returns),
-                'benchmark_calmar': safe_qs_metric(qs.stats.calmar, qs_benchmark_returns),
-                'benchmark_gain_pain_ratio': safe_qs_metric(qs.stats.gain_to_pain_ratio, qs_benchmark_returns),
-                'benchmark_payoff_ratio': safe_qs_metric(qs.stats.payoff_ratio, qs_benchmark_returns),
-                'benchmark_profit_factor': safe_qs_metric(qs.stats.profit_factor, qs_benchmark_returns),
-                'benchmark_tail_ratio': safe_qs_metric(qs.stats.tail_ratio, qs_benchmark_returns),
-                'benchmark_common_sense_ratio': safe_qs_metric(qs.stats.common_sense_ratio, qs_benchmark_returns),
-                'benchmark_longest_dd_days': safe_qs_metric(qs.stats.max_drawdown_duration, qs_benchmark_returns),
-            }
-        except Exception as e:
-            print(f"Warning: Could not calculate QuantStats metrics: {e}")
+                # Calculate for strategy
+                strat_metric = metric_func(qs_strategy_returns)
+                quantstats_metrics[metric_name] = float(strat_metric)
+
+                # Calculate for benchmark
+                bench_metric = metric_func(qs_benchmark_returns)
+                quantstats_metrics[f'benchmark_{metric_name}'] = float(bench_metric)
+
+            except Exception as e:
+                print(f"Warning: Could not calculate QuantStats metric '{metric_name}': {e}")
+                quantstats_metrics[metric_name] = 0.0
+                quantstats_metrics[f'benchmark_{metric_name}'] = 0.0
     
     return {
         'basic_stats': stats,
@@ -214,133 +191,163 @@ def generate_strategy_description_from_config(strategy_name, strategy_config):
     """Generate trading rules description from strategy configuration."""
     
     if strategy_name.lower() == 'cross_asset_momentum':
-        momentum_assets = strategy_config.get('momentum_assets', ['cad_ig_er_index', 'us_hy_er_index', 'us_ig_er_index', 'tsx'])
-        momentum_lookback_weeks = strategy_config.get('momentum_lookback_weeks', 2)
+        momentum_assets = strategy_config.get('momentum_assets', [])
+        momentum_lookback_days = strategy_config.get('momentum_lookback_days', 10)
         min_confirmations = strategy_config.get('min_confirmations', 3)
-        
-        return f"""Cross-Asset {momentum_lookback_weeks}-Week Momentum Strategy
+        trading_asset = strategy_config.get('trading_asset', 'cad_ig_er_index')
+
+        return f"""Cross-Asset {momentum_lookback_days}-Day Momentum Strategy (Weekly Rebalance)
 
 TRADING RULES:
-1. Signal Generation:
-   - Calculate {momentum_lookback_weeks}-week momentum for {len(momentum_assets)} indices
-   - Momentum = (Current Price / Price {momentum_lookback_weeks} weeks ago) - 1
-   - Assets monitored: {', '.join(momentum_assets)}
+1. Data & Frequency:
+   - This strategy operates on DAILY data but only makes trading decisions once per week.
+   - Rebalancing Day: Monday.
 
-2. Entry Condition:
-   - Enter LONG when >={min_confirmations} of {len(momentum_assets)} indices show positive {momentum_lookback_weeks}-week momentum
-   - Must meet confirmation threshold: {min_confirmations}/{len(momentum_assets)} assets
+2. Signal Universe:
+   - A basket of {len(momentum_assets)} diverse assets is monitored to gauge market breadth.
+   - Assets: {', '.join(momentum_assets)}
 
-3. Exit Condition:
-   - Exit when signal condition is no longer met
-   - Exit when <{min_confirmations} of {len(momentum_assets)} assets show positive momentum
+3. Momentum Calculation (Monday Only):
+   - For each asset, a {momentum_lookback_days}-day momentum is calculated on Monday.
+   - Momentum = (Monday's Price / Price {momentum_lookback_days} trading days ago) - 1.
 
-4. Position Management:
-   - Long-only, no short positions
-   - Full capital deployment when signal is active
-   - Cash position when signal is inactive
-   - Weekly rebalancing on Friday close
-
-5. Risk Management:
-   - No leverage, no margin
-   - No stop losses or take profits
-   - Position sizing: 100% of capital when invested
-
-PARAMETERS:
-- Momentum Lookback: {momentum_lookback_weeks} weeks
-- Minimum Confirmations: {min_confirmations} of {len(momentum_assets)}
-- Assets: {momentum_assets}
-- Frequency: Weekly (Friday close)
-- Universe: Multi-asset cross-confirmation"""
-
-    elif strategy_name.lower() == 'multi_asset_momentum':
-        momentum_assets_map = strategy_config.get('momentum_assets_map', {
-            'tsx': 'tsx', 'us_hy': 'us_hy_er_index', 'cad_ig': 'cad_ig_er_index'
-        })
-        momentum_lookback_periods = strategy_config.get('momentum_lookback_periods', 4)
-        signal_threshold = strategy_config.get('signal_threshold', -0.005)
-        exit_signal_shift_periods = strategy_config.get('exit_signal_shift_periods', 1)
-        
-        return f"""Multi-Asset {momentum_lookback_periods}-Period Momentum Strategy
-
-TRADING RULES:
-1. Momentum Calculation:
-   - Calculate {momentum_lookback_periods}-period momentum for each asset
-   - Individual Momentum = (Current Price / Price {momentum_lookback_periods} periods ago) - 1
-   - Assets: {list(momentum_assets_map.keys())} → {list(momentum_assets_map.values())}
-
-2. Signal Combination:
-   - Average individual momentums across all assets
-   - Combined Momentum = Sum(Individual Momentums) / Number of Assets
-   - Creates single composite momentum signal
-
-3. Entry Condition:
-   - Enter LONG when Combined Momentum > {signal_threshold:.3f}
-   - Signal threshold allows slightly negative momentum for entry
-
-4. Exit Condition:
-   - Exit after {exit_signal_shift_periods} period(s) holding time
-   - OR exit when Combined Momentum ≤ {signal_threshold:.3f}
+4. Entry Condition (Monday Only):
+   - A position is entered in '{trading_asset}' if enough assets show positive momentum.
+   - Entry Threshold: LONG when >= {min_confirmations} of the {len(momentum_assets)} assets have positive momentum.
 
 5. Position Management:
-   - Long-only strategy
-   - Binary position: 100% invested or 100% cash
-   - Weekly rebalancing
+   - If the entry condition is met on Monday, the position is held for the entire week.
+   - The position is exited on the next Monday if the entry condition is no longer met.
 
 PARAMETERS:
-- Momentum Lookback: {momentum_lookback_periods} periods
-- Signal Threshold: {signal_threshold:.3f}
-- Exit Shift: {exit_signal_shift_periods} periods
-- Assets Map: {momentum_assets_map}
-- Combination Method: Equal-weighted average"""
+- Trading Asset: {trading_asset}
+- Momentum Lookback: {momentum_lookback_days} trading days
+- Confirmation Threshold: {min_confirmations} out of {len(momentum_assets)} assets
+- Rebalancing Frequency: Weekly (Monday)
+"""
 
-    elif strategy_name.lower() == 'genetic_algorithm':
-        population_size = strategy_config.get('population_size', 120)
-        max_generations = strategy_config.get('max_generations', 120)
-        mutation_rate = strategy_config.get('mutation_rate', 0.40)
-        crossover_rate = strategy_config.get('crossover_rate', 0.40)
-        max_clauses_per_rule = strategy_config.get('max_clauses_per_rule', 4)
-        fitness_drawdown_penalty_factor = strategy_config.get('fitness_drawdown_penalty_factor', 0.1)
-        
-        return f"""Genetic Algorithm Evolved Trading Strategy
+    elif strategy_name.lower() == 'vol_adaptive_momentum':
+        price_col = strategy_config.get('price_column', 'cad_ig_er_index')
+        vix_col = strategy_config.get('vix_column', 'vix')
+        mom_lookback = strategy_config.get('mom_lookback', 20)
+        vol_lookback = strategy_config.get('vol_lookback', 20)
+        vix_z_lookback = strategy_config.get('vix_z_lookback', 252)
+        thr_low_vol = strategy_config.get('thr_low_vol', 0.60)
+        thr_high_vol = strategy_config.get('thr_high_vol', 0.00)
+        max_hold = strategy_config.get('max_hold', 10)
+        scale = strategy_config.get('scale', 0.005)
+
+        return f"""Volatility-Adaptive {mom_lookback}-Day Momentum Strategy
 
 TRADING RULES:
-1. Feature Engineering (Technical Indicators):
-   - Momentum: 1, 2, 3, 4, 6, 8, 12, 13, 26, 52 week returns
-   - Volatility: 4, 8, 13, 26 week rolling volatility
-   - SMA Deviation: Price deviation from 4, 8, 13, 26 week moving averages
-   - MACD: 12/26 EMA crossover with 9-period signal line
-   - Stochastic K: 14-period stochastic oscillator
-   - Factor Momentum: 4-week momentum of CAD OAS, US IG OAS, US HY OAS, VIX
+1. Core Indicators:
+   - Price Series: {price_col}
+   - Volatility Index: {vix_col}
+   - Momentum: {mom_lookback}-day percentage change of the price series.
+   - Realized Volatility: {vol_lookback}-day rolling standard deviation of daily returns.
+   - Volatility Filter: {vix_z_lookback}-day z-score of the VIX index.
 
-2. Rule Evolution Process:
-   - Population Size: {population_size} random rule combinations
-   - Generations: {max_generations} evolutionary iterations
-   - Mutation Rate: {mutation_rate:.0%} chance of rule modification
-   - Crossover Rate: {crossover_rate:.0%} chance of rule combination
-   - Max Clauses: {max_clauses_per_rule} conditions per rule
+2. Volatility Regime Detection:
+   - A "High Volatility" regime is active if the current {vol_lookback}-day realized volatility is
+     greater than its long-run median value.
+   - Otherwise, a "Calm" regime is active.
 
-3. Fitness Function:
-   - Primary: Total Return from rule application
-   - Penalty: Drawdown penalty factor = {fitness_drawdown_penalty_factor}
-   - Fitness = Return - ({fitness_drawdown_penalty_factor} × Max Drawdown)
-   - Selects for return while minimizing risk
+3. Entry Conditions:
+   - The primary entry signal is the VIX z-score falling below a certain threshold.
+   - In Calm Regimes: Enter LONG if VIX z-score <= {thr_low_vol:.2f} AND {mom_lookback}-day momentum is positive.
+   - In High-Vol Regimes: Enter LONG if VIX z-score <= {thr_high_vol:.2f} (stricter threshold). The
+     momentum filter is bypassed in high-volatility regimes.
 
-4. Rule Structure:
-   - Boolean combinations of technical conditions
-   - Example: (momentum_4 > 0.02) & (vol_8 < 0.15) | (macd_diff > 0)
-   - Complex multi-condition logic evolved automatically
-
-5. Trading Execution:
-   - Rules generate binary signals (invested/cash)
-   - Long-only positions when rule conditions are met
-   - Weekly rebalancing based on rule evaluation
+4. Position Management (Adaptive Holding Period):
+   - Upon entry, the holding period ('k') is dynamically calculated.
+   - k = 1 + (Positive Momentum / {scale})
+   - The holding period is capped at a maximum of {max_hold} days.
+   - The position is held for 'k' days, after which the entry conditions are re-evaluated.
+   - This allows the strategy to hold positions longer during strong momentum trends.
 
 PARAMETERS:
-- Evolution: {population_size} population × {max_generations} generations
-- Genetic Operators: {mutation_rate:.0%} mutation, {crossover_rate:.0%} crossover
-- Rule Complexity: Max {max_clauses_per_rule} clauses per rule
-- Fitness Penalty: {fitness_drawdown_penalty_factor} × drawdown
-- Feature Universe: 20+ technical indicators"""
+- Momentum Lookback: {mom_lookback} days
+- Realized Volatility Lookback: {vol_lookback} days
+- VIX Z-Score Lookback: {vix_z_lookback} days
+- Calm Vol Threshold (VIX z-score): {thr_low_vol:.2f}
+- High Vol Threshold (VIX z-score): {thr_high_vol:.2f}
+- Max Holding Period: {max_hold} days
+- Momentum Scale for Holding: {scale}
+"""
+
+    elif strategy_name.lower() == 'multi_asset_momentum':
+        assets_map = strategy_config.get('momentum_assets_map', {})
+        lookback = strategy_config.get('momentum_lookback_days', 20)
+        threshold = strategy_config.get('signal_threshold', -0.005)
+        exit_hold_days = strategy_config.get('exit_hold_days', 5)
+        trading_asset = strategy_config.get('trading_asset', 'cad_ig_er_index')
+        
+        asset_values = list(assets_map.values())
+
+        return f"""Multi-Asset {lookback}-Day Combined Momentum (Weekly Rebalance)
+
+TRADING RULES:
+1. Data & Frequency:
+   - This strategy operates on DAILY data but only makes trading decisions once per week.
+   - Rebalancing Day: Monday.
+
+2. Combined Momentum (Monday Only):
+   - On Monday, a {lookback}-day momentum is calculated for {len(asset_values)} assets.
+   - These are averaged into a single composite momentum signal for the market trend.
+
+3. Entry Condition (Monday Only):
+   - A LONG position is entered in '{trading_asset}' if the composite signal is positive.
+   - Entry Signal: Combined Momentum > {threshold:.4f}
+
+4. Exit Condition (Time-Based):
+   - Once entered, the position is held for a fixed number of days.
+   - Holding Period: {exit_hold_days} trading days.
+   - The position is exited after the holding period, regardless of the momentum signal.
+
+PARAMETERS:
+- Trading Asset: {trading_asset}
+- Momentum Lookback: {lookback} trading days
+- Entry Threshold: > {threshold:.4f}
+- Exit Holding Period: {exit_hold_days} trading days
+- Rebalancing Frequency: Weekly (Monday)
+"""
+        
+    elif strategy_name.lower() == 'genetic_algorithm':
+        pop_size = strategy_config.get('population_size', 120)
+        generations = strategy_config.get('max_generations', 120)
+        penalty = strategy_config.get('fitness_drawdown_penalty_factor', 0.1)
+
+        return f"""Genetic Algorithm Evolved Strategy (Weekly Rebalance)
+
+TRADING RULES:
+1. Data & Frequency:
+   - This strategy uses a genetic algorithm to find rules using DAILY data features.
+   - The final, evolved rule is only applied once per week on Monday.
+   - Rebalancing Day: Monday.
+
+2. Feature Engineering (The Gene Pool):
+   - A wide range of daily technical indicators (momentum, volatility, etc.) are created.
+   - These daily features serve as the building blocks for the evolutionary process.
+
+3. Rule Evolution Process:
+   - An initial population of {pop_size} random rules is evolved over {generations} generations.
+   - Rules are selected based on historical fitness (profitability vs. risk).
+
+4. Fitness Function (Survival of the Fittest):
+   - Fitness = Total Return - ({penalty} * Max Drawdown).
+   - This guides the evolution towards high-return, low-risk rules.
+
+5. Final Rule Execution (Monday Only):
+   - The single best-performing rule is applied every Monday to the daily features.
+   - If the rule is TRUE on Monday, a LONG position is entered and held for the week.
+   - If FALSE, the position is exited.
+
+PARAMETERS FOR EVOLUTION:
+- Population Size: {pop_size} rules per generation
+- Max Generations: {generations} iterations
+- Drawdown Penalty Factor: {penalty}
+- Rebalancing Frequency: Weekly (Monday)
+"""
 
     else:
         return f"""Strategy: {strategy_name.upper()}
@@ -816,75 +823,62 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
 
 
 def main():
-    """Main entry point."""
+    """Main function to run the backtesting framework."""
     parser = argparse.ArgumentParser(description="Modular Backtesting Framework")
-    parser.add_argument("--config", default="configs/base_config.yaml", 
-                       help="Path to configuration file")
-    parser.add_argument("--strategy", help="Single strategy to run")
-    parser.add_argument("--compare", nargs="+", 
-                       help="Compare multiple strategies")
-    parser.add_argument("--list-strategies", action="store_true",
-                       help="List available strategies")
+    parser.add_argument(
+        '--config', 
+        type=str, 
+        default='configs/config.yaml', 
+        help='Path to the configuration file.'
+    )
+    parser.add_argument(
+        '--strategies',
+        nargs='+',
+        type=str,
+        help='Run specific strategies by name, overriding the config file. e.g., --strategies vol_adaptive_momentum genetic_algorithm'
+    )
+    parser.add_argument(
+        '--list-strategies',
+        action='store_true',
+        help='List all available strategies and exit.'
+    )
     
     args = parser.parse_args()
-    
-    # List available strategies
+
+    # If --list-strategies is used, print them and exit
     if args.list_strategies:
-        print("Available Strategies:")
-        for name, strategy_class in StrategyFactory.get_available_strategies().items():
-            print(f"  - {name}: {strategy_class.__name__}")
-        return
-    
-    # Load configuration file (we're now always in the framework directory)
-    config_file = Path(args.config)
-    if not config_file.exists():
-        print(f"Config file not found: {config_file.absolute()}")
+        available_strategies = StrategyFactory.get_available_strategies()
+        print("Available strategies:")
+        for name in available_strategies:
+            print(f"- {name}")
+        sys.exit(0)
+
+    # Load configuration
+    config_dict = load_config(args.config)
+    if not config_dict:
+        print(f"Config file not found: {os.path.abspath(args.config)}")
         print("Please ensure the config file exists or provide a valid path.")
-        print(f"Current working directory: {Path.cwd()}")
-        sys.exit(1)
-    
-    print(f"Using config file: {config_file}")
-    
-    config_dict = load_config(str(config_file))
-    
-    # Validate data path (we're now always in the framework directory)
-    data_path = Path(config_dict['data']['file_path'])
-    if not data_path.exists():
-        # Try the original data location as fallback
-        fallback_path = Path("../../cad ig er index weekly backtests/data_pipelines/data_processed/with_er_daily.csv")
-        if fallback_path.exists():
-            config_dict['data']['file_path'] = str(fallback_path)
-            data_path = fallback_path
-        else:
-            print(f"Data file not found: {data_path.absolute()}")
-            print("Please update the file_path in the config file or ensure data exists.")
-            sys.exit(1)
-    
-    print(f"Using data file: {data_path}")
-    
-    # Run based on arguments
-    if args.strategy:
-        run_single_strategy(args.strategy, config_dict)
-    elif args.compare:
-        run_strategy_comparison(args.compare, config_dict)
+        return
+
+    # Determine which strategies to run
+    if args.strategies:
+        # User has specified strategies via command line
+        enabled_strategies = args.strategies
+        print(f"Running user-specified strategies: {', '.join(enabled_strategies)}")
     else:
-        # Get strategies from config or use all available
-        strategies_config = config_dict.get('strategies', {})
-        if strategies_config.get('run_all_by_default', True):
-            # Use enabled strategies from config
-            enabled_strategies = strategies_config.get('enabled', [])
-            if enabled_strategies:
-                print(f"Running enabled strategies from config: {', '.join(enabled_strategies)}")
-                run_strategy_comparison(enabled_strategies, config_dict)
-            else:
-                # Fallback to all available strategies
-                available_strategies = list(StrategyFactory.get_available_strategies().keys())
-                print(f"No enabled strategies in config. Running all available strategies:")
-                print(f"Strategies: {', '.join(available_strategies)}")
-                run_strategy_comparison(available_strategies, config_dict)
-        else:
-            print("Strategy execution disabled in config. Use --strategy or --compare to run specific strategies.")
+        # Use strategies from the config file
+        enabled_strategies = config_dict.get('strategies', {}).get('enabled', [])
+        print(f"Running enabled strategies from config: {', '.join(enabled_strategies)}")
+
+    if not enabled_strategies:
+        print("No strategies enabled in config or provided via arguments. Exiting.")
+        return
+
+    if len(enabled_strategies) > 1:
+        run_strategy_comparison(enabled_strategies, config_dict)
+    elif len(enabled_strategies) == 1:
+        run_single_strategy(enabled_strategies[0], config_dict)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main() 

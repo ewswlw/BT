@@ -12,14 +12,8 @@ from .base_strategy import BaseStrategy
 
 class GeneticAlgorithmStrategy(BaseStrategy):
     """
-    Genetic Algorithm evolved trading strategy.
-    
-    Strategy Logic (matching genetic algo weekly.py):
-    - Uses evolutionary algorithm to discover optimal trading rules
-    - Combines multiple technical features into complex rule expressions
-    - Features include momentum, volatility, SMA deviation, MACD, stochastic K, OAS/VIX momentum
-    - Rules are evaluated using fitness function (return - penalty*drawdown)
-    - Best evolved rule is used for trading signals
+    Genetic Algorithm-based trading strategy.
+    Evolves trading rules and applies them on a weekly basis (Mondays).
     """
     
     def __init__(self, config: Dict):
@@ -44,15 +38,8 @@ class GeneticAlgorithmStrategy(BaseStrategy):
         self.best_fitness = -np.inf
         
     def get_required_features(self) -> List[str]:
-        """Return all technical features needed for GA rule evolution."""
-        # Base price for feature engineering
-        features = [self.trading_asset]
-        
-        # Additional data columns for features (matching genetic algo weekly.py)
-        additional_cols = ['cad_oas', 'us_ig_oas', 'us_hy_oas', 'vix']
-        features.extend(additional_cols)
-        
-        return features
+        """Returns an empty list as features are generated dynamically."""
+        return []
     
     def engineer_ga_features(self, data: pd.DataFrame) -> pd.DataFrame:
         """
@@ -114,46 +101,53 @@ class GeneticAlgorithmStrategy(BaseStrategy):
     
     def generate_signals(self, data: pd.DataFrame, features: pd.DataFrame) -> Tuple[pd.Series, pd.Series]:
         """
-        Generate trading signals using the best evolved rule.
+        Evolves a trading rule and generates signals based on it,
+        rebalancing weekly on Mondays.
         
         Args:
-            data: Weekly price data
-            features: Features DataFrame (will engineer features from data)
+            data: Daily price data
+            features: DataFrame of pre-computed features
             
         Returns:
             Tuple of (entry_signals, exit_signals)
         """
-        # Engineer GA features from price data
-        ga_features = self.engineer_ga_features(data)
+        # Evolve the best trading rule based on the provided data and features
+        best_rule = self._evolve_best_rule(data, features)
+        print(f"Best evolved rule: {best_rule}")
+
+        # Apply the best rule to the features to get raw signals for all days
+        try:
+            # Use eval in a controlled way to apply the rule string
+            raw_signals = eval(best_rule, {'features_df': features})
+        except Exception as e:
+            print(f"Error evaluating evolved rule: {e}")
+            raw_signals = pd.Series(False, index=data.index)
+
+        # --- Monday-Only Trading Logic ---
+        # 1. Identify Mondays for rebalancing
+        is_monday = data.index.dayofweek == 0
         
-        # If no evolved rule yet, evolve one
-        if self.best_rule is None:
-            self.evolve_trading_rule(data, ga_features)
+        # 2. Get the signal from the evolved rule ONLY on Mondays
+        monday_signal = raw_signals[is_monday]
         
-        # Apply the best evolved rule
-        if self.best_rule is not None:
-            try:
-                # Evaluate the rule string to get trading signals
-                signal_mask = eval(self.best_rule, {"pd": pd, "np": np}, {"features_df": ga_features})
-                signal_mask = signal_mask.reindex(data.index).fillna(False)
-                
-                # Entry when signal is True, Exit when signal is False
-                entry_signals = signal_mask.astype(bool)
-                exit_signals = (~signal_mask).astype(bool)
-                
-                print(f"Generated signals using evolved rule: {entry_signals.sum()} entry periods ({entry_signals.mean():.2%})")
-                
-                return entry_signals, exit_signals
-                
-            except Exception as e:
-                print(f"Error applying evolved rule: {e}")
-                # Fallback to no signals
-                return pd.Series(False, index=data.index), pd.Series(True, index=data.index)
-        else:
-            print("No valid rule evolved, returning no signals")
-            return pd.Series(False, index=data.index), pd.Series(True, index=data.index)
+        # 3. Create a Series that only has signal values on Mondays
+        signals_on_mondays = pd.Series(np.nan, index=data.index)
+        signals_on_mondays[is_monday] = monday_signal
+        
+        # 4. Forward-fill the signal to hold position until the next Monday
+        final_signals = signals_on_mondays.ffill().fillna(False)
+        
+        # --- Convert positions to entry/exit signals ---
+        positions = final_signals.astype(int)
+        positions_shifted = positions.shift(1).fillna(0)
+        
+        entry_signals = (positions == 1) & (positions_shifted == 0)
+        exit_signals = (positions == 0) & (positions_shifted == 1)
+
+        print(f"Generated signals using evolved rule: {entry_signals.sum()} entry periods ({entry_signals.mean():.2%})")
+        return entry_signals, exit_signals
     
-    def evolve_trading_rule(self, price_data: pd.DataFrame, features_df: pd.DataFrame):
+    def _evolve_best_rule(self, data: pd.DataFrame, features: pd.DataFrame) -> str:
         """
         Evolve trading rules using genetic algorithm.
         Exactly matches the GA logic from genetic algo weekly.py
@@ -163,13 +157,13 @@ class GeneticAlgorithmStrategy(BaseStrategy):
         print(f"Mutation Rate: {self.mutation_rate}, Crossover Rate: {self.crossover_rate}")
         
         # Get feature names for rule generation
-        feature_names = features_df.columns.tolist()
-        price_series = price_data[self.trading_asset]
+        feature_names = features.columns.tolist()
+        price_series = data[self.trading_asset]
         
         # Initialize population with random rules
         population = []
         for _ in range(self.population_size):
-            rule = self._generate_random_rule(features_df, feature_names)
+            rule = self._generate_random_rule(features, feature_names)
             population.append(rule)
         
         best_overall_rule = None
@@ -180,7 +174,7 @@ class GeneticAlgorithmStrategy(BaseStrategy):
             # Evaluate all rules in current population
             scored_population = []
             for rule in population:
-                fitness, total_return, max_dd = self._evaluate_rule_fitness(rule, price_series, features_df)
+                fitness, total_return, max_dd = self._evaluate_rule_fitness(rule, price_series, features)
                 scored_population.append({
                     'rule': rule,
                     'fitness': fitness, 
@@ -216,18 +210,18 @@ class GeneticAlgorithmStrategy(BaseStrategy):
                 if roll < self.mutation_rate:
                     # Mutation
                     parent = random.choice(elite_rules)
-                    child = self._mutate_rule(parent, features_df, feature_names)
+                    child = self._mutate_rule(parent, features, feature_names)
                     next_population.append(child)
                     
                 elif roll < self.mutation_rate + self.crossover_rate:
                     # Crossover
                     parent1, parent2 = random.sample(elite_rules, 2)
-                    child = self._crossover_rules(parent1, parent2, features_df, feature_names)
+                    child = self._crossover_rules(parent1, parent2, features, feature_names)
                     next_population.append(child)
                     
                 else:
                     # New random rule
-                    new_rule = self._generate_random_rule(features_df, feature_names)
+                    new_rule = self._generate_random_rule(features, feature_names)
                     next_population.append(new_rule)
             
             population = next_population
@@ -242,6 +236,8 @@ class GeneticAlgorithmStrategy(BaseStrategy):
             print(f"Best return: {best_overall_return*100:.2f}%")
         else:
             print("No valid rule evolved")
+        
+        return best_overall_rule
     
     def _generate_random_rule(self, features_df: pd.DataFrame, feature_names: List[str]) -> str:
         """Generate a random trading rule (matching genetic algo weekly.py)."""

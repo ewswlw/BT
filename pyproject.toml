@@ -58,9 +58,20 @@ tsfresh = "^0.21.0"
 fredapi = "^0.5.2"
 matplotlib = "^3.10.1"
 shap = "^0.47.2"
+scipy = "^1.11.0"
+scikit-optimize = "^0.9.0"
+click = "^8.1.0"
+tqdm = "^4.65.0"
+loguru = "^0.7.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+black = "^23.7.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+mypy = "^1.5.0"
 
 [build-system]
 requires = ["poetry-core"]
