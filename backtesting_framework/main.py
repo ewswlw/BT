@@ -620,6 +620,61 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
     return str(file_path)
 
 
+def generate_trade_blotter(results: dict, output_path: Path):
+    """Generate a formatted trade blotter for each strategy."""
+    output_path.mkdir(parents=True, exist_ok=True)
+    file_path = output_path / 'Trade_Blotter.txt'
+    
+    with open(file_path, 'w') as f:
+        f.write(f"Trade Blotter generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+
+        for strategy_name, result in results.items():
+            f.write("="*120 + "\n")
+            f.write(f"Strategy: {strategy_name.upper()}\n")
+            f.write("="*120 + "\n")
+
+            if not (hasattr(result, 'portfolio') and result.portfolio is not None and result.portfolio.trades.count() > 0):
+                f.write("No trades were executed for this strategy.\n\n")
+                print(f"No trades found for {strategy_name}.")
+                continue
+
+            try:
+                blotter = result.portfolio.trades.records_readable.copy()
+
+                # Manual Calculations & Formatting
+                blotter['Entry Timestamp'] = pd.to_datetime(blotter['Entry Timestamp'])
+                blotter['Exit Timestamp'] = pd.to_datetime(blotter['Exit Timestamp'])
+                last_timestamp = result.returns.index[-1]
+                blotter['Days in Trade'] = (blotter['Exit Timestamp'].fillna(last_timestamp) - blotter['Entry Timestamp']).dt.days
+
+                # Formatting
+                blotter['Return'] = blotter['Return'].astype(float).map('{:.2%}'.format)
+                blotter['PnL'] = blotter['PnL'].astype(float).map('{:,.2f}'.format)
+                blotter['Avg Entry Price'] = blotter['Avg Entry Price'].astype(float).map('{:,.4f}'.format)
+                blotter['Avg Exit Price'] = blotter['Avg Exit Price'].astype(float).map('{:,.4f}'.format)
+                blotter['Entry Fees'] = blotter['Entry Fees'].astype(float).map('{:,.2f}'.format)
+                blotter['Exit Fees'] = blotter['Exit Fees'].astype(float).map('{:,.2f}'.format)
+                blotter['Size'] = blotter['Size'].astype(float).map('{:,.4f}'.format)
+
+                # Reorder and select columns
+                blotter.rename(columns={'Column': 'Asset/Params'}, inplace=True)
+                output_columns = [
+                    'Trade Id', 'Asset/Params', 'Direction', 'Status', 'Size',
+                    'Entry Timestamp', 'Avg Entry Price', 'Exit Timestamp', 'Avg Exit Price',
+                    'Days in Trade', 'PnL', 'Return', 'Entry Fees', 'Exit Fees'
+                ]
+                final_blotter = blotter[[col for col in output_columns if col in blotter.columns]]
+
+                f.write(final_blotter.to_string(index=False))
+                f.write("\n\n")
+
+            except Exception as e:
+                f.write(f"An error occurred while generating the blotter for this strategy: {e}\n\n")
+                print(f"Warning: Could not get trades for {strategy_name}: {e}")
+    
+    print(f"\n✓ Trade blotter saved to: {file_path}")
+
+
 def run_single_strategy(strategy_name: str, config_dict: dict):
     """Run a single strategy."""
     print(f"\n{'='*80}")
@@ -703,6 +758,13 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
         
         if html_path:
             print(f"\nHTML Report: {html_path}")
+
+        # Generate trade blotter
+        try:
+            results_path = Path(base_config.reporting.output_dir).parent / 'results'
+            generate_trade_blotter({strategy_name: result}, results_path)
+        except Exception as e:
+            print(f"✗ Error generating trade blotter: {e}")
             
     except Exception as e:
         print(f"Error running strategy {strategy_name}: {e}")
@@ -805,6 +867,13 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
                     import traceback
                     traceback.print_exc()
             
+            # Generate trade blotter
+            try:
+                results_path = Path(base_config.reporting.output_dir).parent / 'results'
+                generate_trade_blotter(results, results_path)
+            except Exception as e:
+                print(f"✗ Error generating trade blotter: {e}")
+
             # Save individual reports
             for strategy_name, result in results.items():
                 try:
