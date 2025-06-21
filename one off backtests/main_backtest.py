@@ -77,7 +77,7 @@ CONFIG = {
 
 def load_data(config: dict) -> pd.DataFrame:
     """
-    Loads and prepares the market data from a CSV file.
+    Loads and prepares the market data using the DataPipeline class.
     
     Args:
         config (dict): The data configuration section.
@@ -86,11 +86,20 @@ def load_data(config: dict) -> pd.DataFrame:
         pd.DataFrame: A DataFrame with a DatetimeIndex and specified columns.
     """
     try:
-        data = pd.read_csv(
-            config['file_path'],
-            index_col=config['date_column'],
-            parse_dates=True
-        )
+        # Add project root to path to find data_pipelines module
+        import os
+        import sys
+        # Assumes this script is in a subdirectory of the project root
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        if project_root not in sys.path:
+            sys.path.append(project_root)
+        
+        from data_pipelines.fetch_data import DataPipeline
+        
+        # Initialize the pipeline and use it to load the dataset from CSV
+        pipeline = DataPipeline()
+        data = pipeline.load_dataset(config['file_path'])
+
         # Ensure the required columns exist
         required_cols = [config['price_column']]
         if config.get('vix_column'):
@@ -100,8 +109,12 @@ def load_data(config: dict) -> pd.DataFrame:
             if col not in data.columns:
                 raise ValueError(f"Required column '{col}' not found in the data file.")
 
-        print(f"Data loaded successfully. Date range: {data.index.min().date()} to {data.index.max().date()}")
+        print(f"Data loaded successfully via DataPipeline. Date range: {data.index.min().date()} to {data.index.max().date()}")
         return data
+
+    except ImportError:
+        print("Error: Could not import DataPipeline. Make sure 'data_pipelines/fetch_data.py' exists.")
+        return pd.DataFrame()
     except FileNotFoundError:
         print(f"Error: Data file not found at {config['file_path']}")
         return pd.DataFrame()
