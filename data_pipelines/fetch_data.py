@@ -866,11 +866,12 @@ class DataPipeline:
             logger.error(f"Error getting full dataset: {str(e)}")
             raise
 
-    def save_dataset(self, output_path=None, date_format=None):
+    def save_dataset(self, df: pd.DataFrame = None, output_path=None, date_format=None):
         """
         Save the dataset to a file.
         
         Args:
+            df (pd.DataFrame, optional): DataFrame to save. If not provided, it will be fetched.
             output_path (str): Path to save the dataset to.
             date_format (str): Format to use for the date index.
             
@@ -893,7 +894,8 @@ class DataPipeline:
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         
         try:
-            df = self.get_full_dataset()
+            if df is None:
+                df = self.get_full_dataset()
             
             # Ensure index name is 'Date'
             df.index.name = 'Date'
@@ -956,7 +958,7 @@ if __name__ == "__main__":
     df = pipeline.process_data()
 
     # Save the dataset to CSV using the default path defined at the top of the file
-    saved_path = pipeline.save_dataset(DEFAULT_OUTPUT_PATH)
+    saved_path = pipeline.save_dataset(df, DEFAULT_OUTPUT_PATH)
     print(f"\nDataset saved to: {saved_path}")
 
     # Print basic information about the resulting dataset

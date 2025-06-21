@@ -58,6 +58,8 @@ CONFIG = {
     # See `data_pipelines/fetch_data.py` for format details.
     "bad_dates": {},
 
+    # --- Output ---
+    "output_csv_path": "one off backtests/market_data.csv",
 }
 #############################################################
 # END OF CONFIGURATION
@@ -98,7 +100,7 @@ def run_pipeline():
             return None
 
         # Display basic information about the dataset
-        print(f"\n--- Data Information ---")
+        print(f"\n--- API Data Information ---")
         print(f"Date Range: {fetched_data.index.min()} to {fetched_data.index.max()}")
         print(f"Number of rows: {len(fetched_data)}")
         print(f"Number of columns: {len(fetched_data.columns)}")
@@ -111,12 +113,46 @@ def run_pipeline():
         print(f"\nLast 5 rows:")
         print(fetched_data.tail())
 
-        print(fetched_data.info())
+        print("\n--- API Data Info ---")
+        fetched_data.info()
         
        # Display some basic statistics
-        print(f"\n--- Basic Statistics ---")
+        print(f"\n--- Basic Statistics (from API) ---")
         print(fetched_data.describe())
         
+        # Save the data to CSV
+        output_path = CONFIG.get("output_csv_path")
+        if output_path:
+            print(f"\n--- Saving data to {output_path} ---")
+            saved_path = pipeline.save_dataset(fetched_data, output_path)
+            print(f"Data saved successfully to {saved_path}")
+
+            # Load data from CSV and verify
+            print("\n--- Verifying saved CSV data ---")
+            csv_data = pipeline.load_dataset(saved_path)
+            
+            if csv_data.empty:
+                print("\nWarning: The loaded CSV data is empty.")
+                return None
+            
+            print(f"\n--- CSV Data Information ---")
+            print(f"Date Range: {csv_data.index.min()} to {csv_data.index.max()}")
+            print(f"Number of rows: {len(csv_data)}")
+            print(f"Number of columns: {len(csv_data.columns)}")
+            print(f"Columns: {csv_data.columns.tolist()}")
+            
+            print(f"\nFirst 5 rows (from CSV):")
+            print(csv_data.head())
+            
+            print(f"\nLast 5 rows (from CSV):")
+            print(csv_data.tail())
+
+            print("\n--- CSV Data Info ---")
+            csv_data.info()
+
+            print(f"\n--- Basic Statistics (from CSV) ---")
+            print(csv_data.describe())
+
         print("\n--- Script Finished Successfully ---")
         return fetched_data
         
