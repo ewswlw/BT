@@ -667,12 +667,7 @@ class DataPipeline:
             # Store the processed data
             self.data = final_df
 
-            # Handle bad dates
-            for date, info in self.bad_dates.items():
-                if date in final_df.index and info['column'] in final_df.columns:
-                    if info['action'] == 'use_previous':
-                        final_df.loc[date, info['column']] = final_df.loc[final_df.index < date, info['column']].iloc[-1]
-                        logger.info(f"Handled bad date {date} for column {info['column']}")
+            # Redundant bad date handling removed, this is now fully handled in clean_data()
 
             return final_df
             
@@ -729,9 +724,9 @@ class DataPipeline:
                             logger.warning(f"Could not parse date from {date_key}")
                             continue
                             
-                        # Check if column exists
+                        # Check if column exists, but don't warn if it doesn't
                         if column not in cleaned_df.columns:
-                            logger.warning(f"Column {column} not found in data")
+                            logger.debug(f"Column {column} for bad date rule not found in current dataset, skipping.")
                             continue
                             
                         # Check if date exists
@@ -753,14 +748,11 @@ class DataPipeline:
                                 logger.warning(f"  No previous values for {column} before {date}")
                                 
                         elif action == 'forward_fill':
-                            # Get next value
-                            next_values = cleaned_df.loc[cleaned_df.index > date, column]
-                            if not next_values.empty:
-                                next_value = next_values.iloc[0]
-                                cleaned_df.loc[date, column] = next_value
-                                logger.info(f"  Forward filled with {next_value} for {column} on {date}")
-                            else:
-                                logger.warning(f"  No next values for {column} after {date}")
+                            # This was previously implemented incorrectly as a backfill.
+                            # The goal of ffill on a single point is to use the *previous* value.
+                            # Let's correct this to use a proper forward fill.
+                            cleaned_df[column] = cleaned_df[column].ffill()
+                            logger.info(f"  Forward filled column {column} up to {date}")
                                 
                         elif action == 'interpolate':
                             # Get values before and after
@@ -857,6 +849,7 @@ class DataPipeline:
             logger.info("Cleaning data...")
             final_df = self.clean_data(final_df)
 
+            # Align start date after cleaning to ensure we are aligning based on clean, non-null data
             if self.start_date_align == 'yes':
                 non_null_df = final_df.dropna(how='any')
                 if not non_null_df.empty:
