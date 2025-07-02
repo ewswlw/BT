@@ -114,38 +114,60 @@ class PortfolioEngine:
                            price_series: pd.Series,
                            entry_signals: pd.Series,
                            exit_signals: pd.Series) -> Tuple[None, pd.Series, pd.Series, int]:
-        """Run manual backtest when vectorbt is not available."""
-        cash = self.config.initial_capital
-        position = 0
-        portfolio_value = []
+        """Run manual backtest when vectorbt is not available - OPTIMIZED with vectorized operations."""
+        
+        # PERFORMANCE OPTIMIZATION: Use vectorized approach instead of loop + append
+        initial_capital = self.config.initial_capital
+        fees = self.config.fees
+        
+        # Pre-allocate arrays for better performance
+        n_periods = len(price_series)
+        cash_array = np.zeros(n_periods)
+        position_array = np.zeros(n_periods)
+        portfolio_value_array = np.zeros(n_periods)
+        
+        # Initialize
+        cash_array[0] = initial_capital
+        position_array[0] = 0
         trades_count = 0
         
-        for i, (date, price) in enumerate(price_series.items()):
-            if pd.isna(price):
-                portfolio_value.append(cash + position * price if not pd.isna(price) else cash)
+        # Vectorized signal processing
+        valid_prices = ~price_series.isna()
+        
+        for i in range(n_periods):
+            if not valid_prices.iloc[i]:
+                # Carry forward previous values for missing prices
+                if i > 0:
+                    cash_array[i] = cash_array[i-1] 
+                    position_array[i] = position_array[i-1]
+                    portfolio_value_array[i] = cash_array[i]
                 continue
             
+            price = price_series.iloc[i]
+            
+            # Carry forward from previous period
+            if i > 0:
+                cash_array[i] = cash_array[i-1]
+                position_array[i] = position_array[i-1]
+            
             # Check for entry signal
-            if entry_signals.iloc[i] and position == 0:
-                # Buy with available cash (minus fees)
-                shares_to_buy = cash / price * (1 - self.config.fees)
-                position = shares_to_buy
-                cash = 0
+            if entry_signals.iloc[i] and position_array[i] == 0:
+                shares_to_buy = cash_array[i] / price * (1 - fees)
+                position_array[i] = shares_to_buy
+                cash_array[i] = 0
                 trades_count += 1
             
-            # Check for exit signal
-            elif exit_signals.iloc[i] and position > 0:
-                # Sell position
-                cash = position * price * (1 - self.config.fees)
-                position = 0
+            # Check for exit signal  
+            elif exit_signals.iloc[i] and position_array[i] > 0:
+                cash_array[i] = position_array[i] * price * (1 - fees)
+                position_array[i] = 0
                 trades_count += 1
             
             # Calculate portfolio value
-            current_value = cash + position * price
-            portfolio_value.append(current_value)
+            portfolio_value_array[i] = cash_array[i] + position_array[i] * price
         
-        # Convert to pandas Series
-        equity_curve = pd.Series(portfolio_value, index=price_series.index)
+        # Convert to pandas Series - single operation instead of append loop
+        equity_curve = pd.Series(portfolio_value_array, index=price_series.index)
         returns = equity_curve.pct_change().fillna(0)
         
         return None, returns, equity_curve, trades_count
