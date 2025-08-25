@@ -1,7 +1,7 @@
 ================================================================================
 SIMPLE STRATEGIES VS. BUY & HOLD
 ================================================================================
-Generated: 2025-06-21 18:31:20
+Generated: 2025-08-25 08:47:55
 Total Strategies Analyzed: 3
 Benchmark Asset: Buy & Hold (spx_close)
 ================================================================================
@@ -13,20 +13,20 @@ Benchmark Asset: Buy & Hold (spx_close)
 SMA_CROSSOVER - VectorBT Portfolio Stats
 --------------------------------------------------
 Start                         :  1990-01-02 00:00:00
-End                           :  2025-06-20 00:00:00
-Period                        :   8957 days 00:00:00
+End                           :  2025-08-25 00:00:00
+Period                        :   9003 days 00:00:00
 Start Value                   :             100.0000
-End Value                     :            1457.7354
-Total Return [%]              :            1357.7354
-Benchmark Return [%]          :            1559.1621
+End Value                     :            1519.2779
+Total Return [%]              :            1419.2779
+Benchmark Return [%]          :            1697.9121
 Max Gross Exposure [%]        :             100.0000
 Total Fees Paid               :               0.0000
 Max Drawdown [%]              :              33.9250
 Max Drawdown Duration         :    862 days 00:00:00
-Total Trades                  :                   15
+Total Trades                  :                   16
 Total Closed Trades           :                   15
-Total Open Trades             :                    0
-Open Trade Pnl                :               0.0000
+Total Open Trades             :                    1
+Open Trade Pnl                :              61.5425
 Win Rate [%]                  :              80.0000
 Best Trade [%]                :             120.9347
 Worst Trade [%]               :              -8.3894
@@ -36,53 +36,53 @@ Avg Winning Trade Duration    :    514 days 12:00:00
 Avg Losing Trade Duration     :    155 days 16:00:00
 Profit Factor                 :              12.8069
 Expectancy                    :              90.5157
-Sharpe Ratio                  :               0.6448
-Calmar Ratio                  :               0.2308
-Omega Ratio                   :               1.1497
-Sortino Ratio                 :               0.9071
+Sharpe Ratio                  :               0.6515
+Calmar Ratio                  :               0.2333
+Omega Ratio                   :               1.1513
+Sortino Ratio                 :               0.9169
 
 --------------------------------------------------
 VIX_VOLATILITY - VectorBT Portfolio Stats
 --------------------------------------------------
 Start                         :  1990-01-02 00:00:00
-End                           :  2025-06-20 00:00:00
-Period                        :   8957 days 00:00:00
+End                           :  2025-08-25 00:00:00
+Period                        :   9003 days 00:00:00
 Start Value                   :             100.0000
-End Value                     :             447.2387
-Total Return [%]              :             347.2387
-Benchmark Return [%]          :            1559.1621
+End Value                     :             458.1894
+Total Return [%]              :             358.1894
+Benchmark Return [%]          :            1697.9121
 Max Gross Exposure [%]        :             100.0000
 Total Fees Paid               :               0.0000
 Max Drawdown [%]              :              53.7528
 Max Drawdown Duration         :   3748 days 00:00:00
-Total Trades                  :                  239
-Total Closed Trades           :                  238
-Total Open Trades             :                    1
-Open Trade Pnl                :              -1.1151
-Win Rate [%]                  :              73.9496
+Total Trades                  :                  240
+Total Closed Trades           :                  240
+Total Open Trades             :                    0
+Open Trade Pnl                :               0.0000
+Win Rate [%]                  :              74.1667
 Best Trade [%]                :              21.9766
 Worst Trade [%]               :             -12.8474
-Avg Winning Trade [%]         :               1.5184
+Avg Winning Trade [%]         :               1.5136
 Avg Losing Trade [%]          :              -1.7407
-Avg Winning Trade Duration    : 9 days 01:05:27.272727272
+Avg Winning Trade Duration    : 8 days 23:19:33.033707865
 Avg Losing Trade Duration     : 28 days 19:44:30.967741935
-Profit Factor                 :               2.4114
-Expectancy                    :               1.4637
-Sharpe Ratio                  :               0.3461
-Calmar Ratio                  :               0.0801
-Omega Ratio                   :               1.1052
-Sortino Ratio                 :               0.4937
+Profit Factor                 :               2.4513
+Expectancy                    :               1.4925
+Sharpe Ratio                  :               0.3495
+Calmar Ratio                  :               0.0810
+Omega Ratio                   :               1.1065
+Sortino Ratio                 :               0.4986
 
 --------------------------------------------------
 BUY & HOLD - VectorBT Portfolio Stats
 --------------------------------------------------
 Start                         :  1990-01-02 00:00:00
-End                           :  2025-06-20 00:00:00
-Period                        :   8957 days 00:00:00
+End                           :  2025-08-25 00:00:00
+Period                        :   9003 days 00:00:00
 Start Value                   :             100.0000
-End Value                     :            1659.1621
-Total Return [%]              :            1559.1621
-Benchmark Return [%]          :            1559.1621
+End Value                     :            1797.9121
+Total Return [%]              :            1697.9121
+Benchmark Return [%]          :            1697.9121
 Max Gross Exposure [%]        :             100.0000
 Total Fees Paid               :               0.0000
 Max Drawdown [%]              :              56.7754
@@ -90,7 +90,7 @@ Max Drawdown Duration         :   1802 days 00:00:00
 Total Trades                  :                    1
 Total Closed Trades           :                    0
 Total Open Trades             :                    1
-Open Trade Pnl                :            1559.1621
+Open Trade Pnl                :            1697.9121
 Win Rate [%]                  :                  nan
 Best Trade [%]                :                  nan
 Worst Trade [%]               :                  nan
@@ -100,10 +100,10 @@ Avg Winning Trade Duration    :                  NaT
 Avg Losing Trade Duration     :                  NaT
 Profit Factor                 :                  nan
 Expectancy                    :                  nan
-Sharpe Ratio                  :               0.5271
-Calmar Ratio                  :               0.1448
-Omega Ratio                   :               1.1048
-Sortino Ratio                 :               0.7462
+Sharpe Ratio                  :               0.5379
+Calmar Ratio                  :               0.1484
+Omega Ratio                   :               1.1071
+Sortino Ratio                 :               0.7618
 
 
 ================================================================================
@@ -113,63 +113,63 @@ Sortino Ratio                 :               0.7462
 SMA_CROSSOVER - VectorBT Returns Stats
 --------------------------------------------------
 Start                         :  1990-01-02 00:00:00
-End                           :  2025-06-20 00:00:00
-Period                        :   8957 days 00:00:00
-Total Return [%]              :            1357.7354
-Annualized Return [%]         :               7.8300
-Annualized Volatility [%]     :              13.0091
+End                           :  2025-08-25 00:00:00
+Period                        :   9003 days 00:00:00
+Total Return [%]              :            1419.2779
+Annualized Return [%]         :               7.9133
+Annualized Volatility [%]     :              12.9909
 Max Drawdown [%]              :              33.9250
 Max Drawdown Duration         :    862 days 00:00:00
-Sharpe Ratio                  :               0.6448
-Calmar Ratio                  :               0.2308
-Omega Ratio                   :               1.1497
-Sortino Ratio                 :               0.9071
-Skew                          :              -0.4834
-Kurtosis                      :              20.0349
-Tail Ratio                    :               1.0111
-Common Sense Ratio            :               1.0903
+Sharpe Ratio                  :               0.6515
+Calmar Ratio                  :               0.2333
+Omega Ratio                   :               1.1513
+Sortino Ratio                 :               0.9169
+Skew                          :              -0.4832
+Kurtosis                      :              20.0514
+Tail Ratio                    :               1.0120
+Common Sense Ratio            :               1.0921
 Value At Risk                 :              -0.0123
 
 --------------------------------------------------
 VIX_VOLATILITY - VectorBT Returns Stats
 --------------------------------------------------
 Start                         :  1990-01-02 00:00:00
-End                           :  2025-06-20 00:00:00
-Period                        :   8957 days 00:00:00
-Total Return [%]              :             347.2387
-Annualized Return [%]         :               4.3044
-Annualized Volatility [%]     :              15.7776
+End                           :  2025-08-25 00:00:00
+Period                        :   9003 days 00:00:00
+Total Return [%]              :             358.1894
+Annualized Return [%]         :               4.3526
+Annualized Volatility [%]     :              15.7400
 Max Drawdown [%]              :              53.7528
 Max Drawdown Duration         :   3748 days 00:00:00
-Sharpe Ratio                  :               0.3461
-Calmar Ratio                  :               0.0801
-Omega Ratio                   :               1.1052
-Sortino Ratio                 :               0.4937
-Skew                          :              -0.0544
-Kurtosis                      :              19.9626
-Tail Ratio                    :               1.0124
-Common Sense Ratio            :               1.0560
-Value At Risk                 :              -0.0149
+Sharpe Ratio                  :               0.3495
+Calmar Ratio                  :               0.0810
+Omega Ratio                   :               1.1065
+Sortino Ratio                 :               0.4986
+Skew                          :              -0.0546
+Kurtosis                      :              20.0654
+Tail Ratio                    :               1.0172
+Common Sense Ratio            :               1.0614
+Value At Risk                 :              -0.0148
 
 --------------------------------------------------
 BUY & HOLD - VectorBT Returns Stats
 --------------------------------------------------
 Start                         :  1990-01-02 00:00:00
-End                           :  2025-06-20 00:00:00
-Period                        :   8957 days 00:00:00
-Total Return [%]              :            1559.1621
-Annualized Return [%]         :               8.2233
-Annualized Volatility [%]     :              18.1118
+End                           :  2025-08-25 00:00:00
+Period                        :   9003 days 00:00:00
+Total Return [%]              :            1697.9121
+Annualized Return [%]         :               8.4231
+Annualized Volatility [%]     :              18.0786
 Max Drawdown [%]              :              56.7754
 Max Drawdown Duration         :   1802 days 00:00:00
-Sharpe Ratio                  :               0.5271
-Calmar Ratio                  :               0.1448
-Omega Ratio                   :               1.1048
-Sortino Ratio                 :               0.7462
-Skew                          :              -0.1440
-Kurtosis                      :              10.6792
-Tail Ratio                    :               0.9533
-Common Sense Ratio            :               1.0317
+Sharpe Ratio                  :               0.5379
+Calmar Ratio                  :               0.1484
+Omega Ratio                   :               1.1071
+Sortino Ratio                 :               0.7618
+Skew                          :              -0.1455
+Kurtosis                      :              10.7112
+Tail Ratio                    :               0.9544
+Common Sense Ratio            :               1.0347
 Value At Risk                 :              -0.0173
 
 
@@ -182,48 +182,48 @@ SMA_CROSSOVER vs BENCHMARK
                     Benchmark    Strategy
 ------------------  -----------  ----------
 Start Period        1990-01-02   1990-01-02
-End Period          2025-06-20   2025-06-20
+End Period          2025-08-25   2025-08-25
 Risk-Free Rate      0.0%         0.0%
-Time in Market      97.0%        74.0%
+Time in Market      97.0%        75.0%
 
-Cumulative Return   1,517.04%    1,357.74%
-CAGR﹪              5.56%        5.35%
+Cumulative Return   1,652.27%    1,419.28%
+CAGR﹪              5.7%         5.41%
 
-Sharpe              0.53         0.64
-Prob. Sharpe Ratio  99.91%       99.99%
-Sortino             0.75         0.91
-Sortino/√2          0.53         0.64
+Sharpe              0.54         0.65
+Prob. Sharpe Ratio  99.93%       99.99%
+Sortino             0.76         0.92
+Sortino/√2          0.54         0.65
 Omega               1.15         1.15
 
 Max Drawdown        -56.78%      -33.92%
 Longest DD Days     2620         1255
 
 Gain/Pain Ratio     0.11         0.15
-Gain/Pain (1M)      0.64         0.94
+Gain/Pain (1M)      0.66         0.95
 
 Payoff Ratio        0.97         0.97
 Profit Factor       1.11         1.15
-Common Sense Ratio  1.06         1.16
-CPC Index           0.57         0.6
+Common Sense Ratio  1.06         1.17
+CPC Index           0.58         0.61
 Tail Ratio          0.95         1.01
-Outlier Win Ratio   3.71         6.72
-Outlier Loss Ratio  3.54         4.2
+Outlier Win Ratio   3.71         6.7
+Outlier Loss Ratio  3.53         4.19
 
-MTD                 0.95%        0.0%
-3M                  5.15%        -5.5%
-6M                  1.72%        -8.59%
-YTD                 1.47%        -8.81%
-1Y                  8.76%        -2.25%
-3Y (ann.)           10.34%       6.74%
-5Y (ann.)           9.02%        7.77%
-10Y (ann.)          7.44%        4.17%
-All-time (ann.)     5.56%        5.35%
+MTD                 2.01%        2.01%
+3M                  11.44%       4.22%
+6M                  8.08%        -6.58%
+YTD                 9.95%        -4.96%
+1Y                  14.77%       -0.8%
+3Y (ann.)           14.19%       7.8%
+5Y (ann.)           10.16%       8.3%
+10Y (ann.)          8.84%        5.25%
+All-time (ann.)     5.7%         5.41%
 
-Avg. Drawdown       -2.13%       -1.96%
+Avg. Drawdown       -2.11%       -1.96%
 Avg. Drawdown Days  32           32
-Recovery Factor     5.9          8.79
+Recovery Factor     6.05         8.91
 Ulcer Index         0.16         0.07
-Serenity Index      0.8          2.66
+Serenity Index      0.82         2.67
 
 
 --------------------------------------------------------------------------------
@@ -232,48 +232,48 @@ VIX_VOLATILITY vs BENCHMARK
                     Benchmark    Strategy
 ------------------  -----------  ----------
 Start Period        1990-01-02   1990-01-02
-End Period          2025-06-20   2025-06-20
+End Period          2025-08-25   2025-08-25
 Risk-Free Rate      0.0%         0.0%
-Time in Market      100.0%       39.0%
+Time in Market      100.0%       38.0%
 
-Cumulative Return   1,594.45%    347.24%
-CAGR﹪              5.66%        2.96%
+Cumulative Return   1,736.15%    358.19%
+CAGR﹪              5.79%        2.99%
 
-Sharpe              0.53         0.35
-Prob. Sharpe Ratio  99.92%       98.03%
-Sortino             0.75         0.49
-Sortino/√2          0.53         0.35
+Sharpe              0.54         0.35
+Prob. Sharpe Ratio  99.94%       98.15%
+Sortino             0.77         0.5
+Sortino/√2          0.54         0.35
 Omega               1.11         1.11
 
 Max Drawdown        -56.78%      -53.75%
 Longest DD Days     2620         5442
 
 Gain/Pain Ratio     0.11         0.11
-Gain/Pain (1M)      0.63         0.58
+Gain/Pain (1M)      0.64         0.59
 
 Payoff Ratio        0.98         1.0
 Profit Factor       1.11         1.11
-Common Sense Ratio  1.05         1.12
+Common Sense Ratio  1.06         1.13
 CPC Index           0.58         0.58
-Tail Ratio          0.95         1.01
-Outlier Win Ratio   4.12         11.01
-Outlier Loss Ratio  3.97         2.71
+Tail Ratio          0.95         1.02
+Outlier Win Ratio   4.13         11.07
+Outlier Loss Ratio  3.96         2.7
 
-MTD                 0.95%        0.69%
-3M                  5.15%        6.83%
-6M                  1.72%        6.43%
-YTD                 1.47%        5.28%
-1Y                  8.76%        16.05%
-3Y (ann.)           10.34%       5.3%
-5Y (ann.)           9.02%        6.29%
-10Y (ann.)          7.44%        4.77%
-All-time (ann.)     5.66%        2.96%
+MTD                 2.01%        1.47%
+3M                  11.44%       5.26%
+6M                  8.08%        7.86%
+YTD                 9.95%        7.86%
+1Y                  14.77%       16.97%
+3Y (ann.)           14.19%       7.21%
+5Y (ann.)           10.16%       6.56%
+10Y (ann.)          8.84%        5.23%
+All-time (ann.)     5.79%        2.99%
 
-Avg. Drawdown       -2.19%       -3.37%
-Avg. Drawdown Days  33           77
-Recovery Factor     6.01         3.61
+Avg. Drawdown       -2.17%       -3.37%
+Avg. Drawdown Days  32           77
+Recovery Factor     6.16         3.66
 Ulcer Index         0.16         0.12
-Serenity Index      0.82         0.7
+Serenity Index      0.84         0.71
 
 
 
@@ -282,9 +282,9 @@ Serenity Index      0.82         0.7
 ================================================================================
 Strategy                     Total Return       CAGR     Sharpe    Sortino       Max DD   Volatility
 ----------------------------------------------------------------------------------------------------
-SMA_Crossover                    1357.74%      7.83%       0.64       0.91       33.92%       13.01%
-VIX_Volatility                    347.24%      4.30%       0.35       0.49       53.75%       15.78%
-Buy & Hold                       1559.16%      8.22%       0.53       0.75       56.78%       18.11%
+SMA_Crossover                    1419.28%      7.91%       0.65       0.92       33.92%       12.99%
+VIX_Volatility                    358.19%      4.35%       0.35       0.50       53.75%       15.74%
+Buy & Hold                       1697.91%      8.42%       0.54       0.76       56.78%       18.08%
 
 ================================================================================
 5. DYNAMIC TRADING RULES

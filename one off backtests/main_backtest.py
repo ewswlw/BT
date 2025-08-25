@@ -18,6 +18,11 @@ import numpy as np
 import vectorbt as vbt
 import quantstats as qs
 from datetime import datetime
+import warnings
+
+# Suppress vectorbt warnings about missing benchmark returns
+warnings.filterwarnings('ignore', message='Metric.*requires benchmark_rets to be set')
+warnings.filterwarnings('ignore', message='Metric.*raised an exception')
 
 # Set vectorbt settings for annualization
 vbt.settings.returns['year_freq'] = '252 days'
@@ -472,6 +477,8 @@ def main():
     benchmark_pf = create_benchmark(price_series, CONFIG)
     results[benchmark_name] = benchmark_pf
     print(f"  - {benchmark_name} backtest complete. Total Return: {benchmark_pf.total_return() * 100:.2f}%")
+
+
 
     # Generate and save report
     print("\n--- Generating Comprehensive Report ---")
