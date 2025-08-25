@@ -3924,8 +3924,8 @@ files = [
 
 [package.dependencies]
 numpy = [
-    {version = ">=1.23.2", markers = "python_version >= \"3.11\""},
     {version = ">=1.21.0", markers = "python_version >= \"3.10\" and python_version < \"3.11\""},
+    {version = ">=1.23.2", markers = "python_version >= \"3.11\""},
 ]
 python-dateutil = ">=2.8.1"
 pytz = ">=2020.1"
@@ -6323,12 +6323,13 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "vectorbt"
-version = "0.26.2"
+version = "0.28.1"
 description = "Python library for backtesting and analyzing trading strategies at scale"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "vectorbt-0.26.2.tar.gz", hash = "sha256:b46e826ca506b495a77c9223542f0eb0adac3239ae61846f57664bebda91880a"},
+    {file = "vectorbt-0.28.1-py3-none-any.whl", hash = "sha256:a17978f61d3344c23876fde9f026f6586a6709e6a1b65b1ea739f81ae2f54a10"},
+    {file = "vectorbt-0.28.1.tar.gz", hash = "sha256:aceeb4767a1bd5be18329bc85779b2fc744b1edc4513ad19c4dbc3fc7d83d301"},
 ]
 
 [package.dependencies]
@@ -6339,10 +6340,10 @@ ipywidgets = ">=7.0.0"
 matplotlib = "*"
 mypy_extensions = "*"
 numba = [
-    {version = ">=0.57.0", markers = "python_version >= \"3.11\""},
     {version = ">=0.56.0,<0.57.0", markers = "python_version >= \"3.10\" and python_version < \"3.11\""},
+    {version = ">=0.57.0", markers = "python_version >= \"3.11\""},
 ]
-numpy = ">=1.16.5,<2.0.0"
+numpy = ">=1.16.5"
 pandas = "*"
 plotly = ">=4.12.0"
 pytz = "*"
@@ -6354,7 +6355,8 @@ tqdm = "*"
 
 [package.extras]
 cov = ["codecov", "pytest", "pytest-cov"]
-full = ["TA-Lib", "alpaca-trade-api (>=1.4.3)", "ccxt (>=4.0.14)", "pandas_ta", "python-binance", "python-telegram-bot (>=13.4,<20.0)", "quantstats (>=0.0.37)", "ray (>=1.4.1)", "ta", "yfinance (>=0.2.22)"]
+full = ["TA-Lib", "alpaca-py", "ccxt (>=4.0.14)", "pandas_ta", "python-binance", "python-telegram-bot (>=13.4,<20.0)", "quantstats (>=0.0.37)", "ray (>=1.4.1)", "ta", "yfinance (>=0.2.22)"]
+full-no-talib = ["alpaca-py", "ccxt (>=4.0.14)", "pandas_ta", "python-binance", "python-telegram-bot (>=13.4,<20.0)", "quantstats (>=0.0.37)", "ray (>=1.4.1)", "ta", "yfinance (>=0.2.22)"]
 
 [[package]]
 name = "wcwidth"
@@ -6851,4 +6853,4 @@ test = ["pytest"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "51d9030fd8cbdf0eb0b5d3b912c2407e37be19da6df58f7d34f32a3a75b520ed"
+content-hash = "f875fa237cf855fc8dcae9d2d7e48c6afb61a2082b4c9ef50891b5ddbf6c3b98"
