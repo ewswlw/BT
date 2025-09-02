@@ -1,0 +1,9 @@
+,lookback,op,column
+CAD_on_CAD,3,>,cad_ig_er_index
+CAD_on_US_HY,3,>,us_hy_er_index
+CAD_on_US_IG,5,>,us_ig_er_index
+CAD_on_TSX,5,>,tsx
+CAD_on_SPX_EPS,2,>,spx_1bf_eps
+CAD_on_TSX_EPS,4,>,tsx_1bf_eps
+CAD_on_CAD_OAS,3,<,cad_oas
+CAD_on_US_IG_OAS,4,<,us_ig_oas

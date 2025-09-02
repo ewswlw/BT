@@ -250,3 +250,160 @@ def safe_sharpe_calculation(returns, risk_free_rate=0):
         <kpi>Integration success: VectorBT-QuantStats workflows function seamlessly</kpi>
     </primary_kpis>
 </success_metrics>
+
+<critical_timing_issues>
+    <signal_execution_timing>
+        <issue_name>VectorBT Signal Timing Lag</issue_name>
+        <description>VectorBT executes trades at bar close, but manual calculations often assume same-bar execution</description>
+        
+        <problem_manifestation>
+            <symptom>VectorBT returns significantly lower than manual signal*return calculations</symptom>
+            <symptom>Perfect signal correlation but different portfolio performance</symptom>
+        </problem_manifestation>
+        
+        <root_cause>
+            Manual calculation: signal[t] * return[t] (same period)
+            VectorBT default: signal[t] executed at close, captures return[t+1] (next period)
+        </root_cause>
+        
+        <mandatory_fix>
+            <fix_method_1>
+                <name>Signal Forward Shift (Recommended)</name>
+                <code>
+# CRITICAL: Always shift signals forward for timing alignment
+you must always ask me which applies and how to handle this
+entries = signal & ~signal.shift(1).fillna(False)
+exits = ~signal & signal.shift(1).fillna(False)
+
+# MANDATORY TIMING FIX
+adj_entries = entries.shift(-1).fillna(False)
+adj_exits = exits.shift(-1).fillna(False)
+
+pf = vbt.Portfolio.from_signals(
+    close=price_data,
+    entries=adj_entries,  # Use adjusted signals
+    exits=adj_exits,      # Use adjusted signals
+    freq='D'  # or appropriate frequency
+)
+                </code>
+            </fix_method_1>
+            
+            <fix_method_2>
+                <name>Price Data Backward Shift (Alternative)</name>
+                <code>
+# Alternative: Shift price data backward
+shifted_prices = price_data.shift(1)
+
+pf = vbt.Portfolio.from_signals(
+    close=shifted_prices,  # Use shifted prices
+    entries=entries,
+    exits=exits,
+    freq='D'
+)
+                </code>
+            </fix_method_2>
+        </mandatory_fix>
+        
+        <validation_requirement>
+            <validation_code>
+# ALWAYS validate timing alignment
+manual_returns = (signal.astype(int) * returns).dropna()
+vbt_returns = pf.returns().dropna()
+
+manual_total = ((1 + manual_returns).cumprod().iloc[-1] - 1) * 100
+vbt_total = pf.total_return() * 100
+
+assert abs(manual_total - vbt_total) < 0.1, f"Timing mismatch: Manual {manual_total:.2f}% vs VBT {vbt_total:.2f}%"
+            </validation_code>
+        </validation_requirement>
+        
+        <prevention_checklist>
+            <check>✓ Always apply signal timing fix when comparing to manual calculations</check>
+            <check>✓ Test with simple signal to verify timing alignment</check>
+            <check>✓ Document which timing approach is used in strategy description</check>
+            <check>✓ Include timing validation in all VectorBT implementations</check>
+        </prevention_checklist>
+    </signal_execution_timing>
+</critical_timing_issues>
+
+<mandatory_validation_protocols>
+    <cross_calculation_validation>
+        <requirement>Every VectorBT implementation MUST include manual calculation comparison</requirement>
+        
+        <validation_template>
+            <validation_code>
+def validate_vectorbt_vs_manual(vbt_portfolio, signal, returns, tolerance=0.1):
+    """
+    Mandatory validation function for VectorBT vs manual calculation alignment.
+    
+    Args:
+        vbt_portfolio: VectorBT Portfolio object
+        signal: Boolean/integer signal series
+        returns: Return series
+        tolerance: Maximum allowed percentage point difference
+    
+    Returns:
+        bool: True if aligned within tolerance
+    
+    Raises:
+        AssertionError: If timing mismatch exceeds tolerance
+    """
+    # Manual calculation
+    manual_strategy_returns = (signal.astype(int) * returns).dropna()
+    manual_total_return = ((1 + manual_strategy_returns).cumprod().iloc[-1] - 1) * 100
+    
+    # VectorBT calculation
+    vbt_total_return = vbt_portfolio.total_return() * 100
+    
+    # Calculate difference
+    difference = abs(manual_total_return - vbt_total_return)
+    
+    # Validation
+    if difference > tolerance:
+        error_msg = (f"TIMING MISMATCH DETECTED!\n"
+                    f"Manual calculation: {manual_total_return:.2f}%\n"
+                    f"VectorBT calculation: {vbt_total_return:.2f}%\n"
+                    f"Difference: {difference:.2f} percentage points\n"
+                    f"Apply signal timing fix: entries.shift(-1), exits.shift(-1)")
+        raise AssertionError(error_msg)
+    
+    return True
+
+# MANDATORY: Include this validation in every VectorBT strategy
+validate_vectorbt_vs_manual(pf, composite_signal, returns)
+            </validation_code>
+        </validation_template>
+        
+        <integration_requirement>
+            <rule>Include validation function in every VectorBT strategy implementation</rule>
+            <rule>Run validation before generating final results</rule>
+            <rule>Document validation results in strategy output</rule>
+            <rule>Fail fast if validation detects timing issues</rule>
+        </integration_requirement>
+    </cross_calculation_validation>
+    
+    <api_parameter_validation>
+        <common_parameter_errors>
+            <error>
+                <mistake>Using 'price' instead of 'close' parameter</mistake>
+                <fix>Always use 'close' parameter in Portfolio.from_signals()</fix>
+            </error>
+            <error>
+                <mistake>Using 'W-FRI' frequency notation</mistake>
+                <fix>Use 'W' for weekly frequency in VectorBT</fix>
+            </error>
+            <error>
+                <mistake>Accessing 'Cumulative Return' from stats()</mistake>
+                <fix>Use 'Total Return [%]' or total_return() method</fix>
+            </error>
+        </common_parameter_errors>
+        
+        <parameter_checklist>
+            <check>✓ close= parameter (not price=)</check>
+            <check>✓ freq='D', 'W', 'M' (not 'W-FRI')</check>
+            <check>✓ total_return() method (not stats()['Cumulative Return'])</check>
+            <check>✓ entries/exits as boolean series</check>
+            <check>✓ Signal timing adjustment applied</check>
+        </parameter_checklist>
+    </api_parameter_validation>
+</mandatory_validation_protocols>
