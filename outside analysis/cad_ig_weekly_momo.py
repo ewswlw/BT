@@ -186,18 +186,23 @@ def comprehensive_backtest_analysis(file_path='with_er_daily.csv'):
     # Save stats for composite & B&H
     comp_stats = pf.stats()
     bh_stats = pf_bh.stats()
-    comp_stats.to_csv(outputs_dir / f"{STRATEGY_NAME}_composite_stats.csv")
-    bh_stats.to_csv(outputs_dir / f"{STRATEGY_NAME}_buy_and_hold_stats.csv")
+    
+    # Convert to proper DataFrame format with Metric and Value columns
+    comp_df = pd.DataFrame({'Metric': comp_stats.index, 'Value': comp_stats.values})
+    bh_df = pd.DataFrame({'Metric': bh_stats.index, 'Value': bh_stats.values})
+    
+    comp_df.to_csv(outputs_dir / f"{STRATEGY_NAME}_composite_stats.csv", index=False)
+    bh_df.to_csv(outputs_dir / f"{STRATEGY_NAME}_buy_and_hold_stats.csv", index=False)
 
     # Save signals & equity/returns
     composite_bool.astype(int).rename('signal').to_csv(outputs_dir / f"{STRATEGY_NAME}_signals.csv")
     strat_returns = pf.returns().dropna()
     bh_returns = pf_bh.returns().dropna()
-    strat_returns.to_csv(outputs_dir / f"{STRATEGY_NAME}_returns.csv")
-    bh_returns.to_csv(outputs_dir / f"{STRATEGY_NAME}_benchmark_returns.csv")
+    strat_returns.rename('strategy_returns').to_csv(outputs_dir / f"{STRATEGY_NAME}_returns.csv")
+    bh_returns.rename('benchmark_returns').to_csv(outputs_dir / f"{STRATEGY_NAME}_benchmark_returns.csv")
     # Equity curve from returns
     eq = (1.0 + strat_returns).cumprod()
-    eq.to_csv(outputs_dir / f"{STRATEGY_NAME}_equity_curve.csv")
+    eq.rename('equity_curve').to_csv(outputs_dir / f"{STRATEGY_NAME}_equity_curve.csv")
 
     # === STATISTICAL VALIDATION ===
     # Align for tests
