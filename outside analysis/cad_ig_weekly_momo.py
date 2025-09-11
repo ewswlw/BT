@@ -101,6 +101,10 @@ def comprehensive_backtest_analysis(file_path='with_er_daily.csv'):
         if col not in weekly.columns:
             continue
         best_cum, best_lb = -np.inf, None
+
+        ##NOTE: look ahead bias here
+        ## optimizing lookback periods using the entire dataset, then applying those "optimal" parameters to generate signals for the same period. 
+        # This creates severe look-ahead bias.
         for lb in range(2, 21):
             ma = weekly[col].rolling(lb, min_periods=lb).mean()
             cond = (weekly[col] > ma) if op == '>' else (weekly[col] < ma)
@@ -112,6 +116,9 @@ def comprehensive_backtest_analysis(file_path='with_er_daily.csv'):
             exits = ~sig & sig.shift(1).fillna(False)
             
             # TIMING FIX: Shift signals forward to match manual calculation timing
+
+            ##NOTE: lookahead bias
+            ## shift(-1) moves signals forward in time, meaning you're acting on future information.
             adj_entries = entries.shift(-1).fillna(False)
             adj_exits = exits.shift(-1).fillna(False)
 
@@ -154,6 +161,10 @@ def comprehensive_backtest_analysis(file_path='with_er_daily.csv'):
         if strat not in optimal_lookbacks:
             continue
         lb, op, col = optimal_lookbacks[strat]
+
+        ##NOTE: LOOK AHEAD BIAS HERE
+        ## moving average at time t includes the price at time t. 
+        # When you compare weekly[col] to ma, you're comparing the current price to a moving average that includes that same current price
         ma = weekly[col].rolling(lb, min_periods=lb).mean()
         cond = (weekly[col] > ma) if op == '>' else (weekly[col] < ma)
         signals[strat] = cond.shift(1).fillna(False)

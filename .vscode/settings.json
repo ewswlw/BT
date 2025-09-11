@@ -13,5 +13,6 @@
             "disabled": false,
             "autoApprove": []
         }
-    }
+    },
+    "workbench.activityBar.orientation": "vertical"
 } 
