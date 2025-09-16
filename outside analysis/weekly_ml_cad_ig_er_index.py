@@ -842,13 +842,33 @@ def comprehensive_backtest_analysis(file_path='../data_pipelines/data_processed/
     print("\n🔍 MANUAL BACKTEST VERIFICATION")
     print("="*80)
     
-    # Manual calculation
-    manual_returns = (final_sig * w_df["fwd_ret_1w"]).dropna()
-    manual_equity = (1 + manual_returns).cumprod()
+    # Manual calculation - use aligned data for fair comparison
+    if first_trade_date is not None:
+        # Use aligned data (from first trade date)
+        first_trade_idx = w_df.index.get_indexer([first_trade_date], method='nearest')[0]
+        if first_trade_idx >= 0:
+            start_date = w_df.index[first_trade_idx]
+            aligned_w_df = w_df.loc[start_date:]
+            aligned_final_sig = final_sig.loc[start_date:]
+            manual_returns = (aligned_final_sig * aligned_w_df["fwd_ret_1w"]).dropna()
+            manual_equity = (1 + manual_returns).cumprod()
+            years = (aligned_w_df.index[-1] - aligned_w_df.index[0]).days / 365.25
+            print(f"• Using aligned data from: {start_date.strftime('%Y-%m-%d')} to {aligned_w_df.index[-1].strftime('%Y-%m-%d')}")
+        else:
+            # Fallback to full data
+            manual_returns = (final_sig * w_df["fwd_ret_1w"]).dropna()
+            manual_equity = (1 + manual_returns).cumprod()
+            years = (w_df.index[-1] - w_df.index[0]).days / 365.25
+            print("• Using full data range (2003-2025)")
+    else:
+        # Fallback to full data
+        manual_returns = (final_sig * w_df["fwd_ret_1w"]).dropna()
+        manual_equity = (1 + manual_returns).cumprod()
+        years = (w_df.index[-1] - w_df.index[0]).days / 365.25
+        print("• Using full data range (2003-2025)")
     
     # Calculate metrics
     manual_total_return = (manual_equity.iloc[-1] - 1) * 100
-    years = (w_df.index[-1] - w_df.index[0]).days / 365.25
     manual_annualized_return = ((manual_equity.iloc[-1] / manual_equity.iloc[0]) ** (1/years) - 1) * 100
     
     # Max drawdown
