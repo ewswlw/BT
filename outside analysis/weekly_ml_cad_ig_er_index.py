@@ -539,6 +539,55 @@ def comprehensive_backtest_analysis(file_path='../data_pipelines/data_processed/
     print("="*80)
     print(strategy_stats)
     
+    # Manual backtest calculation for comparison
+    print("\n🔍 MANUAL BACKTEST VERIFICATION")
+    print("="*80)
+    
+    # Manual calculation
+    manual_returns = (final_sig * w_df["fwd_ret_1w"]).dropna()
+    manual_equity = (1 + manual_returns).cumprod()
+    
+    # Calculate metrics
+    manual_total_return = (manual_equity.iloc[-1] - 1) * 100
+    years = (w_df.index[-1] - w_df.index[0]).days / 365.25
+    manual_annualized_return = ((manual_equity.iloc[-1] / manual_equity.iloc[0]) ** (1/years) - 1) * 100
+    
+    # Max drawdown
+    manual_peak = manual_equity.cummax()
+    manual_drawdown = ((manual_equity - manual_peak) / manual_peak * 100)
+    manual_max_drawdown = manual_drawdown.min()
+    
+    # Time in market
+    manual_time_in_market = final_sig.mean() * 100
+    
+    # Number of trades
+    manual_trades = (final_sig.diff() != 0).sum() // 2  # Divide by 2 for entry/exit pairs
+    
+    print(f"• Manual Total Return: {manual_total_return:.2f}%")
+    print(f"• Manual Annualized Return: {manual_annualized_return:.2f}%")
+    print(f"• Manual Max Drawdown: {manual_max_drawdown:.2f}%")
+    print(f"• Manual Time in Market: {manual_time_in_market:.1f}%")
+    print(f"• Manual Number of Trades: {manual_trades}")
+    
+    # Comparison with VectorBT
+    print(f"\n📈 VECTORBT vs MANUAL COMPARISON")
+    print("-" * 50)
+    print(f"• Total Return: VBT {strategy_stats['Total Return [%]']:.2f}% vs Manual {manual_total_return:.2f}%")
+    print(f"• Max Drawdown: VBT {strategy_stats['Max Drawdown [%]']:.2f}% vs Manual {manual_max_drawdown:.2f}%")
+    print(f"• Time in Market: VBT {final_sig.mean()*100:.1f}% vs Manual {manual_time_in_market:.1f}%")
+    print(f"• Number of Trades: VBT {strategy_stats['Total Trades']} vs Manual {manual_trades}")
+    
+    # Calculate differences
+    tr_diff = abs(strategy_stats['Total Return [%]'] - manual_total_return)
+    dd_diff = abs(strategy_stats['Max Drawdown [%]'] - manual_max_drawdown)
+    
+    print(f"\n✅ VALIDATION STATUS")
+    print("-" * 50)
+    if tr_diff < 0.1 and dd_diff < 0.1:
+        print("✅ Manual and VectorBT calculations match within 0.1%")
+    else:
+        print(f"⚠️  Differences detected: TR diff {tr_diff:.2f}%, DD diff {dd_diff:.2f}%")
+    
     print(f"\nOutput files saved to: {outputs_dir}/")
     print(f"- {STRATEGY_NAME}_composite_stats.csv")
     print(f"- {STRATEGY_NAME}_buy_and_hold_stats.csv") 
