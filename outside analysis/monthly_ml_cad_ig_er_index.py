@@ -626,9 +626,295 @@ def comprehensive_backtest_analysis(file_path='../data_pipelines/data_processed/
     else:
         print("⚠️  No trades found in the strategy")
     
+    # PERFORMANCE DRILLDOWN SECTION
+    print("\n" + "="*80)
+    print("📊 PERFORMANCE DRILLDOWN")
+    print("="*80)
+    
+    # 1. Performance by Timeframe
+    print("\n📈 PERFORMANCE BY TIMEFRAME")
+    print("-" * 60)
+    print(f"{'Timeframe':<15} {'Strategy %':<12} {'Buy & Hold %':<12}")
+    print("-" * 60)
+    
+    # Calculate timeframe returns
+    strategy_equity = (1.0 + strategy_returns).cumprod()
+    bh_equity = (1.0 + bh_returns).cumprod()
+    
+    # Align data to start from first trade date for fair comparison
+    if first_trade_date is not None:
+        # Find the first trade date in the equity data
+        first_trade_idx = strategy_equity.index.get_indexer([first_trade_date], method='nearest')[0]
+        if first_trade_idx >= 0:
+            start_date = strategy_equity.index[first_trade_idx]
+            strategy_equity = strategy_equity.loc[start_date:]
+            bh_equity = bh_equity.loc[start_date:]
+            print(f"• Aligned comparisons start from: {start_date.strftime('%Y-%m-%d')}")
+    
+    # Get current date and calculate various timeframes
+    end_date = strategy_equity.index[-1]
+    
+    timeframes = {
+        'MTD': 1,  # Month to date
+        '3M': 3,   # 3 months
+        '6M': 6,   # 6 months
+        'YTD': 12, # Year to date
+        '1Y': 12,  # 1 year
+        '3Y': 36,  # 3 years
+        '5Y': 60,  # 5 years
+        '10Y': 120, # 10 years
+        'All-time': 999 # All time
+    }
+    
+    for tf_name, tf_months in timeframes.items():
+        if tf_name == 'MTD':
+            # Month to date
+            start_date = end_date.replace(day=1)
+        elif tf_name == 'YTD':
+            # Year to date
+            start_date = end_date.replace(month=1, day=1)
+        elif tf_name == 'All-time':
+            # All time
+            start_date = strategy_equity.index[0]
+        else:
+            # Other timeframes
+            start_date = end_date - pd.DateOffset(months=tf_months)
+        
+        # Get data for the timeframe
+        tf_strategy = strategy_equity.loc[start_date:end_date]
+        tf_bh = bh_equity.loc[start_date:end_date]
+        
+        if len(tf_strategy) > 1 and len(tf_bh) > 1:
+            strategy_ret = ((tf_strategy.iloc[-1] / tf_strategy.iloc[0]) - 1) * 100
+            bh_ret = ((tf_bh.iloc[-1] / tf_bh.iloc[0]) - 1) * 100
+            
+            # Annualize for longer periods
+            if tf_name in ['3Y', '5Y', '10Y', 'All-time']:
+                years = (end_date - start_date).days / 365.25
+                if years > 0:
+                    strategy_ret = ((tf_strategy.iloc[-1] / tf_strategy.iloc[0]) ** (1/years) - 1) * 100
+                    bh_ret = ((tf_bh.iloc[-1] / tf_bh.iloc[0]) ** (1/years) - 1) * 100
+                    tf_name += ' (ann.)'
+            
+            print(f"{tf_name:<15} {strategy_ret:>10.2f}% {bh_ret:>10.2f}%")
+        else:
+            print(f"{tf_name:<15} {'N/A':>10} {'N/A':>10}")
+    
+    # 2. EOY Returns vs Benchmark
+    print(f"\n📅 EOY RETURNS VS BENCHMARK")
+    print(f"Note: Strategy has {WARMUP_MONTHS} month warmup period (~{WARMUP_MONTHS/12:.1f} years)")
+    print("-" * 70)
+    print(f"{'Year':<6} {'Buy & Hold %':<12} {'Strategy %':<12} {'Multiplier':<10} {'Won':<6}")
+    print("-" * 70)
+    
+    # Calculate yearly returns (using aligned data)
+    strategy_yearly = strategy_equity.resample('Y').last().pct_change() * 100
+    bh_yearly = bh_equity.resample('Y').last().pct_change() * 100
+    
+    # Align the data
+    common_years = strategy_yearly.index.intersection(bh_yearly.index)
+    
+    for year in common_years:
+        if pd.notna(strategy_yearly[year]) and pd.notna(bh_yearly[year]):
+            strategy_ret = strategy_yearly[year]
+            bh_ret = bh_yearly[year]
+            
+            # Calculate multiplier (use absolute value for negative returns)
+            if abs(bh_ret) < 0.01:  # Very close to zero
+                multiplier = "N/A"
+            else:
+                # Use absolute value of buy & hold return for multiplier
+                multiplier = f"{strategy_ret / abs(bh_ret):.2f}"
+            
+            # Determine if won (strategy > buy & hold, or strategy = 0% and buy & hold < 0%)
+            if strategy_ret > bh_ret:
+                won = "+"
+            elif strategy_ret == 0.0 and bh_ret < 0.0:
+                won = "+"  # Strategy avoided losses during warmup period
+            else:
+                won = "-"
+            
+            print(f"{year.year:<6} {bh_ret:>10.2f}% {strategy_ret:>10.2f}% {multiplier:>10} {won:>6}")
+    
+    # 3. Worst 10 Drawdowns - Strategy
+    print(f"\n📉 WORST 10 DRAWDOWNS - STRATEGY")
+    print("-" * 60)
+    print(f"{'Started':<12} {'Recovered':<12} {'Drawdown %':<12} {'Days':<6}")
+    print("-" * 60)
+    
+    # Get strategy drawdowns
+    try:
+        strategy_drawdowns = strategy_pf.drawdowns.records_readable
+        if len(strategy_drawdowns) > 0:
+            # Calculate drawdown percentage from peak and valley values
+            strategy_drawdowns['Drawdown_Pct'] = ((strategy_drawdowns['Valley Value'] - strategy_drawdowns['Peak Value']) / strategy_drawdowns['Peak Value']) * 100
+            
+            # Sort by drawdown (most negative first) and take top 10
+            strategy_drawdowns_sorted = strategy_drawdowns.sort_values('Drawdown_Pct').head(10)
+            
+            for _, dd in strategy_drawdowns_sorted.iterrows():
+                started = pd.to_datetime(dd['Start Timestamp']).strftime('%m/%d/%Y')
+                recovered = pd.to_datetime(dd['End Timestamp']).strftime('%m/%d/%Y')
+                drawdown_pct = dd['Drawdown_Pct']
+                days = (pd.to_datetime(dd['End Timestamp']) - pd.to_datetime(dd['Start Timestamp'])).days
+                
+                print(f"{started:<12} {recovered:<12} {drawdown_pct:>10.2f}% {days:>6}")
+        else:
+            print("No drawdowns found")
+    except Exception as e:
+        print(f"Error getting strategy drawdowns: {e}")
+        print("No drawdowns found")
+    
+    # 4. Worst 10 Drawdowns - Buy & Hold
+    print(f"\n📉 WORST 10 DRAWDOWNS - BUY & HOLD")
+    print("-" * 60)
+    print(f"{'Started':<12} {'Recovered':<12} {'Drawdown %':<12} {'Days':<6}")
+    print("-" * 60)
+    
+    # Get buy & hold drawdowns
+    try:
+        bh_drawdowns = bh_pf.drawdowns.records_readable
+        if len(bh_drawdowns) > 0:
+            # Calculate drawdown percentage from peak and valley values
+            bh_drawdowns['Drawdown_Pct'] = ((bh_drawdowns['Valley Value'] - bh_drawdowns['Peak Value']) / bh_drawdowns['Peak Value']) * 100
+            
+            # Sort by drawdown (most negative first) and take top 10
+            bh_drawdowns_sorted = bh_drawdowns.sort_values('Drawdown_Pct').head(10)
+            
+            for _, dd in bh_drawdowns_sorted.iterrows():
+                started = pd.to_datetime(dd['Start Timestamp']).strftime('%m/%d/%Y')
+                recovered = pd.to_datetime(dd['End Timestamp']).strftime('%m/%d/%Y')
+                drawdown_pct = dd['Drawdown_Pct']
+                days = (pd.to_datetime(dd['End Timestamp']) - pd.to_datetime(dd['Start Timestamp'])).days
+                
+                print(f"{started:<12} {recovered:<12} {drawdown_pct:>10.2f}% {days:>6}")
+        else:
+            print("No drawdowns found")
+    except Exception as e:
+        print(f"Error getting buy & hold drawdowns: {e}")
+        print("No drawdowns found")
+    
     print("\n" + "="*80)
     print("✅ MONTHLY ML STRATEGY ANALYSIS COMPLETE - READY FOR TRADING DECISIONS")
     print("="*80)
+    
+    # VectorBT detailed stats - Full Range vs Aligned
+    print("\n📊 VECTORBT DETAILED STATISTICS COMPARISON")
+    print("="*80)
+    
+    # Show full range statistics first
+    print("🔍 FULL RANGE STATISTICS (2003-2025)")
+    print("-" * 60)
+    print("STRATEGY (FULL RANGE):")
+    print(strategy_stats)
+    print()
+    print("BUY & HOLD (FULL RANGE):")
+    print(bh_stats)
+    
+    # Create aligned portfolios for fair comparison
+    if first_trade_date is not None:
+        # Find the first trade date in the data
+        first_trade_idx = monthly_features.index.get_indexer([first_trade_date], method='nearest')[0]
+        if first_trade_idx >= 0:
+            start_date = monthly_features.index[first_trade_idx]
+            
+            # Align data to first trade date
+            aligned_monthly_features = monthly_features.loc[start_date:]
+            aligned_final_sig = final_sig.loc[start_date:]
+            
+            # Create aligned portfolios
+            aligned_strategy_pf = create_vectorbt_portfolio(aligned_monthly_features["cad_ig_er_index"], aligned_final_sig, "OptimizedMLv2")
+            aligned_bh_signals = pd.Series(1, index=aligned_monthly_features.index, dtype=int)
+            aligned_bh_pf = create_vectorbt_portfolio(aligned_monthly_features["cad_ig_er_index"], aligned_bh_signals, "Buy & Hold")
+            
+            # Get aligned statistics
+            aligned_strategy_stats = aligned_strategy_pf.stats()
+            aligned_bh_stats = aligned_bh_pf.stats()
+            
+            print("\n" + "="*80)
+            print("🎯 ALIGNED STATISTICS (2010-2025 - FAIR COMPARISON)")
+            print("-" * 60)
+            print(f"Aligned Period: {start_date.strftime('%Y-%m-%d')} to {aligned_monthly_features.index[-1].strftime('%Y-%m-%d')}")
+            print(f"Aligned Duration: {(aligned_monthly_features.index[-1] - start_date).days} days")
+            print()
+            print("STRATEGY (ALIGNED):")
+            print(aligned_strategy_stats)
+            print()
+            print("BUY & HOLD (ALIGNED):")
+            print(aligned_bh_stats)
+        else:
+            print("\nCould not align data - showing full range only")
+    else:
+        print("\nNo first trade date - showing full range only")
+    
+    # Manual backtest calculation for comparison
+    print("\n🔍 MANUAL BACKTEST VERIFICATION")
+    print("="*80)
+    
+    # Manual calculation - use aligned data for fair comparison
+    if first_trade_date is not None:
+        # Use aligned data (from first trade date)
+        first_trade_idx = monthly_features.index.get_indexer([first_trade_date], method='nearest')[0]
+        if first_trade_idx >= 0:
+            start_date = monthly_features.index[first_trade_idx]
+            aligned_monthly_features = monthly_features.loc[start_date:]
+            aligned_final_sig = final_sig.loc[start_date:]
+            manual_returns = (aligned_final_sig * aligned_monthly_features["monthly_forward_return"]).dropna()
+            manual_equity = (1 + manual_returns).cumprod()
+            years = (aligned_monthly_features.index[-1] - aligned_monthly_features.index[0]).days / 365.25
+            print(f"• Using aligned data from: {start_date.strftime('%Y-%m-%d')} to {aligned_monthly_features.index[-1].strftime('%Y-%m-%d')}")
+        else:
+            # Fallback to full data
+            manual_returns = (final_sig * monthly_features["monthly_forward_return"]).dropna()
+            manual_equity = (1 + manual_returns).cumprod()
+            years = (monthly_features.index[-1] - monthly_features.index[0]).days / 365.25
+            print("• Using full data range (2003-2025)")
+    else:
+        # Fallback to full data
+        manual_returns = (final_sig * monthly_features["monthly_forward_return"]).dropna()
+        manual_equity = (1 + manual_returns).cumprod()
+        years = (monthly_features.index[-1] - monthly_features.index[0]).days / 365.25
+        print("• Using full data range (2003-2025)")
+    
+    # Calculate metrics
+    manual_total_return = (manual_equity.iloc[-1] - 1) * 100
+    manual_annualized_return = ((manual_equity.iloc[-1] / manual_equity.iloc[0]) ** (1/years) - 1) * 100
+    
+    # Max drawdown
+    manual_peak = manual_equity.cummax()
+    manual_drawdown = ((manual_equity - manual_peak) / manual_peak * 100)
+    manual_max_drawdown = manual_drawdown.min()
+    
+    # Time in market
+    manual_time_in_market = final_sig.mean() * 100
+    
+    # Number of trades
+    manual_trades = (final_sig.diff() != 0).sum() // 2  # Divide by 2 for entry/exit pairs
+    
+    print(f"• Manual Total Return: {manual_total_return:.2f}%")
+    print(f"• Manual Annualized Return: {manual_annualized_return:.2f}%")
+    print(f"• Manual Max Drawdown: {manual_max_drawdown:.2f}%")
+    print(f"• Manual Time in Market: {manual_time_in_market:.1f}%")
+    print(f"• Manual Number of Trades: {manual_trades}")
+    
+    # Comparison with VectorBT
+    print(f"\n📈 VECTORBT vs MANUAL COMPARISON")
+    print("-" * 50)
+    print(f"• Total Return: VBT {strategy_stats['Total Return [%]']:.2f}% vs Manual {manual_total_return:.2f}%")
+    print(f"• Max Drawdown: VBT {strategy_stats['Max Drawdown [%]']:.2f}% vs Manual {manual_max_drawdown:.2f}%")
+    print(f"• Time in Market: VBT {final_sig.mean()*100:.1f}% vs Manual {manual_time_in_market:.1f}%")
+    print(f"• Number of Trades: VBT {strategy_stats['Total Trades']} vs Manual {manual_trades}")
+    
+    # Calculate differences
+    tr_diff = abs(strategy_stats['Total Return [%]'] - manual_total_return)
+    dd_diff = abs(strategy_stats['Max Drawdown [%]'] - manual_max_drawdown)
+    
+    print(f"\n✅ VALIDATION STATUS")
+    print("-" * 50)
+    if tr_diff < 0.1 and dd_diff < 0.1:
+        print("✅ Manual and VectorBT calculations match within 0.1%")
+    else:
+        print(f"⚠️  Differences detected: TR diff {tr_diff:.2f}%, DD diff {dd_diff:.2f}%")
     
     print(f"\nOutput files saved to: {outputs_dir}/")
     print(f"- {STRATEGY_NAME}_composite_stats.csv")
