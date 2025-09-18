@@ -1,0 +1,29 @@
+Metric,Value
+Start,2007-10-31 00:00:00
+End,2025-07-31 00:00:00
+Period,6420 days 00:00:00
+Start Value,100.0
+End Value,209.617320087848
+Total Return [%],109.61732008784797
+Benchmark Return [%],32.50854446179192
+Max Gross Exposure [%],100.0
+Total Fees Paid,0.0
+Max Drawdown [%],1.1473871471888764e-14
+Max Drawdown Duration,30 days 00:00:00
+Total Trades,39
+Total Closed Trades,39
+Total Open Trades,0
+Open Trade PnL,0.0
+Win Rate [%],100.0
+Best Trade [%],17.482425260679705
+Worst Trade [%],0.036355406755688525
+Avg Winning Trade [%],1.956066367637106
+Avg Losing Trade [%],
+Avg Winning Trade Duration,109 days 05:32:18.461538462
+Avg Losing Trade Duration,
+Profit Factor,inf
+Expectancy,2.810700515073025
+Sharpe Ratio,2.3846810524996442
+Calmar Ratio,193546382461829.0
+Omega Ratio,6485282439567152.0
+Sortino Ratio,1546350050702235.0
