@@ -58,10 +58,14 @@ def load_config(config_path: str) -> dict:
 
 def calculate_comprehensive_stats(result, benchmark_data, strategy_name):
     """Calculate comprehensive statistics for a strategy."""
+    # Use benchmark-aligned dates for reporting (ensuring all strategies report same period)
+    benchmark_start = benchmark_data.index[0].strftime('%Y-%m-%d')
+    benchmark_end = benchmark_data.index[-1].strftime('%Y-%m-%d')
+    
     stats = {
         'strategy_name': strategy_name,
-        'start_period': result.returns.index[0].strftime('%Y-%m-%d'),
-        'end_period': result.returns.index[-1].strftime('%Y-%m-%d'),
+        'start_period': benchmark_start,
+        'end_period': benchmark_end,
         'total_periods': len(result.returns),
         'time_in_market': result.time_in_market,
         'trades_count': result.trades_count
@@ -80,10 +84,11 @@ def calculate_comprehensive_stats(result, benchmark_data, strategy_name):
     stats['total_return'] = (result.equity_curve.iloc[-1] / result.equity_curve.iloc[0]) - 1
     stats['benchmark_total_return'] = (benchmark_data.iloc[-1] / benchmark_data.iloc[0]) - 1
     
-    # Annualized metrics (weekly data)
-    annual_factor = 52
-    stats['cagr'] = (1 + stats['total_return']) ** (annual_factor / len(strategy_returns)) - 1
-    stats['benchmark_cagr'] = (1 + stats['benchmark_total_return']) ** (annual_factor / len(benchmark_returns)) - 1
+    # Annualized metrics (daily data)
+    annual_factor = 252  # Trading days per year for daily data
+    # Use the full length of returns for CAGR calculation, not the aligned subset
+    stats['cagr'] = (1 + stats['total_return']) ** (annual_factor / len(result.returns)) - 1
+    stats['benchmark_cagr'] = (1 + stats['benchmark_total_return']) ** (annual_factor / len(benchmark_data)) - 1
     
     # Volatility
     stats['volatility'] = strategy_returns.std() * np.sqrt(annual_factor)
@@ -146,6 +151,14 @@ def calculate_comprehensive_stats(result, benchmark_data, strategy_name):
         try:
             vectorbt_stats = result.portfolio.stats().to_dict()
             vectorbt_returns_stats = result.portfolio.returns().vbt.returns.stats().to_dict()
+            
+            # Fix VectorBT's incorrect annualized calculations
+            # VectorBT seems to use wrong annualization factor, so we override with correct values
+            if 'Annualized Return [%]' in vectorbt_returns_stats:
+                vectorbt_returns_stats['Annualized Return [%]'] = stats['cagr'] * 100  # Convert to percentage
+            if 'Annualized Volatility [%]' in vectorbt_returns_stats:
+                vectorbt_returns_stats['Annualized Volatility [%]'] = stats['volatility'] * 100  # Convert to percentage
+                
         except Exception as e:
             print(f"Warning: Could not calculate VectorBT stats: {e}")
     
@@ -360,6 +373,51 @@ Note: Detailed trading rules not available for this strategy type.
 Please check the strategy implementation for specific logic."""
 
 
+def extract_last_3_trades(result, strategy_name):
+    """Extract and format the last 3 trades from a strategy result."""
+    try:
+        if not (hasattr(result, 'portfolio') and result.portfolio is not None and result.portfolio.trades.count() > 0):
+            return "No trades were executed for this strategy."
+        
+        # Get all trades
+        blotter = result.portfolio.trades.records_readable.copy()
+        
+        if len(blotter) == 0:
+            return "No trades were executed for this strategy."
+        
+        # Get last 3 trades (or all if less than 3)
+        last_trades = blotter.tail(3)
+        
+        # Manual Calculations & Formatting (same as in generate_trade_blotter)
+        last_trades['Entry Timestamp'] = pd.to_datetime(last_trades['Entry Timestamp'])
+        last_trades['Exit Timestamp'] = pd.to_datetime(last_trades['Exit Timestamp'])
+        last_timestamp = result.returns.index[-1]
+        last_trades['Days in Trade'] = (last_trades['Exit Timestamp'].fillna(last_timestamp) - last_trades['Entry Timestamp']).dt.days
+        
+        # Formatting
+        last_trades['Return'] = last_trades['Return'].astype(float).map('{:.2%}'.format)
+        last_trades['PnL'] = last_trades['PnL'].astype(float).map('{:,.2f}'.format)
+        last_trades['Avg Entry Price'] = last_trades['Avg Entry Price'].astype(float).map('{:,.4f}'.format)
+        last_trades['Avg Exit Price'] = last_trades['Avg Exit Price'].astype(float).map('{:,.4f}'.format)
+        last_trades['Entry Fees'] = last_trades['Entry Fees'].astype(float).map('{:,.2f}'.format)
+        last_trades['Exit Fees'] = last_trades['Exit Fees'].astype(float).map('{:,.2f}'.format)
+        last_trades['Size'] = last_trades['Size'].astype(float).map('{:,.4f}'.format)
+        
+        # Reorder and select columns
+        last_trades.rename(columns={'Column': 'Asset/Params'}, inplace=True)
+        output_columns = [
+            'Trade Id', 'Asset/Params', 'Direction', 'Status', 'Size',
+            'Entry Timestamp', 'Avg Entry Price', 'Exit Timestamp', 'Avg Exit Price',
+            'Days in Trade', 'PnL', 'Return', 'Entry Fees', 'Exit Fees'
+        ]
+        final_trades = last_trades[[col for col in output_columns if col in last_trades.columns]]
+        
+        return final_trades.to_string(index=False)
+        
+    except Exception as e:
+        return f"An error occurred while extracting trades for {strategy_name}: {e}"
+
+
 def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
     """Generate comprehensive statistics file for all strategies."""
     output_dir = Path("outputs/results")
@@ -455,7 +513,7 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
                 f.write(f"{'Total Trades':<30} {basic['trades_count']:<15} {'N/A':<15}\n")
                 f.write(f"\n")
                 f.write(f"{'Total Return':<30} {basic['total_return']:<15.4f} {basic['benchmark_total_return']:<15.4f}\n")
-                f.write(f"{'CAGR':<30} {basic['cagr']:<15.4f} {basic['benchmark_cagr']:<15.4f}\n")
+                f.write(f"{'CAGR':<30} {basic['cagr']:<15.2%} {basic['benchmark_cagr']:<15.2%}\n")
                 f.write(f"{'Volatility (ann.)':<30} {basic['volatility']:<15.4f} {basic['benchmark_volatility']:<15.4f}\n")
                 f.write(f"{'Sharpe Ratio':<30} {basic['sharpe']:<15.4f} {basic['benchmark_sharpe']:<15.4f}\n")
                 f.write(f"{'Sortino Ratio':<30} {basic['sortino']:<15.4f} {basic['benchmark_sortino']:<15.4f}\n")
@@ -600,6 +658,17 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
             f.write(f"{strategy_name.upper()} TRADING RULES\n")
             f.write(f"{'-'*80}\n")
             f.write(description)
+            f.write(f"\n\n")
+            
+            # Add last 3 trades section
+            f.write(f"{'-'*80}\n")
+            f.write(f"{strategy_name.upper()} - LAST 3 TRADES\n")
+            f.write(f"{'-'*80}\n")
+            try:
+                last_trades_text = extract_last_3_trades(results[strategy_name], strategy_name)
+                f.write(last_trades_text)
+            except Exception as e:
+                f.write(f"Error extracting trades for {strategy_name}: {e}")
             f.write(f"\n\n")
         
         f.write("="*100 + "\n")

@@ -1,7 +1,7 @@
 ====================================================================================================
 COMPREHENSIVE STRATEGY COMPARISON REPORT
 ====================================================================================================
-Generated: 2025-09-11 16:12:30
+Generated: 2025-09-23 16:21:21
 Total Strategies Analyzed: 4
 Benchmark Asset: cad_ig_er_index
 ====================================================================================================
@@ -14,129 +14,129 @@ Benchmark Asset: cad_ig_er_index
 CROSS_ASSET_MOMENTUM - VectorBT Portfolio Stats
 ------------------------------------------------------------
 Start                         : 2003-11-30 00:00:00
-End                           : 2025-08-29 00:00:00
-Period                        : 5749 days 00:00:00
+End                           : 2025-09-23 00:00:00
+Period                        : 5767 days 00:00:00
 Start Value                   :       100.00
-End Value                     :       183.32
-Total Return [%]              :      83.3225
-Benchmark Return [%]          :      33.1658
+End Value                     :       183.56
+Total Return [%]              :      83.5649
+Benchmark Return [%]          :      33.2885
 Max Gross Exposure [%]        :       100.00
 Total Fees Paid               :         0.00
 Max Drawdown [%]              :         0.98
 Max Drawdown Duration         : 306 days 00:00:00
-Total Trades                  :       159.00
-Total Closed Trades           :       158.00
+Total Trades                  :       160.00
+Total Closed Trades           :       159.00
 Total Open Trades             :         1.00
-Open Trade PnL                :        -0.31
-Win Rate [%]                  :        72.15
+Open Trade PnL                :         0.24
+Win Rate [%]                  :        71.70
 Best Trade [%]                :         8.04
 Worst Trade [%]               :        -0.88
 Avg Winning Trade [%]         :         0.59
-Avg Losing Trade [%]          :        -0.13
+Avg Losing Trade [%]          :        -0.14
 Avg Winning Trade Duration    : 24 days 16:00:00
-Avg Losing Trade Duration     : 9 days 00:32:43.636363636
-Profit Factor                 :        10.82
-Expectancy                    :         0.53
-Sharpe Ratio                  :       3.6870
-Calmar Ratio                  :       3.9925
-Omega Ratio                   :       2.5304
-Sortino Ratio                 :       7.2813
+Avg Losing Trade Duration     : 9 days 01:36:00
+Profit Factor                 :        10.44
+Expectancy                    :         0.52
+Sharpe Ratio                  :       3.6885
+Calmar Ratio                  :       3.9886
+Omega Ratio                   :       2.5336
+Sortino Ratio                 :       7.2858
 
 ------------------------------------------------------------
 MULTI_ASSET_MOMENTUM - VectorBT Portfolio Stats
 ------------------------------------------------------------
 Start                         : 2003-11-30 00:00:00
-End                           : 2025-08-29 00:00:00
-Period                        : 5749 days 00:00:00
+End                           : 2025-09-23 00:00:00
+Period                        : 5767 days 00:00:00
 Start Value                   :       100.00
-End Value                     :       175.06
-Total Return [%]              :      75.0570
-Benchmark Return [%]          :      33.1658
+End Value                     :       175.22
+Total Return [%]              :      75.2183
+Benchmark Return [%]          :      33.2885
 Max Gross Exposure [%]        :       100.00
 Total Fees Paid               :         0.00
 Max Drawdown [%]              :         2.10
 Max Drawdown Duration         : 491 days 00:00:00
-Total Trades                  :       139.00
-Total Closed Trades           :       138.00
+Total Trades                  :       140.00
+Total Closed Trades           :       139.00
 Total Open Trades             :         1.00
-Open Trade PnL                :         1.21
-Win Rate [%]                  :        66.67
+Open Trade PnL                :         0.16
+Win Rate [%]                  :        66.91
 Best Trade [%]                :         6.14
 Worst Trade [%]               :        -1.08
 Avg Winning Trade [%]         :         0.71
 Avg Losing Trade [%]          :        -0.21
-Avg Winning Trade Duration    : 36 days 13:49:33.913043478
+Avg Winning Trade Duration    : 36 days 21:09:40.645161290
 Avg Losing Trade Duration     : 16 days 07:18:15.652173913
-Profit Factor                 :         6.91
+Profit Factor                 :         7.00
 Expectancy                    :         0.54
-Sharpe Ratio                  :       3.1408
-Calmar Ratio                  :       1.7234
-Omega Ratio                   :       1.9554
-Sortino Ratio                 :       5.4132
+Sharpe Ratio                  :       3.1392
+Calmar Ratio                  :       1.7208
+Omega Ratio                   :       1.9543
+Sortino Ratio                 :       5.4083
 
 ------------------------------------------------------------
 GENETIC_ALGORITHM - VectorBT Portfolio Stats
 ------------------------------------------------------------
 Start                         : 2003-11-30 00:00:00
-End                           : 2025-08-29 00:00:00
-Period                        : 5749 days 00:00:00
+End                           : 2025-09-23 00:00:00
+Period                        : 5767 days 00:00:00
 Start Value                   :       100.00
-End Value                     :       177.85
-Total Return [%]              :      77.8523
-Benchmark Return [%]          :      33.1658
+End Value                     :       182.03
+Total Return [%]              :      82.0325
+Benchmark Return [%]          :      33.2885
 Max Gross Exposure [%]        :       100.00
 Total Fees Paid               :         0.00
-Max Drawdown [%]              :         1.50
-Max Drawdown Duration         : 323 days 00:00:00
-Total Trades                  :        80.00
-Total Closed Trades           :        79.00
+Max Drawdown [%]              :         1.85
+Max Drawdown Duration         : 514 days 00:00:00
+Total Trades                  :        92.00
+Total Closed Trades           :        91.00
 Total Open Trades             :         1.00
-Open Trade PnL                :         2.57
-Win Rate [%]                  :        64.56
-Best Trade [%]                :         8.32
-Worst Trade [%]               :        -0.89
-Avg Winning Trade [%]         :         1.25
-Avg Losing Trade [%]          :        -0.25
-Avg Winning Trade Duration    : 70 days 05:38:49.411764706
-Avg Losing Trade Duration     : 25 days 12:00:00
-Profit Factor                 :         9.41
-Expectancy                    :         0.95
-Sharpe Ratio                  :       3.1610
-Calmar Ratio                  :       2.4821
-Omega Ratio                   :       1.9455
-Sortino Ratio                 :       5.4572
+Open Trade PnL                :         0.24
+Win Rate [%]                  :        54.95
+Best Trade [%]                :        16.16
+Worst Trade [%]               :        -0.78
+Avg Winning Trade [%]         :         1.38
+Avg Losing Trade [%]          :        -0.18
+Avg Winning Trade Duration    : 82 days 12:28:48
+Avg Losing Trade Duration     : 11 days 02:55:36.585365853
+Profit Factor                 :         9.37
+Expectancy                    :         0.90
+Sharpe Ratio                  :       3.1395
+Calmar Ratio                  :       2.0924
+Omega Ratio                   :       1.9082
+Sortino Ratio                 :       5.5732
 
 ------------------------------------------------------------
 VOL_ADAPTIVE_MOMENTUM - VectorBT Portfolio Stats
 ------------------------------------------------------------
 Start                         : 2003-11-30 00:00:00
-End                           : 2025-08-29 00:00:00
-Period                        : 5749 days 00:00:00
+End                           : 2025-09-23 00:00:00
+Period                        : 5767 days 00:00:00
 Start Value                   :       100.00
-End Value                     :       170.96
-Total Return [%]              :      70.9622
-Benchmark Return [%]          :      33.1658
+End Value                     :       171.24
+Total Return [%]              :      71.2375
+Benchmark Return [%]          :      33.2885
 Max Gross Exposure [%]        :       100.00
 Total Fees Paid               :         0.00
 Max Drawdown [%]              :         1.23
 Max Drawdown Duration         : 306 days 00:00:00
 Total Trades                  :       177.00
-Total Closed Trades           :       177.00
-Total Open Trades             :         0.00
-Open Trade PnL                :         0.00
-Win Rate [%]                  :        62.15
+Total Closed Trades           :       176.00
+Total Open Trades             :         1.00
+Open Trade PnL                :         0.06
+Win Rate [%]                  :        63.07
 Best Trade [%]                :        13.83
 Worst Trade [%]               :        -0.67
-Avg Winning Trade [%]         :         0.55
+Avg Winning Trade [%]         :         0.54
 Avg Losing Trade [%]          :        -0.08
-Avg Winning Trade Duration    : 28 days 08:56:43.636363636
-Avg Losing Trade Duration     : 6 days 13:15:13.432835820
-Profit Factor                 :        11.40
+Avg Winning Trade Duration    : 28 days 03:14:35.675675676
+Avg Losing Trade Duration     : 6 days 17:21:13.846153846
+Profit Factor                 :        11.54
 Expectancy                    :         0.40
-Sharpe Ratio                  :       3.6990
-Calmar Ratio                  :       2.8202
-Omega Ratio                   :       2.2631
-Sortino Ratio                 :       6.8267
+Sharpe Ratio                  :       3.7033
+Calmar Ratio                  :       2.8198
+Omega Ratio                   :       2.2671
+Sortino Ratio                 :       6.8366
 
 ====================================================================================================
 2. VECTORBT RETURNS STATS (pf.vbt.returns.stats())
@@ -146,84 +146,84 @@ Sortino Ratio                 :       6.8267
 CROSS_ASSET_MOMENTUM - VectorBT Returns Stats
 ------------------------------------------------------------
 Start                         : 2003-11-30 00:00:00
-End                           : 2025-08-29 00:00:00
-Period                        : 40243 days 00:00:00
-Total Return [%]              :      83.3225
-Annualized Return [%]         :       0.5512
-Annualized Volatility [%]     :         0.40
+End                           : 2025-09-23 00:00:00
+Period                        : 40369 days 00:00:00
+Total Return [%]              :      83.5649
+Annualized Return [%]         :       2.6897
+Annualized Volatility [%]     :         0.87
 Max Drawdown [%]              :         0.98
 Max Drawdown Duration         : 2142 days 00:00:00
-Sharpe Ratio                  :       1.3935
-Calmar Ratio                  :       0.5610
-Omega Ratio                   :       2.5304
-Sortino Ratio                 :       2.7521
+Sharpe Ratio                  :       1.3941
+Calmar Ratio                  :       0.5605
+Omega Ratio                   :       2.5336
+Sortino Ratio                 :       2.7538
 Skew                          :         2.81
-Kurtosis                      :        39.31
-Tail Ratio                    :       1.8763
-Common Sense Ratio            :       1.8867
+Kurtosis                      :        39.41
+Tail Ratio                    :       1.8753
+Common Sense Ratio            :       1.8857
 Value at Risk                 :        -0.00
 
 ------------------------------------------------------------
 MULTI_ASSET_MOMENTUM - VectorBT Returns Stats
 ------------------------------------------------------------
 Start                         : 2003-11-30 00:00:00
-End                           : 2025-08-29 00:00:00
-Period                        : 40243 days 00:00:00
-Total Return [%]              :      75.0570
-Annualized Return [%]         :       0.5092
-Annualized Volatility [%]     :         0.43
+End                           : 2025-09-23 00:00:00
+Period                        : 40369 days 00:00:00
+Total Return [%]              :      75.2183
+Annualized Return [%]         :       2.4811
+Annualized Volatility [%]     :         0.94
 Max Drawdown [%]              :         2.10
 Max Drawdown Duration         : 3437 days 00:00:00
-Sharpe Ratio                  :       1.1871
-Calmar Ratio                  :       0.2425
-Omega Ratio                   :       1.9554
-Sortino Ratio                 :       2.0460
+Sharpe Ratio                  :       1.1865
+Calmar Ratio                  :       0.2421
+Omega Ratio                   :       1.9543
+Sortino Ratio                 :       2.0442
 Skew                          :         1.34
-Kurtosis                      :        26.80
-Tail Ratio                    :       1.4994
-Common Sense Ratio            :       1.5070
+Kurtosis                      :        26.83
+Tail Ratio                    :       1.4951
+Common Sense Ratio            :       1.5027
 Value at Risk                 :        -0.00
 
 ------------------------------------------------------------
 GENETIC_ALGORITHM - VectorBT Returns Stats
 ------------------------------------------------------------
 Start                         : 2003-11-30 00:00:00
-End                           : 2025-08-29 00:00:00
-Period                        : 40243 days 00:00:00
-Total Return [%]              :      77.8523
-Annualized Return [%]         :       0.5236
-Annualized Volatility [%]     :         0.44
-Max Drawdown [%]              :         1.50
-Max Drawdown Duration         : 2261 days 00:00:00
-Sharpe Ratio                  :       1.1948
-Calmar Ratio                  :       0.3491
-Omega Ratio                   :       1.9455
-Sortino Ratio                 :       2.0626
-Skew                          :         1.35
-Kurtosis                      :        26.41
-Tail Ratio                    :       1.4989
-Common Sense Ratio            :       1.5068
+End                           : 2025-09-23 00:00:00
+Period                        : 40369 days 00:00:00
+Total Return [%]              :      82.0325
+Annualized Return [%]         :       2.6521
+Annualized Volatility [%]     :         1.01
+Max Drawdown [%]              :         1.85
+Max Drawdown Duration         : 3598 days 00:00:00
+Sharpe Ratio                  :       1.1866
+Calmar Ratio                  :       0.2941
+Omega Ratio                   :       1.9082
+Sortino Ratio                 :       2.1065
+Skew                          :         1.79
+Kurtosis                      :        25.60
+Tail Ratio                    :       1.4494
+Common Sense Ratio            :       1.4573
 Value at Risk                 :        -0.00
 
 ------------------------------------------------------------
 VOL_ADAPTIVE_MOMENTUM - VectorBT Returns Stats
 ------------------------------------------------------------
 Start                         : 2003-11-30 00:00:00
-End                           : 2025-08-29 00:00:00
-Period                        : 40243 days 00:00:00
-Total Return [%]              :      70.9622
-Annualized Return [%]         :       0.4876
-Annualized Volatility [%]     :         0.35
+End                           : 2025-09-23 00:00:00
+Period                        : 40369 days 00:00:00
+Total Return [%]              :      71.2375
+Annualized Return [%]         :       2.3782
+Annualized Volatility [%]     :         0.76
 Max Drawdown [%]              :         1.23
 Max Drawdown Duration         : 2142 days 00:00:00
-Sharpe Ratio                  :       1.3981
+Sharpe Ratio                  :       1.3997
 Calmar Ratio                  :       0.3970
-Omega Ratio                   :       2.2631
-Sortino Ratio                 :       2.5802
+Omega Ratio                   :       2.2671
+Sortino Ratio                 :       2.5840
 Skew                          :         1.92
-Kurtosis                      :        29.08
-Tail Ratio                    :       1.6446
-Common Sense Ratio            :       1.6526
+Kurtosis                      :        29.15
+Tail Ratio                    :       1.6415
+Common Sense Ratio            :       1.6495
 Value at Risk                 :        -0.00
 
 ====================================================================================================
@@ -236,19 +236,19 @@ CROSS_ASSET_MOMENTUM - Manual Calculations
 Metric                         Strategy        Benchmark      
 ------------------------------------------------------------
 Start Period                   2003-11-30      2003-11-30     
-End Period                     2025-08-29      2025-08-29     
-Total Periods                  5749            5749           
-Time in Market                 55.99%          100.0%         
-Total Trades                   159             N/A            
+End Period                     2025-09-23      2025-09-23     
+Total Periods                  5767            5767           
+Time in Market                 55.96%          100.0%         
+Total Trades                   160             N/A            
 
-Total Return                   0.8332          0.3317         
-CAGR                           0.0055          0.0026         
-Volatility (ann.)              0.0039          0.0066         
-Sharpe Ratio                   1.3918          0.3933         
-Sortino Ratio                  1.4215          0.3697         
+Total Return                   0.8356          0.3329         
+CAGR                           2.69%           1.26%          
+Volatility (ann.)              0.0087          0.0146         
+Sharpe Ratio                   3.0651          0.8671         
+Sortino Ratio                  3.1279          0.8147         
 Max Drawdown                   -0.0098         -0.1548        
-Skewness                       2.8111          -2.8162        
-Kurtosis                       39.3017         56.0482        
+Skewness                       2.8147          -2.8189        
+Kurtosis                       39.4026         56.1762        
 
 
 ------------------------------------------------------------
@@ -257,19 +257,19 @@ MULTI_ASSET_MOMENTUM - Manual Calculations
 Metric                         Strategy        Benchmark      
 ------------------------------------------------------------
 Start Period                   2003-11-30      2003-11-30     
-End Period                     2025-08-29      2025-08-29     
-Total Periods                  5749            5749           
-Time in Market                 72.71%          100.0%         
-Total Trades                   139             N/A            
+End Period                     2025-09-23      2025-09-23     
+Total Periods                  5767            5767           
+Time in Market                 72.78%          100.0%         
+Total Trades                   140             N/A            
 
-Total Return                   0.7506          0.3317         
-CAGR                           0.0051          0.0026         
-Volatility (ann.)              0.0043          0.0066         
-Sharpe Ratio                   1.1856          0.3933         
-Sortino Ratio                  1.2639          0.3697         
+Total Return                   0.7522          0.3329         
+CAGR                           2.48%           1.26%          
+Volatility (ann.)              0.0094          0.0146         
+Sharpe Ratio                   2.6087          0.8671         
+Sortino Ratio                  2.7807          0.8147         
 Max Drawdown                   -0.0210         -0.1548        
-Skewness                       1.3433          -2.8162        
-Kurtosis                       26.7932         56.0482        
+Skewness                       1.3424          -2.8189        
+Kurtosis                       26.8206         56.1762        
 
 
 ------------------------------------------------------------
@@ -278,19 +278,19 @@ GENETIC_ALGORITHM - Manual Calculations
 Metric                         Strategy        Benchmark      
 ------------------------------------------------------------
 Start Period                   2003-11-30      2003-11-30     
-End Period                     2025-08-29      2025-08-29     
-Total Periods                  5749            5749           
-Time in Market                 76.22%          100.0%         
-Total Trades                   80              N/A            
+End Period                     2025-09-23      2025-09-23     
+Total Periods                  5767            5767           
+Time in Market                 79.57%          100.0%         
+Total Trades                   92              N/A            
 
-Total Return                   0.7785          0.3317         
-CAGR                           0.0052          0.0026         
-Volatility (ann.)              0.0044          0.0066         
-Sharpe Ratio                   1.1932          0.3933         
-Sortino Ratio                  1.3010          0.3697         
-Max Drawdown                   -0.0150         -0.1548        
-Skewness                       1.3482          -2.8162        
-Kurtosis                       26.4044         56.0482        
+Total Return                   0.8203          0.3329         
+CAGR                           2.65%           1.26%          
+Volatility (ann.)              0.0101          0.0146         
+Sharpe Ratio                   2.6088          0.8671         
+Sortino Ratio                  3.0714          0.8147         
+Max Drawdown                   -0.0185         -0.1548        
+Skewness                       1.7938          -2.8189        
+Kurtosis                       25.5941         56.1762        
 
 
 ------------------------------------------------------------
@@ -299,19 +299,19 @@ VOL_ADAPTIVE_MOMENTUM - Manual Calculations
 Metric                         Strategy        Benchmark      
 ------------------------------------------------------------
 Start Period                   2003-11-30      2003-11-30     
-End Period                     2025-08-29      2025-08-29     
-Total Periods                  5749            5749           
-Time in Market                 61.92%          100.0%         
+End Period                     2025-09-23      2025-09-23     
+Total Periods                  5767            5767           
+Time in Market                 61.80%          100.0%         
 Total Trades                   177             N/A            
 
-Total Return                   0.7096          0.3317         
-CAGR                           0.0049          0.0026         
-Volatility (ann.)              0.0035          0.0066         
-Sharpe Ratio                   1.3963          0.3933         
-Sortino Ratio                  1.4829          0.3697         
+Total Return                   0.7124          0.3329         
+CAGR                           2.38%           1.26%          
+Volatility (ann.)              0.0076          0.0146         
+Sharpe Ratio                   3.0774          0.8671         
+Sortino Ratio                  3.2636          0.8147         
 Max Drawdown                   -0.0123         -0.1548        
-Skewness                       1.9207          -2.8162        
-Kurtosis                       29.0768         56.0482        
+Skewness                       1.9227          -2.8189        
+Kurtosis                       29.1428         56.1762        
 
 ====================================================================================================
 4. QUANTSTATS STYLE COMPREHENSIVE COMPARISON
@@ -323,31 +323,31 @@ CROSS_ASSET_MOMENTUM vs BENCHMARK
 Metric                              Benchmark       Strategy       
 -----------------------------------------------------------------
 Start Period                        2003-11-30      2003-11-30     
-End Period                          2025-08-29      2025-08-29     
+End Period                          2025-09-23      2025-09-23     
 Risk-Free Rate                      0.0%            0.0%           
 Time in Market                      100.0%          56.0%          
 
-Cumulative Return                           33.17%         83.32%
-CAGR%                                        0.26%          0.55%
+Cumulative Return                           33.29%         83.56%
+CAGR%                                        1.26%          2.69%
 
-Sharpe                                        0.39           1.39
+Sharpe                                        0.87           3.07
 Prob. Sharpe Ratio                           0.00%          0.00%
 Smart Sharpe                                  0.67           2.42
-Sortino                                       0.37           1.42
-Smart Sortino                                 0.88           4.77
+Sortino                                       0.81           3.13
+Smart Sortino                                 0.88           4.78
 Omega                                         0.00           0.00
 
 Max Drawdown                               -15.48%         -0.98%
 Longest DD Days                                  0              0
-Volatility (ann.)                            0.66%          0.39%
-Calmar                                        0.06           1.98
+Volatility (ann.)                            1.46%          0.87%
+Calmar                                        0.06           1.97
 Skew                                         -2.82           2.81
-Kurtosis                                     56.05          39.30
+Kurtosis                                     56.18          39.40
 
 Expected Daily %                             0.00%          0.00%
 Expected Weekly %                            0.01%          0.01%
 Expected Monthly %                           0.02%          0.05%
-Expected Yearly %                            0.26%          0.55%
+Expected Yearly %                            1.27%          2.66%
 Daily Value-at-Risk                         -0.02%         -0.01%
 Expected Shortfall (cVaR)                   -0.05%         -0.02%
 
@@ -364,72 +364,31 @@ MULTI_ASSET_MOMENTUM vs BENCHMARK
 Metric                              Benchmark       Strategy       
 -----------------------------------------------------------------
 Start Period                        2003-11-30      2003-11-30     
-End Period                          2025-08-29      2025-08-29     
+End Period                          2025-09-23      2025-09-23     
 Risk-Free Rate                      0.0%            0.0%           
-Time in Market                      100.0%          72.7%          
+Time in Market                      100.0%          72.8%          
 
-Cumulative Return                           33.17%         75.06%
-CAGR%                                        0.26%          0.51%
+Cumulative Return                           33.29%         75.22%
+CAGR%                                        1.26%          2.48%
 
-Sharpe                                        0.39           1.19
+Sharpe                                        0.87           2.61
 Prob. Sharpe Ratio                           0.00%          0.00%
 Smart Sharpe                                  0.67           2.07
-Sortino                                       0.37           1.26
+Sortino                                       0.81           2.78
 Smart Sortino                                 0.88           3.57
 Omega                                         0.00           0.00
 
 Max Drawdown                               -15.48%         -2.10%
 Longest DD Days                                  0              0
-Volatility (ann.)                            0.66%          0.43%
+Volatility (ann.)                            1.46%          0.94%
 Calmar                                        0.06           0.85
 Skew                                         -2.82           1.34
-Kurtosis                                     56.05          26.79
+Kurtosis                                     56.18          26.82
 
 Expected Daily %                             0.00%          0.00%
 Expected Weekly %                            0.01%          0.01%
 Expected Monthly %                           0.02%          0.04%
-Expected Yearly %                            0.26%          0.51%
-Daily Value-at-Risk                         -0.02%         -0.01%
-Expected Shortfall (cVaR)                   -0.05%         -0.02%
-
-Gain/Pain Ratio                               0.00           0.00
-Payoff Ratio                                  0.82           1.08
-Profit Factor                                 1.23           1.96
-Common Sense Ratio                            1.26           2.93
-Tail Ratio                                     1.0            1.5
-
-
---------------------------------------------------------------------------------
-GENETIC_ALGORITHM vs BENCHMARK
---------------------------------------------------------------------------------
-Metric                              Benchmark       Strategy       
------------------------------------------------------------------
-Start Period                        2003-11-30      2003-11-30     
-End Period                          2025-08-29      2025-08-29     
-Risk-Free Rate                      0.0%            0.0%           
-Time in Market                      100.0%          76.2%          
-
-Cumulative Return                           33.17%         77.85%
-CAGR%                                        0.26%          0.52%
-
-Sharpe                                        0.39           1.19
-Prob. Sharpe Ratio                           0.00%          0.00%
-Smart Sharpe                                  0.67           2.15
-Sortino                                       0.37           1.30
-Smart Sortino                                 0.88           3.72
-Omega                                         0.00           0.00
-
-Max Drawdown                               -15.48%         -1.50%
-Longest DD Days                                  0              0
-Volatility (ann.)                            0.66%          0.44%
-Calmar                                        0.06           1.23
-Skew                                         -2.82           1.35
-Kurtosis                                     56.05          26.40
-
-Expected Daily %                             0.00%          0.00%
-Expected Weekly %                            0.01%          0.01%
-Expected Monthly %                           0.02%          0.04%
-Expected Yearly %                            0.26%          0.52%
+Expected Yearly %                            1.27%          2.46%
 Daily Value-at-Risk                         -0.02%         -0.01%
 Expected Shortfall (cVaR)                   -0.05%         -0.02%
 
@@ -441,42 +400,83 @@ Tail Ratio                                     1.0            1.5
 
 
 --------------------------------------------------------------------------------
+GENETIC_ALGORITHM vs BENCHMARK
+--------------------------------------------------------------------------------
+Metric                              Benchmark       Strategy       
+-----------------------------------------------------------------
+Start Period                        2003-11-30      2003-11-30     
+End Period                          2025-09-23      2025-09-23     
+Risk-Free Rate                      0.0%            0.0%           
+Time in Market                      100.0%          79.6%          
+
+Cumulative Return                           33.29%         82.03%
+CAGR%                                        1.26%          2.65%
+
+Sharpe                                        0.87           2.61
+Prob. Sharpe Ratio                           0.00%          0.00%
+Smart Sharpe                                  0.67           2.12
+Sortino                                       0.81           3.07
+Smart Sortino                                 0.88           3.76
+Omega                                         0.00           0.00
+
+Max Drawdown                               -15.48%         -1.85%
+Longest DD Days                                  0              0
+Volatility (ann.)                            1.46%          1.01%
+Calmar                                        0.06           1.04
+Skew                                         -2.82           1.79
+Kurtosis                                     56.18          25.59
+
+Expected Daily %                             0.00%          0.00%
+Expected Weekly %                            0.01%          0.01%
+Expected Monthly %                           0.02%          0.05%
+Expected Yearly %                            1.27%          2.62%
+Daily Value-at-Risk                         -0.02%         -0.01%
+Expected Shortfall (cVaR)                   -0.05%         -0.03%
+
+Gain/Pain Ratio                               0.00           0.00
+Payoff Ratio                                  0.82           1.10
+Profit Factor                                 1.23           1.91
+Common Sense Ratio                            1.26           2.77
+Tail Ratio                                     1.0            1.4
+
+
+--------------------------------------------------------------------------------
 VOL_ADAPTIVE_MOMENTUM vs BENCHMARK
 --------------------------------------------------------------------------------
 Metric                              Benchmark       Strategy       
 -----------------------------------------------------------------
 Start Period                        2003-11-30      2003-11-30     
-End Period                          2025-08-29      2025-08-29     
+End Period                          2025-09-23      2025-09-23     
 Risk-Free Rate                      0.0%            0.0%           
-Time in Market                      100.0%          61.9%          
+Time in Market                      100.0%          61.8%          
 
-Cumulative Return                           33.17%         70.96%
-CAGR%                                        0.26%          0.49%
+Cumulative Return                           33.29%         71.24%
+CAGR%                                        1.26%          2.38%
 
-Sharpe                                        0.39           1.40
+Sharpe                                        0.87           3.08
 Prob. Sharpe Ratio                           0.00%          0.00%
 Smart Sharpe                                  0.67           2.63
-Sortino                                       0.37           1.48
-Smart Sortino                                 0.88           4.85
+Sortino                                       0.81           3.26
+Smart Sortino                                 0.88           4.86
 Omega                                         0.00           0.00
 
 Max Drawdown                               -15.48%         -1.23%
 Longest DD Days                                  0              0
-Volatility (ann.)                            0.66%          0.35%
+Volatility (ann.)                            1.46%          0.76%
 Calmar                                        0.06           1.40
 Skew                                         -2.82           1.92
-Kurtosis                                     56.05          29.08
+Kurtosis                                     56.18          29.14
 
 Expected Daily %                             0.00%          0.00%
 Expected Weekly %                            0.01%          0.01%
 Expected Monthly %                           0.02%          0.04%
-Expected Yearly %                            0.26%          0.49%
+Expected Yearly %                            1.27%          2.35%
 Daily Value-at-Risk                         -0.02%         -0.01%
 Expected Shortfall (cVaR)                   -0.05%         -0.02%
 
 Gain/Pain Ratio                               0.00           0.00
-Payoff Ratio                                  0.82           1.14
-Profit Factor                                 1.23           2.26
+Payoff Ratio                                  0.82           1.15
+Profit Factor                                 1.23           2.27
 Common Sense Ratio                            1.26           3.72
 Tail Ratio                                     1.0            1.6
 
@@ -485,11 +485,11 @@ Tail Ratio                                     1.0            1.6
 ====================================================================================================
 Strategy                  Total Return    CAGR       Sharpe     Sortino    Max DD       Volatility  
 ----------------------------------------------------------------------------------------------
-BENCHMARK                         33.17%     0.26%      0.39      0.37     -15.48%       0.66%
-CROSS_ASSET_MOMENTUM              83.32%     0.55%      1.39      1.42      -0.98%       0.39%
-MULTI_ASSET_MOMENTUM              75.06%     0.51%      1.19      1.26      -2.10%       0.43%
-GENETIC_ALGORITHM                 77.85%     0.52%      1.19      1.30      -1.50%       0.44%
-VOL_ADAPTIVE_MOMENTUM             70.96%     0.49%      1.40      1.48      -1.23%       0.35%
+BENCHMARK                         33.29%     1.26%      0.87      0.81     -15.48%       1.46%
+CROSS_ASSET_MOMENTUM              83.56%     2.69%      3.07      3.13      -0.98%       0.87%
+MULTI_ASSET_MOMENTUM              75.22%     2.48%      2.61      2.78      -2.10%       0.94%
+GENETIC_ALGORITHM                 82.03%     2.65%      2.61      3.07      -1.85%       1.01%
+VOL_ADAPTIVE_MOMENTUM             71.24%     2.38%      3.08      3.26      -1.23%       0.76%
 
 ====================================================================================================
 6. DYNAMIC TRADING RULES
@@ -507,7 +507,7 @@ TRADING RULES:
    - Rebalancing Day: Monday.
 
 2. Signal Universe:
-   - A basket of 4 diverse assets is monitored to gauge market breadth.
+   - A basket of 4 diverse assets is moni tored to gauge market breadth.
    - Assets: cad_ig_er_index, us_hy_er_index, us_ig_er_index, tsx
 
 3. Momentum Calculation (Monday Only):
@@ -528,6 +528,14 @@ PARAMETERS:
 - Confirmation Threshold: 3 out of 4 assets
 - Rebalancing Frequency: Weekly (Monday)
 
+
+--------------------------------------------------------------------------------
+CROSS_ASSET_MOMENTUM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade   PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.3456      2025-06-30        135.6596     2025-08-04       136.4677             35  1.09  0.60%       0.00      0.00
+            0      Long Closed 1.3471      2025-08-18        136.3116     2025-09-01       136.0849             14 -0.31 -0.17%       0.00      0.00
+            0      Long   Open 1.3477      2025-09-15        136.0304     2025-09-23       136.2103              8  0.24  0.13%       0.00      0.00
 
 --------------------------------------------------------------------------------
 MULTI_ASSET_MOMENTUM TRADING RULES
@@ -559,6 +567,14 @@ PARAMETERS:
 - Exit Holding Period: 5 trading days
 - Rebalancing Frequency: Weekly (Monday)
 
+
+--------------------------------------------------------------------------------
+MULTI_ASSET_MOMENTUM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.2871      2025-04-28        133.8840     2025-05-31       135.0698             33 1.53  0.89%       0.00      0.00
+            0      Long Closed 1.2864      2025-06-02        135.1445     2025-08-31       136.0849             90 1.21  0.70%       0.00      0.00
+            0      Long   Open 1.2864      2025-09-01        136.0849     2025-09-23       136.2103             22 0.16  0.09%       0.00      0.00
 
 --------------------------------------------------------------------------------
 GENETIC_ALGORITHM TRADING RULES
@@ -594,6 +610,14 @@ PARAMETERS FOR EVOLUTION:
 - Drawdown Penalty Factor: 0.1
 - Rebalancing Frequency: Weekly (Monday)
 
+
+--------------------------------------------------------------------------------
+GENETIC_ALGORITHM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.3412      2025-04-14        133.3377     2025-04-21       133.3505              7 0.02  0.01%       0.00      0.00
+            0      Long Closed 1.3358      2025-04-28        133.8840     2025-08-25       136.0883            119 2.94  1.65%       0.00      0.00
+            0      Long   Open 1.3364      2025-09-15        136.0304     2025-09-23       136.2103              8 0.24  0.13%       0.00      0.00
 
 --------------------------------------------------------------------------------
 VOL_ADAPTIVE_MOMENTUM TRADING RULES
@@ -635,6 +659,14 @@ PARAMETERS:
 - Max Holding Period: 10 days
 - Momentum Scale for Holding: 0.005
 
+
+--------------------------------------------------------------------------------
+VOL_ADAPTIVE_MOMENTUM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.2592      2025-05-12        134.7154     2025-05-23       134.9178             11 0.25  0.15%       0.00      0.00
+            0      Long Closed 1.2578      2025-05-30        135.0698     2025-08-21       136.0991             83 1.29  0.76%       0.00      0.00
+            0      Long   Open 1.2572      2025-09-18        136.1656     2025-09-23       136.2103              5 0.06  0.03%       0.00      0.00
 
 ====================================================================================================
 IMPORTANT NOTES
