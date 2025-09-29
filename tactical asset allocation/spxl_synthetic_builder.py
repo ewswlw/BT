@@ -26,6 +26,7 @@ from datetime import datetime
 import logging
 from typing import Tuple, Optional
 from xbbg import blp
+import quantstats as qs
 
 # Add project root to path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -578,6 +579,152 @@ def validate_synthetic_vs_actual(builder: SPXLSyntheticBuilder) -> pd.DataFrame:
 
 
 #############################################################
+# QUANTSTATS ANALYSIS
+#############################################################
+
+def create_quantstats_comparison(complete_series: pd.DataFrame, output_dir: str = None):
+    """
+    Create quantstats tearsheet comparing SPXL synthetic vs SPX buy-and-hold.
+    
+    Args:
+        complete_series: Complete SPXL series with NAV and returns
+        output_dir: Optional custom output directory for tearsheet
+        
+    Returns:
+        Tuple of (spxl_returns, spx_returns) as Series
+    """
+    logger.info("")
+    logger.info("=" * 80)
+    logger.info("QUANTSTATS ANALYSIS: SPXL vs SPX Buy-and-Hold")
+    logger.info("=" * 80)
+    logger.info("")
+    
+    # Get date range
+    start_date = complete_series.index[0].strftime('%Y-%m-%d')
+    end_date = complete_series.index[-1].strftime('%Y-%m-%d')
+    
+    # Fetch SPX Total Return Index (SPTR)
+    logger.info(f"Fetching SPX Total Return Index (SPTR Index) from Bloomberg...")
+    logger.info(f"Date range: {start_date} to {end_date}")
+    
+    try:
+        spx_tr_data = blp.bdh(
+            tickers='SPTR Index',
+            flds='PX_LAST',
+            start_date=start_date,
+            end_date=end_date,
+            Per='DAILY'
+        )
+        
+        # Flatten columns
+        if isinstance(spx_tr_data.columns, pd.MultiIndex):
+            spx_tr_data.columns = ['spx_tr_price']
+        else:
+            spx_tr_data.columns = ['spx_tr_price']
+        
+        logger.info(f"Fetched {len(spx_tr_data)} days of SPX Total Return data")
+        logger.info(f"  Starting price: {spx_tr_data['spx_tr_price'].iloc[0]:.2f}")
+        logger.info(f"  Ending price: {spx_tr_data['spx_tr_price'].iloc[-1]:.2f}")
+        
+        # Calculate returns
+        spxl_returns = complete_series['daily_return'].copy()
+        spx_returns = spx_tr_data['spx_tr_price'].pct_change()
+        
+        # Align the series
+        combined = pd.DataFrame({
+            'SPXL_3x': spxl_returns,
+            'SPX_Total_Return': spx_returns
+        }).dropna()
+        
+        # Ensure DatetimeIndex and remove timezone if present
+        if not isinstance(combined.index, pd.DatetimeIndex):
+            combined.index = pd.to_datetime(combined.index)
+        if hasattr(combined.index, 'tz') and combined.index.tz is not None:
+            combined.index = combined.index.tz_localize(None)
+        
+        logger.info(f"")
+        logger.info(f"Aligned series: {len(combined)} trading days")
+        logger.info(f"Date range: {combined.index[0]} to {combined.index[-1]}")
+        
+        # Set output directory
+        if output_dir is None:
+            output_dir = os.path.join(project_root, OUTPUT_DIR)
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Generate tearsheet
+        output_file = os.path.join(output_dir, 'spxl_vs_spx_tearsheet.html')
+        logger.info(f"")
+        logger.info(f"Generating quantstats tearsheet...")
+        logger.info(f"Output file: {output_file}")
+        
+        # Extend pandas functionality for quantstats
+        qs.extend_pandas()
+        
+        # Generate HTML tearsheet
+        qs.reports.html(
+            combined['SPXL_3x'],
+            benchmark=combined['SPX_Total_Return'],
+            output=output_file,
+            title='SPXL 3x Leveraged vs SPX Total Return (1970-2025)'
+        )
+        
+        logger.info(f"Tearsheet generated successfully!")
+        logger.info(f"  File size: {os.path.getsize(output_file):,} bytes")
+        
+        # Also print metrics to console
+        logger.info("")
+        logger.info("=" * 80)
+        logger.info("PERFORMANCE METRICS COMPARISON")
+        logger.info("=" * 80)
+        
+        # Calculate metrics
+        spxl_cagr = qs.stats.cagr(combined['SPXL_3x']) * 100
+        spx_cagr = qs.stats.cagr(combined['SPX_Total_Return']) * 100
+        
+        spxl_sharpe = qs.stats.sharpe(combined['SPXL_3x'])
+        spx_sharpe = qs.stats.sharpe(combined['SPX_Total_Return'])
+        
+        spxl_sortino = qs.stats.sortino(combined['SPXL_3x'])
+        spx_sortino = qs.stats.sortino(combined['SPX_Total_Return'])
+        
+        spxl_maxdd = qs.stats.max_drawdown(combined['SPXL_3x']) * 100
+        spx_maxdd = qs.stats.max_drawdown(combined['SPX_Total_Return']) * 100
+        
+        spxl_vol = qs.stats.volatility(combined['SPXL_3x']) * 100
+        spx_vol = qs.stats.volatility(combined['SPX_Total_Return']) * 100
+        
+        logger.info(f"")
+        logger.info(f"CAGR:")
+        logger.info(f"  SPXL 3x:           {spxl_cagr:>8.2f}%")
+        logger.info(f"  SPX Total Return:  {spx_cagr:>8.2f}%")
+        logger.info(f"  Difference:        {spxl_cagr - spx_cagr:>8.2f}%")
+        logger.info(f"")
+        logger.info(f"Sharpe Ratio:")
+        logger.info(f"  SPXL 3x:           {spxl_sharpe:>8.2f}")
+        logger.info(f"  SPX Total Return:  {spx_sharpe:>8.2f}")
+        logger.info(f"")
+        logger.info(f"Sortino Ratio:")
+        logger.info(f"  SPXL 3x:           {spxl_sortino:>8.2f}")
+        logger.info(f"  SPX Total Return:  {spx_sortino:>8.2f}")
+        logger.info(f"")
+        logger.info(f"Max Drawdown:")
+        logger.info(f"  SPXL 3x:           {spxl_maxdd:>8.2f}%")
+        logger.info(f"  SPX Total Return:  {spx_maxdd:>8.2f}%")
+        logger.info(f"")
+        logger.info(f"Volatility (Annual):")
+        logger.info(f"  SPXL 3x:           {spxl_vol:>8.2f}%")
+        logger.info(f"  SPX Total Return:  {spx_vol:>8.2f}%")
+        logger.info("=" * 80)
+        logger.info("")
+        
+        return combined['SPXL_3x'], combined['SPX_Total_Return']
+        
+    except Exception as e:
+        logger.error(f"Error in quantstats analysis: {str(e)}")
+        raise
+
+
+#############################################################
 # MAIN EXECUTION
 #############################################################
 
@@ -597,6 +744,10 @@ def main():
     
     # Save to file
     output_path = builder.save_series(complete_series)
+    
+    # Generate quantstats comparison
+    logger.info("Generating quantstats comparison and tearsheet...")
+    spxl_returns, spx_returns = create_quantstats_comparison(complete_series)
     
     # Display samples
     print("\n" + "=" * 80)
