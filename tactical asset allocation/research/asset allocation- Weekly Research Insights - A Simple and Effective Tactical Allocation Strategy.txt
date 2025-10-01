@@ -1,0 +1,237 @@
+
+================================================================================
+PAGE 1
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+Weekly Research Insights - A Simple
+and Effective Tactical Allocation
+Strategy
+Dynamic Rotation Between Equities and Defensive Assets
+QUANTSEEKER
+JUL 17, 2025 ∙ PAID
+5 11 1 Share
+Hi there. In this week’s Research Insights, I replicate and discuss a recent research pap
+that presents a simple yet effective tactical allocation strategy rotating between equiti
+bonds, commodities, and currencies. The approach is easy to implement and has
+historically delivered returns comparable to SPY, but with much lower volatility and
+smaller drawdowns.
+For investors with a higher risk appetite, I also test a leveraged version that delivers
+substantially higher performance than SPY while maintaining a similar level of volatil
+More details below.
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 1/11
+================================================================================
+PAGE 2
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+Background
+Traditional portfolios often rely on fixed allocations between stocks and bonds, such
+the classic 60/40 model. However, during times of crisis, such as inflation spikes or
+financial panics, both asset classes can decline simultaneously, leaving investors
+vulnerable. The bear market of 2022 was a prime example, as bonds failed to provid
+their usual hedge against falling equities. This dynamic tends to occur when equity
+markets drop amid rising inflation, as seen during the stagflation of the 1970s and
+early 1980s.
+Previous research has shown that momentum-based asset rotation can improve
+performance, particularly during periods of market stress. However, many tactical
+models still rely heavily on a single defensive asset (such as long-term Treasuries),
+which may not always provide protection. A recent paper by Thomas Carlson
+introduces a strategy called Defense First, which rotates monthly among five ETFs, e
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 2/11
+================================================================================
+PAGE 3
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+targeting a different type of market risk. This strategy provides a systematic and
+adaptive way to stay defensive without relying on just one asset class.
+Paper’s Methodology and Results
+The strategy is tested over the period from 1986 to 2025, using ETFs when
+available and proxy indices for earlier years.
+Each month, the model ranks four ETFs, Treasuries (TLT), Gold (GLD), Commodit
+(DBC), and the U.S. Dollar (UUP), based on their returns over four lookback
+windows: 1, 3, 6, and 12 months. Each asset receives a momentum score equal
+the average return across these periods.
+Portfolio weights are fixed by rank: 40% for the top-ranked asset, then 30%, 20%
+and 10% for the others.
+If an asset’s momentum score is lower than the 90-day Treasury bill yield (used
+a cash benchmark), its fixed weight is instead allocated to equities via SPY.
+The strategy delivers an annualized return of around 9.6% after costs, compared
+11% for SPY. However, its risk profile is far superior, with a Sharpe ratio of 0.89
+versus 0.57 for SPY, and a maximum drawdown of only 15% versus 51% for SPY
+SPY essentially acts as the “fallback asset,” receiving the weights of any ETF whose
+momentum fails to exceed the cash rate. As a result, non-equity assets can hold up
+40% individually, while SPY’s allocation can range from 0% to 100%, depending on
+market conditions.
+Testing the Strategy
+To replicate the paper’s main results, I use ETF data from EODHD covering the perio
+from February 2008 to July 2025. This sample is shorter than the original paper’s,
+which relies on proxy indices before 2008. For computing excess returns and Sharpe
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 3/11
+================================================================================
+PAGE 4
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+ratios, and as a benchmark for comparing momentum returns, I use the 3-month T-
+rate (DTB3), sourced from the Federal Reserve Bank of St. Louis (FRED).
+As in the paper, I assume rebalancing occurs at the end of each month. However, I
+base signal generation on the previous day’s closing prices, making it feasible to
+execute trades using, for example, market-on-close orders. I apply a one-way
+transaction cost of 5 basis points. At each rebalance date, I calculate the average
+momentum return for each asset across the four lookback periods and compare it t
+the prevailing 3-month T-bill rate. If an asset’s momentum return exceeds the T-bill
+rate, it receives its assigned portfolio weight; otherwise, that fixed weight is realloca
+to SPY.
+Results
+Following the procedure described above, I obtain the following performance:
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 4/11
+================================================================================
+PAGE 5
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+The strategy delivers a CAGR of approximately 9.5% after costs, slightly below SPY’s
+11.3%. However, it achieves this with only half the volatility. The Sharpe ratio is
+significantly higher, 0.83 for the strategy compared to 0.59 for SPY, and the maximu
+drawdown is less than half of SPY’s. The drawdown chart highlights this resilience,
+showing relatively muted declines over time, except during the 2008 financial crisis
+when the strategy experienced a drawdown of around 24%. In contrast, during the
+2022 bear market, the strategy’s drawdown peaked at only about 10%.
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 5/11
+================================================================================
+PAGE 6
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+The annual performance table reinforces this defensiveness: The strategy gained
+roughly 5% in 2022, significantly outperforming SPY. In 2025 so far, it has returned
+about 15%, driven by allocations to both gold and equities throughout the year.
+To illustrate how the portfolio adjusts over time, consider the period from 2021 to
+2023, which includes the bear market of 2022.
+During the bull run of 2021, the strategy maintained a 50–60% allocation to SPY. As
+markets turned in 2022, it quickly reduced equity exposure and reallocated most of
+portfolio to the U.S. Dollar (UUP) and commodities (DBC). Toward the end of 2022 a
+into the 2023 rebound, the model rotated back into equities, reaching a full 100%
+allocation to SPY at the start of 2023. This sequence highlights the strategy’s
+adaptability and its ability to shift between risk assets and defensive positions in
+response to changing market conditions.
+Increasing Leverage
+Some investors may view the CAGR of 9.5% as too modest and be willing to accept
+more volatility in exchange for higher returns. One way to achieve this is by replacin
+SPY with a leveraged ETF, depending on individual risk preferences. For example,
+substituting SPY with SPXL, the triple-leveraged S&P 500 ETF, and rerunning the mo
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 6/11
+================================================================================
+PAGE 7
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+provides a more aggressive version of the strategy. Since SPXL was listed in Novem
+2008, the sample period starts from that point.
+With SPXL as the fallback asset, the strategy’s CAGR rises to approximately 21%, wh
+its volatility becomes similar to that of SPY. The strategy’s Sharpe ratio is significant
+higher than that of SPY, 0.99 compared to 0.79. The annual performance table show
+consistent outperformance across many years. So far in 2025, the strategy has retur
+about 23%, once again driven by substantial allocations to both gold and equities
+throughout the year.
+Conclusions
+I find results that closely mirror those in the original paper. The strategy offers an
+interesting alternative to static portfolios, particularly in uncertain or volatile market
+While the base version delivers a slightly lower raw return than SPY, it does so with
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 7/11
+================================================================================
+PAGE 8
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+significantly less risk, resulting in superior risk-adjusted performance. During period
+like 2022, when both stocks and bonds struggled, the model successfully shifted
+exposure to the U.S. dollar and commodities, helping cushion the downside. Its des
+comparing momentum signals to the risk-free rate and reallocating to equities only
+when the alternative assets underperform, ensures the strategy remains both adapt
+and disciplined.
+For investors willing to accept more volatility, replacing SPY with SPXL significantly
+boosts long-term returns while still maintaining a strong Sharpe ratio. The leverage
+version remained resilient in turbulent markets and delivered impressive results in
+many calendar years, including strong year-to-date performance in 2025.
+While the current approach is simple and effective, it also provides a solid foundatio
+for further exploration. One could test alternative weighting schemes, add other
+defensive assets such as volatility ETFs, or incorporate additional filters and trend-
+following rules to enhance performance.
+Overall, the strategy presents a robust framework for tactical asset allocation with c
+rules and strong historical results. It's easy to implement, adaptable to different risk
+preferences, and well-suited for investors seeking a systematic way to stay defensiv
+without sacrificing long-term return potential.
+This Substack is reader-supported. To receive
+new posts and support my work, consider
+becoming a free or paid subscriber.
+References
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 8/11
+================================================================================
+PAGE 9
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+Carlson, Thomas, 2025, Defense First: A Multi-Asset Tactical Model for Adaptive
+Downside Protection, SSRN Working Paper 5334772.
+Disclaimer: This newsletter is for informational and educational purposes only and
+should not be construed as investment advice. The author does not endorse or
+recommend any specific securities or investments. While information is gathered from
+sources believed to be reliable, there is no guarantee of its accuracy, completeness, or
+correctness.
+This content does not constitute personalized financial, legal, or investment advice an
+may not be suitable for your individual circumstances. Investing carries risks, and pas
+performance does not guarantee future results. The author and affiliates may hold
+positions in securities discussed, and these holdings may change at any time without
+prior notification.
+The author is not affiliated with, sponsored by, or endorsed by any of the companies,
+organizations, or entities mentioned in this newsletter. Any references to specific
+companies or entities are for informational purposes only.
+The brief summaries and descriptions of research papers and articles provided in this
+newsletter should not be considered definitive or comprehensive representations of th
+original works. Readers are encouraged to refer to the original sources for complete an
+authoritative information.
+This newsletter may contain links to external websites and resources. The inclusion of
+these links does not imply endorsement of the content, products, services, or views
+expressed on these third-party sites. The author is not responsible for the accuracy,
+legality, or content of external sites or for that of any subsequent links. Users access th
+links at their own risk.
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 9/11
+================================================================================
+PAGE 10
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+The author assumes no liability for losses or damages arising from the use of this
+content. By accessing, reading, or using this newsletter, you acknowledge and agree to
+the terms outlined in this disclaimer.
+5 Likes ∙ 1 Restack
+Discussion about this post
+Comments Restacks
+Write a comment...
+Flo Jul 18
+thanks for checking this interesting paper! I have one question:
+"If an asset’s momentum score is lower than the 90-day Treasury bill yield (used as a cash benchm
+its fixed weight is instead allocated to equities via SPY."
+what happens when lets say TLT's momentum is less then that of T-Bills and the SPY's momentum
+well less then T-Bill momentum? Does the system still switch the TLT portion to SPY?
+Thanks!
+LIKE REPLY
+6 replies by QuantSeeker and others
+William Jul 17
+Are you able to outline how the momentum signals were generated and how the weighting deci
+were made?
+LIKE REPLY
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 10/11
+================================================================================
+PAGE 11
+================================================================================
+
+9/29/25, 12:56 PM Weekly Research Insights - A Simple and Effective Tactical Allocation Strategy
+3 replies by QuantSeeker and others
+9 more comments...
+© 2025 QuantSeeker ∙ Privacy ∙ Terms ∙ Collection notice
+Substack is the home for great culture
+https://www.quantseeker.com/p/weekly-research-insights-a-simple 11/11

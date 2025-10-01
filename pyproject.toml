@@ -64,6 +64,7 @@ click = "^8.1.0"
 tqdm = "^4.65.0"
 loguru = "^0.7.0"
 papermill = "^2.6.0"
+pdfplumber = "^0.11.7"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"

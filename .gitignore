@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Data cache
+data/processed/*.pkl
+data/processed/*.csv
+tactical asset allocation/data/processed/*.pkl
+tactical asset allocation/data/processed/*.csv
+
+# Outputs
+outputs/reports/*.html
+outputs/results/*.txt
+outputs/results/*.csv
+tactical asset allocation/outputs/reports/*.html
+tactical asset allocation/outputs/results/*.txt
+tactical asset allocation/outputs/results/*.csv
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+*.cover
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Keep directory structure
+!.gitkeep

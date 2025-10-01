@@ -14,5 +14,6 @@
             "autoApprove": []
         }
     },
-    "workbench.activityBar.orientation": "vertical"
+    "workbench.activityBar.orientation": "vertical",
+    "livePreview.defaultPreviewPath": "/tactical asset allocation/outputs/spxl_vs_spx_tearsheet.html"
 } 
