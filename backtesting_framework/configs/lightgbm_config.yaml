@@ -1,0 +1,120 @@
+# LightGBM Strategy Configuration
+# Optimized for 144.6%+ total return breakthrough performance
+
+data:
+  file_path: "c:/Users/Eddy/YTM Capital Dropbox/Eddy Winiarz/Trading/COF/Models/Unfinished Models/Eddy/Python Projects/BT/data_pipelines/data_processed/with_er_daily.csv"
+  date_column: "Date"
+  resample_frequency: null # Use raw daily data
+  start_date: null
+  end_date: null
+  benchmark_asset: "cad_ig_er_index"
+  trading_asset: "cad_ig_er_index"
+  assets:
+    - "cad_ig_er_index"
+    - "us_hy_er_index" 
+    - "us_ig_er_index"
+    - "tsx"
+    - "cad_oas"
+    - "us_ig_oas"
+    - "us_hy_oas"
+    - "vix"
+    - "us_3m_10y"
+    - "us_lei_yoy"
+    - "us_economic_regime"
+    - "us_growth_surprises"
+    - "us_inflation_surprises"
+    - "us_hard_data_surprises"
+    - "us_equity_revisions"
+
+portfolio:
+  initial_capital: 100
+  frequency: "D" # Daily frequency for calculations
+  fees: 0.0
+  slippage: 0.0
+  position_size: 1.0
+  leverage: 1.0
+
+reporting:
+  output_dir: "outputs/reports"
+  generate_html: true
+  generate_pdf: false
+  include_plots: true
+  metrics_precision: 4
+
+# Feature engineering configuration (not used by LightGBM, but required by framework)
+features:
+  momentum_periods: [5, 10, 15, 20, 30, 40, 60, 65, 130, 260]
+  volatility_windows: [20, 40, 65, 130]
+  sma_windows: [20, 40, 65, 130]
+  include_macd: false
+  include_stochastic: false
+  include_rsi: false
+  include_bollinger: false
+  include_oas_features: false
+  include_vix: false
+  include_correlations: false
+  include_relative_strength: false
+  primary_asset: "cad_ig_er_index"
+  fill_na_value: 0.0
+
+# LightGBM Strategy Configuration
+lightgbm_strategy:
+  # Trading parameters
+  trading_asset: "cad_ig_er_index"
+  benchmark_asset: "cad_ig_er_index"
+  
+  # Feature engineering parameters (comprehensive)
+  momentum_periods: [1, 3, 5, 10, 20, 40, 60, 120, 252]  # Multi-timeframe momentum
+  volatility_periods: [5, 10, 20, 60]                     # Volatility windows
+  ma_periods: [5, 10, 20, 50, 200]                        # Moving average periods
+  
+  # Model parameters
+  prediction_horizons: [1, 5, 10]  # Predict 1-day, 5-day, and 10-day forward returns
+  train_test_split: 0.7            # 70% train, 30% test
+  min_train_samples: 500           # Minimum samples for training
+  
+  # LightGBM hyperparameters (optimized for financial time series)
+  num_leaves: 31                   # Number of leaves in tree
+  learning_rate: 0.05              # Learning rate for gradient boosting
+  feature_fraction: 0.8            # Fraction of features to use per iteration
+  bagging_fraction: 0.8            # Fraction of data to use per iteration
+  bagging_freq: 5                  # Frequency for bagging
+  max_depth: 7                     # Maximum tree depth
+  min_child_samples: 20            # Minimum samples per leaf
+  reg_alpha: 0.1                   # L1 regularization
+  reg_lambda: 0.1                  # L2 regularization
+  n_estimators: 200                # Number of boosting rounds
+  
+  # Threshold optimization parameters
+  optimize_threshold: true         # Enable threshold optimization
+  threshold_range: [0.45, 0.65]    # Range to search for optimal threshold
+  threshold_steps: 20              # Number of steps in threshold search
+  
+  # Risk management
+  use_ensemble: true               # Use ensemble of multiple models
+  min_prediction_confidence: 0.5   # Minimum confidence for signal
+  
+  # Random seed for reproducibility
+  random_seed: 42
+
+# Strategy selection control
+strategies:
+  enabled:
+    - "lightgbm_strategy"
+  run_all_by_default: false
+
+# Enhanced reporting configuration
+enhanced_reporting:
+  generate_detailed_stats_file: true
+  stats_file_name: "lightgbm_strategy_report.txt"
+  include_vectorbt_stats: true
+  include_quantstats_metrics: true
+  include_manual_calculations: true
+  include_drawdown_analysis: true
+
+# Common settings
+random_seed: 42
+verbose: true
+log_level: "INFO"
+
+

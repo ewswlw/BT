@@ -100,6 +100,33 @@ vol_adaptive_momentum:
   max_hold: 10
   scale: 0.005
 
+# LightGBM Machine Learning Strategy
+lightgbm_strategy:
+  trading_asset: "cad_ig_er_index"
+  benchmark_asset: "cad_ig_er_index"
+  momentum_periods: [1, 3, 5, 10, 20, 40, 60, 120, 252]
+  volatility_periods: [5, 10, 20, 60]
+  ma_periods: [5, 10, 20, 50, 200]
+  prediction_horizons: [1, 5, 10]
+  train_test_split: 0.7
+  min_train_samples: 500
+  num_leaves: 31
+  learning_rate: 0.05
+  feature_fraction: 0.8
+  bagging_fraction: 0.8
+  bagging_freq: 5
+  max_depth: 7
+  min_child_samples: 20
+  reg_alpha: 0.1
+  reg_lambda: 0.1
+  n_estimators: 200
+  optimize_threshold: true
+  threshold_range: [0.45, 0.65]
+  threshold_steps: 20
+  use_ensemble: true
+  min_prediction_confidence: 0.5
+  random_seed: 42
+
 # Strategy selection control
 strategies:
   enabled:
@@ -107,7 +134,8 @@ strategies:
     - "multi_asset_momentum" 
     - "genetic_algorithm"
     - "vol_adaptive_momentum"
-  # Available options: cross_asset_momentum, multi_asset_momentum, genetic_algorithm, vol_adaptive_momentum
+    - "lightgbm_strategy"
+  # Available options: cross_asset_momentum, multi_asset_momentum, genetic_algorithm, vol_adaptive_momentum, lightgbm_strategy
   run_all_by_default: true
 
 # Enhanced reporting configuration

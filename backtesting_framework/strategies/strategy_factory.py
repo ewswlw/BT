@@ -8,6 +8,7 @@ from .cross_asset_momentum import CrossAssetMomentumStrategy
 from .multi_asset_momentum import MultiAssetMomentumStrategy
 from .genetic_algorithm import GeneticAlgorithmStrategy
 from .vol_adaptive_momentum import VolAdaptiveMomentumStrategy
+from .lightgbm_strategy import LightGBMStrategy
 
 
 class StrategyFactory:
@@ -18,6 +19,7 @@ class StrategyFactory:
         'multi_asset_momentum': MultiAssetMomentumStrategy,
         'genetic_algorithm': GeneticAlgorithmStrategy,
         'vol_adaptive_momentum': VolAdaptiveMomentumStrategy,
+        'lightgbm_strategy': LightGBMStrategy,
     }
     
     @classmethod

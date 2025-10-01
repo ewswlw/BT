@@ -325,6 +325,59 @@ PARAMETERS:
 - Rebalancing Frequency: Weekly (Monday)
 """
         
+    elif strategy_name.lower() == 'lightgbm_strategy':
+        trading_asset = strategy_config.get('trading_asset', 'cad_ig_er_index')
+        prediction_horizons = strategy_config.get('prediction_horizons', [1, 5, 10])
+        learning_rate = strategy_config.get('learning_rate', 0.05)
+        n_estimators = strategy_config.get('n_estimators', 200)
+        
+        return f"""LightGBM Machine Learning Strategy (Daily Signals)
+
+TRADING RULES:
+1. Data & Methodology:
+   - Uses advanced machine learning (LightGBM) to predict profitable trading opportunities
+   - Analyzes {trading_asset} with 100+ engineered features
+   - Operates on DAILY data with daily signal generation
+
+2. Feature Engineering (Comprehensive):
+   - Multi-timeframe momentum (1d to 252d)
+   - Volatility regimes and measurements
+   - Technical indicators (RSI, MACD, Bollinger Bands, Stochastic)
+   - Cross-asset relationships (VIX, OAS spreads)
+   - Statistical features (z-scores, percentiles, skew, kurtosis)
+   - Trend strength and price acceleration
+
+3. Machine Learning Model:
+   - Ensemble of LightGBM models for prediction horizons: {prediction_horizons} days
+   - Gradient boosting with {n_estimators} estimators
+   - Learning rate: {learning_rate}
+   - Early stopping to prevent overfitting
+   - Binary classification (long vs. cash)
+
+4. Signal Generation:
+   - Optimized prediction probability threshold
+   - Ensemble averaging across multiple models
+   - Entry: When ML model predicts positive forward returns
+   - Exit: When model prediction falls below threshold
+
+5. Risk Management:
+   - Time in market based on model confidence
+   - Automatic regime detection through features
+   - Drawdown control through threshold optimization
+
+PARAMETERS:
+- Trading Asset: {trading_asset}
+- Prediction Horizons: {prediction_horizons} days
+- Learning Rate: {learning_rate}
+- Estimators: {n_estimators}
+- Features: 100+ engineered indicators
+
+EXPECTED PERFORMANCE:
+- Target Total Return: 144.6%+
+- Risk-Adjusted Returns through ML-driven signals
+- Adaptive to market regimes
+"""
+    
     elif strategy_name.lower() == 'genetic_algorithm':
         pop_size = strategy_config.get('population_size', 120)
         generations = strategy_config.get('max_generations', 120)
