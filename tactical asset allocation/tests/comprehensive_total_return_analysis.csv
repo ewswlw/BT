@@ -1,0 +1,26 @@
+Ticker,Name,Start/Inception Date,End Date,Smallest Frequency,CAGR Since Inception (%),YTD Return (%),3yr CAGR (%),5yr CAGR (%),10yr CAGR (%),Max Drawdown Since Inception (%)
+NDXT Index,NASDAQ 100 Total Return,2006-02-22,2025-10-02,Daily,14.75,24.53,30.16,15.27,20.55,-59.34
+VFINX US Equity,Vanguard 500 Index Fund,1980-01-02,2025-10-02,Daily,12.16,15.43,23.89,16.11,14.81,-55.26
+SPXT Index,S&P 500 Total Return,1989-09-11,2025-10-02,Daily,10.79,15.55,24.06,16.27,14.96,-55.25
+VEXMX US Equity,Vanguard Extended Market Index Fund,1987-12-21,2025-10-02,Daily,10.7,11.9,18.9,10.64,10.92,-58.16
+VTSMX US Equity,Vanguard Total Stock Market Index Fund,1992-03-16,2025-10-02,Daily,10.64,14.98,23.11,15.25,14.21,-55.37
+VIMAX US Equity,Vanguard Mid-Cap Index Fund Admiral,2001-11-12,2025-10-02,Daily,10.29,12.96,16.91,11.9,11.05,-58.88
+MXWO Index,MSCI World,1980-01-01,2025-10-02,Daily,9.57,18.41,23.63,14.73,12.68,-57.45
+MXEF Index,MSCI Emerging Markets,1987-12-31,2025-10-02,Daily,9.35,30.08,19.36,7.61,8.18,-65.15
+VSMAX US Equity,Vanguard Small-Cap Index Fund Admiral,2000-11-13,2025-10-02,Daily,9.27,8.04,15.23,11.51,10.28,-59.67
+VTSAX US Equity,Vanguard Total Stock Market Index Fund Admiral,2000-11-13,2025-10-02,Daily,8.85,15.06,23.23,15.37,14.32,-55.32
+LF98TRUU Index,US High Yield Corporate TR,1983-07-29,2025-10-02,Daily,8.34,7.16,10.94,5.46,6.17,-35.34
+VWESX US Equity,Vanguard Long-Term Investment-Grade Fund Admiral,1980-01-02,2025-10-02,Daily,7.71,7.95,5.48,-2.77,2.8,-35.67
+LUACTRUU Index,US Investment Grade Corporate TR,1980-01-31,2025-10-02,Daily,7.53,7.28,6.8,0.48,3.17,-22.04
+MXEUT Index,MSCI Europe Total Return,1997-11-28,2025-10-02,Daily,6.54,15.03,16.89,13.01,8.13,-58.26
+VEMAX US Equity,Vanguard Emerging Markets Index Fund Admiral,2006-06-23,2025-10-02,Daily,5.94,24.69,17.26,7.71,7.6,-66.46
+VUSTX US Equity,Vanguard Long-Term Treasury Fund,1986-05-19,2025-10-02,Daily,5.56,6.39,0.0,-7.28,-0.09,-46.11
+VTMGX US Equity,Vanguard Developed Markets Index Fund Admiral,1999-08-27,2025-10-02,Daily,5.23,28.94,21.38,11.13,8.22,-60.56
+VBMFX US Equity,Vanguard Total Bond Market Index Fund,1986-12-11,2025-10-02,Daily,4.84,6.34,4.68,-0.42,1.76,-18.75
+VFITX US Equity,Vanguard Intermediate-Term Treasury Fund,1991-10-28,2025-10-02,Daily,4.75,6.62,4.07,-0.29,1.49,-15.41
+I05510CA Index,Canadian Investment Grade TR,2002-10-01,2025-10-02,Daily,4.63,4.03,6.8,1.86,3.13,-14.22
+GOLDS Comdty,Gold Spot,1980-01-02,2025-10-02,Daily,4.31,45.1,31.42,15.08,13.01,-70.29
+VFISX US Equity,Vanguard Short-Term Treasury Fund,1991-10-28,2025-10-02,Daily,3.5,4.38,3.94,1.19,1.53,-6.78
+VBTLX US Equity,Vanguard Total Bond Market Index Fund Admiral,2001-11-12,2025-10-02,Daily,3.38,6.44,4.79,-0.32,1.86,-18.57
+BCOM Index,Bloomberg Commodity Index TR,1980-01-02,2025-10-02,Daily,-0.63,5.27,-2.39,8.11,1.68,-75.0
+DJPY Index,Dow Jones Commodity Index TR,2017-12-12,2020-10-30,Daily,-8.63,0.0,0.0,-53.41,-8.63,-31.24
