@@ -62,7 +62,7 @@ TRADING_DAYS_PER_YEAR = 252
 INITIAL_NAV = 100.0
 
 # Output settings
-OUTPUT_DIR = 'tactical asset allocation/outputs'
+OUTPUT_DIR = 'processed'
 OUTPUT_FILE = 'spxl_synthetic_series.csv'
 
 #############################################################
@@ -463,10 +463,14 @@ class SPXLSyntheticBuilder:
             Path where file was saved
         """
         if output_path is None:
-            output_path = os.path.join(project_root, OUTPUT_DIR, OUTPUT_FILE)
+            # Get the directory of the current file (tactical asset allocation/data/)
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            output_path = os.path.join(current_dir, OUTPUT_DIR, OUTPUT_FILE)
         
-        # Ensure directory exists
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        # Check if the processed directory exists, if not create it
+        processed_dir = os.path.join(current_dir, OUTPUT_DIR)
+        if not os.path.exists(processed_dir):
+            os.makedirs(processed_dir)
         
         # Save to CSV
         series.to_csv(output_path)
@@ -648,8 +652,13 @@ def create_quantstats_comparison(complete_series: pd.DataFrame, output_dir: str 
         
         # Set output directory
         if output_dir is None:
-            output_dir = os.path.join(project_root, OUTPUT_DIR)
-        os.makedirs(output_dir, exist_ok=True)
+            # Get the directory of the current file (tactical asset allocation/data/)
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            output_dir = os.path.join(current_dir, OUTPUT_DIR)
+        
+        # Check if the processed directory exists, if not create it
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
         
         # Generate tearsheet
         output_file = os.path.join(output_dir, 'spxl_vs_spx_tearsheet.html')
