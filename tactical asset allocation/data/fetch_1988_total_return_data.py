@@ -51,29 +51,10 @@ ticker_to_security = {
     
     # Bond/Fixed Income Indices
     'LUACTRUU Index': 'Bloomberg US Corporate Total Return Index',
-    'LUAITRUU Index': 'Bloomberg US Agg Industrial Total Return Index',
-    'LD06TRUU Index': 'Bloomberg Intermediate Corporate Total Return Index',
-    'IO2778US Index': 'Bloomberg Intermediate US Govt/Credit Total Return Index',
-    'LD07TRUU Index': 'Bloomberg U.S. Intermediate Credit Total Return Index',
-    'LULCTRUU Index': 'Bloomberg US Government Intermediate Total Return Index',
-    'LUCRTRUU Index': 'Bloomberg Invest Grade Fin Inst Total Return Index',
-    'LD24TRUU Index': 'Bloomberg US Intermediate Treasury Total Return Index',
-    'LD18TRUU Index': 'Bloomberg Intermediate A+ U.S. Govt/Credit Total Return Index',
-    'LD10TRUU Index': 'Bloomberg Long U.S. Corporate Total Return Index',
     'LBUSTRUU Index': 'Bloomberg US Long Treasury Total Return Index',
     'IO0087US Index': 'Bloomberg U.S. Long Credit Total Return Index',
-    'LD08TRUU Index': 'Bloomberg U.S. Government Long Total Return Index',
-    'LD09TRUU Index': 'Bloomberg US Long Credit Baa Total Return Index',
-    'LD11TRUU Index': 'Bloomberg U.S. Long Government Total Return Index',
-    'LD12TRUU Index': 'Bloomberg US Corporate Long Aa Total Return Index',
-    'LD13TRUU Index': 'Bloomberg US Credit Total Return Index',
     'LD14TRUU Index': 'Bloomberg US Govt Total Return Index',
-    'LD15TRUU Index': 'Bloomberg US Treasury Total Return Index',
     'LD16TRUU Index': 'Bloomberg 1-3 Yr Gov Total Return Index',
-    'LD17TRUU Index': 'Bloomberg 1-3 Yr US Gov/Credit Total Return Index',
-    'LD19TRUU Index': 'Bloomberg 1-5 Yr Credit Total Return Index',
-    'LD20TRUU Index': 'Bloomberg US Treasury 1-5 Yr Total Return Index',
-    'LD21TRUU Index': 'Bloomberg 1-5 Yr Gov/Credit Total Return Index',
     'LD28TRUU Index': 'Bloomberg Intermediate US High Yield Total Return Index'
 }
 
