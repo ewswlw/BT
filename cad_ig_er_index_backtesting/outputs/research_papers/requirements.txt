@@ -1,0 +1,43 @@
+# Machine Learning Credit Timing Study - Python Requirements
+# 
+# This file contains all Python packages required to reproduce the results
+# of the machine learning credit timing study for Canadian Investment Grade markets.
+#
+# Installation:
+#   pip install -r requirements.txt
+#
+# Or using conda:
+#   conda install --file requirements.txt
+
+# Core Data Analysis
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Machine Learning
+scikit-learn>=1.1.0
+
+# Statistical Analysis
+scipy>=1.9.0
+
+# Optional: Enhanced Data Visualization
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Optional: Jupyter Notebook Support
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Optional: Progress Bars
+tqdm>=4.64.0
+
+# Optional: Enhanced Data Processing
+openpyxl>=3.0.0  # For Excel file support
+
+# Development and Testing (Optional)
+pytest>=7.0.0
+black>=22.0.0
+flake8>=5.0.0
+
+# Version Information
+# Python: >=3.8
+# Tested on: Python 3.8, 3.9, 3.10, 3.11
