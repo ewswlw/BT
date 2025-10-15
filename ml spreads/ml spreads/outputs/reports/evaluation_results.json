@@ -1,0 +1,1832 @@
+[
+  {
+    "model_name": "Ultra Robust Ultra Random Forest",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:11.692113",
+    "train_metrics": {
+      "r2": 0.6785644800922994,
+      "rmse": 3.170071785197678,
+      "mae": 2.140325795638872,
+      "mape": 3.4704791648900697,
+      "directional_accuracy": 25.03311258278146,
+      "correlation": 0.8365728750528545,
+      "n_samples": 756,
+      "split_number": 1,
+      "train_dates": [
+        "2003-11-30 00:00:00",
+        "2006-10-09 00:00:00"
+      ],
+      "test_dates": [
+        "2006-10-10 00:00:00",
+        "2007-01-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.40842164291911665,
+      "rmse": 0.9505851781598847,
+      "mae": 0.8162529578476995,
+      "mape": 1.3546262376219846,
+      "directional_accuracy": 19.35483870967742,
+      "correlation": 0.9160180612245995,
+      "n_samples": 63,
+      "split_number": 1,
+      "train_dates": [
+        "2003-11-30 00:00:00",
+        "2006-10-09 00:00:00"
+      ],
+      "test_dates": [
+        "2006-10-10 00:00:00",
+        "2007-01-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.27014283717318277,
+    "split_info": {
+      "split_number": 1,
+      "train_dates": [
+        "2003-11-30 00:00:00",
+        "2006-10-09 00:00:00"
+      ],
+      "test_dates": [
+        "2006-10-10 00:00:00",
+        "2007-01-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Random Forest",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:12.315049",
+    "train_metrics": {
+      "r2": 0.681578369576811,
+      "rmse": 3.0436443669412645,
+      "mae": 2.098140554741057,
+      "mape": 3.4335235769689483,
+      "directional_accuracy": 25.43046357615894,
+      "correlation": 0.8375442938625938,
+      "n_samples": 756,
+      "split_number": 2,
+      "train_dates": [
+        "2003-12-29 00:00:00",
+        "2006-11-07 00:00:00"
+      ],
+      "test_dates": [
+        "2006-11-08 00:00:00",
+        "2007-02-01 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -0.06268433861459766,
+      "rmse": 0.8867059104021675,
+      "mae": 0.7180588721121828,
+      "mape": 1.2219060225265315,
+      "directional_accuracy": 22.58064516129032,
+      "correlation": 0.21306241928014474,
+      "n_samples": 63,
+      "split_number": 2,
+      "train_dates": [
+        "2003-12-29 00:00:00",
+        "2006-11-07 00:00:00"
+      ],
+      "test_dates": [
+        "2006-11-08 00:00:00",
+        "2007-02-01 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.7442627081914086,
+    "split_info": {
+      "split_number": 2,
+      "train_dates": [
+        "2003-12-29 00:00:00",
+        "2006-11-07 00:00:00"
+      ],
+      "test_dates": [
+        "2006-11-08 00:00:00",
+        "2007-02-01 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Random Forest",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:12.685845",
+    "train_metrics": {
+      "r2": 0.6907072045199216,
+      "rmse": 2.9711801615577964,
+      "mae": 2.034362230413444,
+      "mape": 3.324436091071531,
+      "directional_accuracy": 25.562913907284766,
+      "correlation": 0.8403174853670826,
+      "n_samples": 756,
+      "split_number": 3,
+      "train_dates": [
+        "2004-01-27 00:00:00",
+        "2006-12-06 00:00:00"
+      ],
+      "test_dates": [
+        "2006-12-07 00:00:00",
+        "2007-03-02 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -0.4685363230656403,
+      "rmse": 1.7963890009259083,
+      "mae": 1.3681659245554578,
+      "mape": 2.4328558930203243,
+      "directional_accuracy": 19.35483870967742,
+      "correlation": 0.6689536162873083,
+      "n_samples": 63,
+      "split_number": 3,
+      "train_dates": [
+        "2004-01-27 00:00:00",
+        "2006-12-06 00:00:00"
+      ],
+      "test_dates": [
+        "2006-12-07 00:00:00",
+        "2007-03-02 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 1.159243527585562,
+    "split_info": {
+      "split_number": 3,
+      "train_dates": [
+        "2004-01-27 00:00:00",
+        "2006-12-06 00:00:00"
+      ],
+      "test_dates": [
+        "2006-12-07 00:00:00",
+        "2007-03-02 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:13.141384",
+    "train_metrics": {
+      "r2": 0.8525879831577026,
+      "rmse": 2.038875153284351,
+      "mae": 1.146286304797252,
+      "mape": 1.8155198102930674,
+      "directional_accuracy": 54.437086092715234,
+      "correlation": 0.9246921674421095,
+      "n_samples": 756,
+      "split_number": 4,
+      "train_dates": [
+        "2004-02-24 00:00:00",
+        "2007-01-03 00:00:00"
+      ],
+      "test_dates": [
+        "2007-01-04 00:00:00",
+        "2007-03-31 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.3269599148925023,
+      "rmse": 1.015988778710874,
+      "mae": 0.8192090743377971,
+      "mape": 1.4661706510350343,
+      "directional_accuracy": 53.2258064516129,
+      "correlation": 0.8875302920322515,
+      "n_samples": 63,
+      "split_number": 4,
+      "train_dates": [
+        "2004-02-24 00:00:00",
+        "2007-01-03 00:00:00"
+      ],
+      "test_dates": [
+        "2007-01-04 00:00:00",
+        "2007-03-31 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.5256280682652003,
+    "split_info": {
+      "split_number": 4,
+      "train_dates": [
+        "2004-02-24 00:00:00",
+        "2007-01-03 00:00:00"
+      ],
+      "test_dates": [
+        "2007-01-04 00:00:00",
+        "2007-03-31 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Random Forest",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:13.441599",
+    "train_metrics": {
+      "r2": 0.72797397325054,
+      "rmse": 2.758159185492982,
+      "mae": 1.9066838975319476,
+      "mape": 3.119498735687171,
+      "directional_accuracy": 23.178807947019866,
+      "correlation": 0.8596058367255334,
+      "n_samples": 756,
+      "split_number": 5,
+      "train_dates": [
+        "2004-03-23 00:00:00",
+        "2007-02-01 00:00:00"
+      ],
+      "test_dates": [
+        "2007-02-02 00:00:00",
+        "2007-04-30 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.027500145424643185,
+      "rmse": 3.5489756777980594,
+      "mae": 3.1527313193640523,
+      "mape": 5.451806376189968,
+      "directional_accuracy": 19.35483870967742,
+      "correlation": 0.5657148767010685,
+      "n_samples": 63,
+      "split_number": 5,
+      "train_dates": [
+        "2004-03-23 00:00:00",
+        "2007-02-01 00:00:00"
+      ],
+      "test_dates": [
+        "2007-02-02 00:00:00",
+        "2007-04-30 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.7004738278258968,
+    "split_info": {
+      "split_number": 5,
+      "train_dates": [
+        "2004-03-23 00:00:00",
+        "2007-02-01 00:00:00"
+      ],
+      "test_dates": [
+        "2007-02-02 00:00:00",
+        "2007-04-30 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Random Forest",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:13.867904",
+    "train_metrics": {
+      "r2": 0.7332846315360306,
+      "rmse": 2.6319161288369215,
+      "mae": 1.873789876137411,
+      "mape": 3.1031109186485417,
+      "directional_accuracy": 24.503311258278146,
+      "correlation": 0.8648901763850844,
+      "n_samples": 756,
+      "split_number": 6,
+      "train_dates": [
+        "2004-04-21 00:00:00",
+        "2007-03-02 00:00:00"
+      ],
+      "test_dates": [
+        "2007-03-05 00:00:00",
+        "2007-05-29 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.10695823571946994,
+      "rmse": 5.0360772972830645,
+      "mae": 4.476893515256744,
+      "mape": 7.1298760974885464,
+      "directional_accuracy": 29.03225806451613,
+      "correlation": 0.8084062027910189,
+      "n_samples": 63,
+      "split_number": 6,
+      "train_dates": [
+        "2004-04-21 00:00:00",
+        "2007-03-02 00:00:00"
+      ],
+      "test_dates": [
+        "2007-03-05 00:00:00",
+        "2007-05-29 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.6263263958165607,
+    "split_info": {
+      "split_number": 6,
+      "train_dates": [
+        "2004-04-21 00:00:00",
+        "2007-03-02 00:00:00"
+      ],
+      "test_dates": [
+        "2007-03-05 00:00:00",
+        "2007-05-29 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Elastic Net",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:14.170378",
+    "train_metrics": {
+      "r2": 0.2781266453976585,
+      "rmse": 4.2223050399383055,
+      "mae": 3.284885567634831,
+      "mape": 5.338993771949469,
+      "directional_accuracy": 50.331125827814574,
+      "correlation": 0.575840191445296,
+      "n_samples": 756,
+      "split_number": 7,
+      "train_dates": [
+        "2004-05-20 00:00:00",
+        "2007-03-31 00:00:00"
+      ],
+      "test_dates": [
+        "2007-04-02 00:00:00",
+        "2007-06-27 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -1.200007016354944,
+      "rmse": 5.897802004878132,
+      "mae": 5.624594293054182,
+      "mape": 8.556012230770541,
+      "directional_accuracy": 50.0,
+      "correlation": 0.03558829389114636,
+      "n_samples": 63,
+      "split_number": 7,
+      "train_dates": [
+        "2004-05-20 00:00:00",
+        "2007-03-31 00:00:00"
+      ],
+      "test_dates": [
+        "2007-04-02 00:00:00",
+        "2007-06-27 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 1.4781336617526024,
+    "split_info": {
+      "split_number": 7,
+      "train_dates": [
+        "2004-05-20 00:00:00",
+        "2007-03-31 00:00:00"
+      ],
+      "test_dates": [
+        "2007-04-02 00:00:00",
+        "2007-06-27 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Elastic Net",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:14.372626",
+    "train_metrics": {
+      "r2": 0.2660655400966373,
+      "rmse": 3.9374130853492755,
+      "mae": 3.1523805958702944,
+      "mape": 5.174241234899678,
+      "directional_accuracy": 50.59602649006622,
+      "correlation": 0.5580639956757518,
+      "n_samples": 756,
+      "split_number": 8,
+      "train_dates": [
+        "2004-06-18 00:00:00",
+        "2007-04-30 00:00:00"
+      ],
+      "test_dates": [
+        "2007-05-01 00:00:00",
+        "2007-07-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -4.817034712126917,
+      "rmse": 10.400528039012634,
+      "mae": 9.44126943322601,
+      "mape": 13.153996173881803,
+      "directional_accuracy": 50.0,
+      "correlation": -0.1745187243541941,
+      "n_samples": 63,
+      "split_number": 8,
+      "train_dates": [
+        "2004-06-18 00:00:00",
+        "2007-04-30 00:00:00"
+      ],
+      "test_dates": [
+        "2007-05-01 00:00:00",
+        "2007-07-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 5.083100252223554,
+    "split_info": {
+      "split_number": 8,
+      "train_dates": [
+        "2004-06-18 00:00:00",
+        "2007-04-30 00:00:00"
+      ],
+      "test_dates": [
+        "2007-05-01 00:00:00",
+        "2007-07-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:14.632701",
+    "train_metrics": {
+      "r2": 0.9404180508225787,
+      "rmse": 1.09977432032055,
+      "mae": 0.7701640620372177,
+      "mape": 1.2774199822212002,
+      "directional_accuracy": 51.9205298013245,
+      "correlation": 0.9720666204421973,
+      "n_samples": 756,
+      "split_number": 9,
+      "train_dates": [
+        "2004-07-19 00:00:00",
+        "2007-05-29 00:00:00"
+      ],
+      "test_dates": [
+        "2007-05-30 00:00:00",
+        "2007-08-23 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -1.1922288743822955,
+      "rmse": 14.197099708014054,
+      "mae": 12.221742498617559,
+      "mape": 14.885690422289223,
+      "directional_accuracy": 54.83870967741935,
+      "correlation": 0.7889229509950453,
+      "n_samples": 63,
+      "split_number": 9,
+      "train_dates": [
+        "2004-07-19 00:00:00",
+        "2007-05-29 00:00:00"
+      ],
+      "test_dates": [
+        "2007-05-30 00:00:00",
+        "2007-08-23 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 2.1326469252048743,
+    "split_info": {
+      "split_number": 9,
+      "train_dates": [
+        "2004-07-19 00:00:00",
+        "2007-05-29 00:00:00"
+      ],
+      "test_dates": [
+        "2007-05-30 00:00:00",
+        "2007-08-23 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:15.048451",
+    "train_metrics": {
+      "r2": 0.9391991747682562,
+      "rmse": 1.0977481200082768,
+      "mae": 0.7837892009510675,
+      "mape": 1.2994434995418946,
+      "directional_accuracy": 52.58278145695364,
+      "correlation": 0.9719712074668437,
+      "n_samples": 756,
+      "split_number": 10,
+      "train_dates": [
+        "2004-08-16 00:00:00",
+        "2007-06-27 00:00:00"
+      ],
+      "test_dates": [
+        "2007-06-28 00:00:00",
+        "2007-09-21 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -1.4566541131123558,
+      "rmse": 18.860037415667644,
+      "mae": 17.05354165228367,
+      "mape": 18.215540752948815,
+      "directional_accuracy": 56.451612903225815,
+      "correlation": 0.861963219810185,
+      "n_samples": 63,
+      "split_number": 10,
+      "train_dates": [
+        "2004-08-16 00:00:00",
+        "2007-06-27 00:00:00"
+      ],
+      "test_dates": [
+        "2007-06-28 00:00:00",
+        "2007-09-21 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 2.395853287880612,
+    "split_info": {
+      "split_number": 10,
+      "train_dates": [
+        "2004-08-16 00:00:00",
+        "2007-06-27 00:00:00"
+      ],
+      "test_dates": [
+        "2007-06-28 00:00:00",
+        "2007-09-21 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:15.466599",
+    "train_metrics": {
+      "r2": 0.9427445613136913,
+      "rmse": 1.1958454751862737,
+      "mae": 0.8296038340520184,
+      "mape": 1.359828551135093,
+      "directional_accuracy": 54.03973509933775,
+      "correlation": 0.9739525489136326,
+      "n_samples": 756,
+      "split_number": 11,
+      "train_dates": [
+        "2004-09-14 00:00:00",
+        "2007-07-25 00:00:00"
+      ],
+      "test_dates": [
+        "2007-07-26 00:00:00",
+        "2007-10-19 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -4.799924330394255,
+      "rmse": 19.04575132187149,
+      "mae": 18.218065328387407,
+      "mape": 18.200368833712012,
+      "directional_accuracy": 56.451612903225815,
+      "correlation": 0.8227014970506255,
+      "n_samples": 63,
+      "split_number": 11,
+      "train_dates": [
+        "2004-09-14 00:00:00",
+        "2007-07-25 00:00:00"
+      ],
+      "test_dates": [
+        "2007-07-26 00:00:00",
+        "2007-10-19 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 5.742668891707947,
+    "split_info": {
+      "split_number": 11,
+      "train_dates": [
+        "2004-09-14 00:00:00",
+        "2007-07-25 00:00:00"
+      ],
+      "test_dates": [
+        "2007-07-26 00:00:00",
+        "2007-10-19 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:15.736303",
+    "train_metrics": {
+      "r2": 0.9647071526747596,
+      "rmse": 1.2953799788587408,
+      "mae": 0.8950471738843238,
+      "mape": 1.4338261873948894,
+      "directional_accuracy": 54.437086092715234,
+      "correlation": 0.9838039805102694,
+      "n_samples": 756,
+      "split_number": 12,
+      "train_dates": [
+        "2004-10-13 00:00:00",
+        "2007-08-23 00:00:00"
+      ],
+      "test_dates": [
+        "2007-08-24 00:00:00",
+        "2007-11-19 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -5.218552660931519,
+      "rmse": 16.00450147770917,
+      "mae": 14.642725243128487,
+      "mape": 13.756037545966787,
+      "directional_accuracy": 54.83870967741935,
+      "correlation": 0.3166776780510324,
+      "n_samples": 63,
+      "split_number": 12,
+      "train_dates": [
+        "2004-10-13 00:00:00",
+        "2007-08-23 00:00:00"
+      ],
+      "test_dates": [
+        "2007-08-24 00:00:00",
+        "2007-11-19 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 6.183259813606279,
+    "split_info": {
+      "split_number": 12,
+      "train_dates": [
+        "2004-10-13 00:00:00",
+        "2007-08-23 00:00:00"
+      ],
+      "test_dates": [
+        "2007-08-24 00:00:00",
+        "2007-11-19 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:16.138988",
+    "train_metrics": {
+      "r2": 0.982334109192745,
+      "rmse": 1.2931687096108668,
+      "mae": 0.9071576313651413,
+      "mape": 1.415894202962829,
+      "directional_accuracy": 55.09933774834437,
+      "correlation": 0.9917194171619246,
+      "n_samples": 756,
+      "split_number": 13,
+      "train_dates": [
+        "2004-11-10 00:00:00",
+        "2007-09-21 00:00:00"
+      ],
+      "test_dates": [
+        "2007-09-24 00:00:00",
+        "2007-12-18 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -0.004544983098823785,
+      "rmse": 15.367267217300718,
+      "mae": 13.286026616120298,
+      "mape": 10.97568583676746,
+      "directional_accuracy": 62.903225806451616,
+      "correlation": 0.8937543392349178,
+      "n_samples": 63,
+      "split_number": 13,
+      "train_dates": [
+        "2004-11-10 00:00:00",
+        "2007-09-21 00:00:00"
+      ],
+      "test_dates": [
+        "2007-09-24 00:00:00",
+        "2007-12-18 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.9868790922915688,
+    "split_info": {
+      "split_number": 13,
+      "train_dates": [
+        "2004-11-10 00:00:00",
+        "2007-09-21 00:00:00"
+      ],
+      "test_dates": [
+        "2007-09-24 00:00:00",
+        "2007-12-18 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:16.452349",
+    "train_metrics": {
+      "r2": 0.9867896508198912,
+      "rmse": 1.3578001062733438,
+      "mae": 0.9293163191106165,
+      "mape": 1.4061304128557768,
+      "directional_accuracy": 55.76158940397351,
+      "correlation": 0.9937273308928861,
+      "n_samples": 756,
+      "split_number": 14,
+      "train_dates": [
+        "2004-12-09 00:00:00",
+        "2007-10-19 00:00:00"
+      ],
+      "test_dates": [
+        "2007-10-22 00:00:00",
+        "2008-01-16 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -0.18165350147918047,
+      "rmse": 15.132362239597084,
+      "mae": 13.969887528020605,
+      "mape": 10.790785994938577,
+      "directional_accuracy": 64.51612903225806,
+      "correlation": 0.9185265043162267,
+      "n_samples": 63,
+      "split_number": 14,
+      "train_dates": [
+        "2004-12-09 00:00:00",
+        "2007-10-19 00:00:00"
+      ],
+      "test_dates": [
+        "2007-10-22 00:00:00",
+        "2008-01-16 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 1.1684431522990717,
+    "split_info": {
+      "split_number": 14,
+      "train_dates": [
+        "2004-12-09 00:00:00",
+        "2007-10-19 00:00:00"
+      ],
+      "test_dates": [
+        "2007-10-22 00:00:00",
+        "2008-01-16 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:16.751790",
+    "train_metrics": {
+      "r2": 0.9896268430719939,
+      "rmse": 1.4234094234911339,
+      "mae": 0.9742344941465523,
+      "mape": 1.4475931601536804,
+      "directional_accuracy": 56.556291390728475,
+      "correlation": 0.9950825259794077,
+      "n_samples": 756,
+      "split_number": 15,
+      "train_dates": [
+        "2005-01-07 00:00:00",
+        "2007-11-19 00:00:00"
+      ],
+      "test_dates": [
+        "2007-11-20 00:00:00",
+        "2008-02-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -0.31792186828622326,
+      "rmse": 7.384377142839068,
+      "mae": 6.120849457767286,
+      "mape": 4.3858960585520395,
+      "directional_accuracy": 59.67741935483871,
+      "correlation": 0.7859739994929849,
+      "n_samples": 63,
+      "split_number": 15,
+      "train_dates": [
+        "2005-01-07 00:00:00",
+        "2007-11-19 00:00:00"
+      ],
+      "test_dates": [
+        "2007-11-20 00:00:00",
+        "2008-02-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 1.3075487113582172,
+    "split_info": {
+      "split_number": 15,
+      "train_dates": [
+        "2005-01-07 00:00:00",
+        "2007-11-19 00:00:00"
+      ],
+      "test_dates": [
+        "2007-11-20 00:00:00",
+        "2008-02-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Elastic Net",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:17.220505",
+    "train_metrics": {
+      "r2": 0.9316535963591868,
+      "rmse": 4.751744198808933,
+      "mae": 3.3885653530760385,
+      "mape": 4.7960417769981065,
+      "directional_accuracy": 50.331125827814574,
+      "correlation": 0.980435589479724,
+      "n_samples": 756,
+      "split_number": 16,
+      "train_dates": [
+        "2005-02-07 00:00:00",
+        "2007-12-18 00:00:00"
+      ],
+      "test_dates": [
+        "2007-12-19 00:00:00",
+        "2008-03-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.6786533330729666,
+      "rmse": 5.6836327548154815,
+      "mae": 5.055155774555815,
+      "mape": 3.45461839016754,
+      "directional_accuracy": 58.06451612903226,
+      "correlation": 0.9307489058575564,
+      "n_samples": 63,
+      "split_number": 16,
+      "train_dates": [
+        "2005-02-07 00:00:00",
+        "2007-12-18 00:00:00"
+      ],
+      "test_dates": [
+        "2007-12-19 00:00:00",
+        "2008-03-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.25300026328622016,
+    "split_info": {
+      "split_number": 16,
+      "train_dates": [
+        "2005-02-07 00:00:00",
+        "2007-12-18 00:00:00"
+      ],
+      "test_dates": [
+        "2007-12-19 00:00:00",
+        "2008-03-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Elastic Net",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:17.691822",
+    "train_metrics": {
+      "r2": 0.94795358727599,
+      "rmse": 4.886180889900106,
+      "mae": 3.5764326844614565,
+      "mape": 5.015111940750509,
+      "directional_accuracy": 52.185430463576154,
+      "correlation": 0.9825298113547463,
+      "n_samples": 756,
+      "split_number": 17,
+      "train_dates": [
+        "2005-03-08 00:00:00",
+        "2008-01-16 00:00:00"
+      ],
+      "test_dates": [
+        "2008-01-17 00:00:00",
+        "2008-04-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -0.02919355274623725,
+      "rmse": 12.941236041843485,
+      "mae": 10.852929527476276,
+      "mape": 6.556461793372994,
+      "directional_accuracy": 53.2258064516129,
+      "correlation": 0.9569110770305977,
+      "n_samples": 63,
+      "split_number": 17,
+      "train_dates": [
+        "2005-03-08 00:00:00",
+        "2008-01-16 00:00:00"
+      ],
+      "test_dates": [
+        "2008-01-17 00:00:00",
+        "2008-04-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.9771471400222272,
+    "split_info": {
+      "split_number": 17,
+      "train_dates": [
+        "2005-03-08 00:00:00",
+        "2008-01-16 00:00:00"
+      ],
+      "test_dates": [
+        "2008-01-17 00:00:00",
+        "2008-04-14 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:17.844920",
+    "train_metrics": {
+      "r2": 0.9940385628550382,
+      "rmse": 1.9195896114598368,
+      "mae": 1.3116358664279009,
+      "mape": 1.7825321259822766,
+      "directional_accuracy": 54.17218543046357,
+      "correlation": 0.9970762137116387,
+      "n_samples": 756,
+      "split_number": 18,
+      "train_dates": [
+        "2005-04-06 00:00:00",
+        "2008-02-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-02-15 00:00:00",
+        "2008-05-13 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.4195201165528739,
+      "rmse": 7.589696998758627,
+      "mae": 6.070215290057418,
+      "mape": 3.5644793338868523,
+      "directional_accuracy": 51.61290322580645,
+      "correlation": 0.928857370327893,
+      "n_samples": 63,
+      "split_number": 18,
+      "train_dates": [
+        "2005-04-06 00:00:00",
+        "2008-02-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-02-15 00:00:00",
+        "2008-05-13 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.5745184463021643,
+    "split_info": {
+      "split_number": 18,
+      "train_dates": [
+        "2005-04-06 00:00:00",
+        "2008-02-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-02-15 00:00:00",
+        "2008-05-13 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:17.998532",
+    "train_metrics": {
+      "r2": 0.9953693564814458,
+      "rmse": 1.9488365663917242,
+      "mae": 1.3397541904968275,
+      "mape": 1.788743832717989,
+      "directional_accuracy": 54.17218543046357,
+      "correlation": 0.9977420286342228,
+      "n_samples": 756,
+      "split_number": 19,
+      "train_dates": [
+        "2005-05-04 00:00:00",
+        "2008-03-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-03-17 00:00:00",
+        "2008-06-10 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.42444047225734527,
+      "rmse": 5.590474150792119,
+      "mae": 3.9900774273119906,
+      "mape": 2.322291732582839,
+      "directional_accuracy": 43.54838709677419,
+      "correlation": 0.8858817087849515,
+      "n_samples": 63,
+      "split_number": 19,
+      "train_dates": [
+        "2005-05-04 00:00:00",
+        "2008-03-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-03-17 00:00:00",
+        "2008-06-10 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.5709288842241005,
+    "split_info": {
+      "split_number": 19,
+      "train_dates": [
+        "2005-05-04 00:00:00",
+        "2008-03-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-03-17 00:00:00",
+        "2008-06-10 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:18.298326",
+    "train_metrics": {
+      "r2": 0.9959943400895418,
+      "rmse": 2.0987666865792476,
+      "mae": 1.4313905405820666,
+      "mape": 1.8682591648415323,
+      "directional_accuracy": 53.377483443708606,
+      "correlation": 0.9980448387707231,
+      "n_samples": 756,
+      "split_number": 20,
+      "train_dates": [
+        "2005-06-02 00:00:00",
+        "2008-04-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-04-15 00:00:00",
+        "2008-07-09 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.5140024996887447,
+      "rmse": 4.397878998683569,
+      "mae": 3.443923872055622,
+      "mape": 2.0405050158339426,
+      "directional_accuracy": 48.38709677419355,
+      "correlation": 0.807635952358863,
+      "n_samples": 63,
+      "split_number": 20,
+      "train_dates": [
+        "2005-06-02 00:00:00",
+        "2008-04-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-04-15 00:00:00",
+        "2008-07-09 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.4819918404007971,
+    "split_info": {
+      "split_number": 20,
+      "train_dates": [
+        "2005-06-02 00:00:00",
+        "2008-04-14 00:00:00"
+      ],
+      "test_dates": [
+        "2008-04-15 00:00:00",
+        "2008-07-09 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:18.605246",
+    "train_metrics": {
+      "r2": 0.9957327896669561,
+      "rmse": 2.3816396239727053,
+      "mae": 1.6847881890485878,
+      "mape": 2.1612875472993958,
+      "directional_accuracy": 54.83443708609271,
+      "correlation": 0.9979579914921896,
+      "n_samples": 756,
+      "split_number": 21,
+      "train_dates": [
+        "2005-07-01 00:00:00",
+        "2008-05-13 00:00:00"
+      ],
+      "test_dates": [
+        "2008-05-14 00:00:00",
+        "2008-08-07 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.7212602130088872,
+      "rmse": 3.2398574143487084,
+      "mae": 2.3982708259632397,
+      "mape": 1.4049730792816426,
+      "directional_accuracy": 50.0,
+      "correlation": 0.9065159507891182,
+      "n_samples": 63,
+      "split_number": 21,
+      "train_dates": [
+        "2005-07-01 00:00:00",
+        "2008-05-13 00:00:00"
+      ],
+      "test_dates": [
+        "2008-05-14 00:00:00",
+        "2008-08-07 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.2744725766580689,
+    "split_info": {
+      "split_number": 21,
+      "train_dates": [
+        "2005-07-01 00:00:00",
+        "2008-05-13 00:00:00"
+      ],
+      "test_dates": [
+        "2008-05-14 00:00:00",
+        "2008-08-07 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:18.908362",
+    "train_metrics": {
+      "r2": 0.9957423552212402,
+      "rmse": 2.526149567125724,
+      "mae": 1.8216820215325285,
+      "mape": 2.325767083974118,
+      "directional_accuracy": 53.50993377483444,
+      "correlation": 0.9979907631251846,
+      "n_samples": 756,
+      "split_number": 22,
+      "train_dates": [
+        "2005-07-31 00:00:00",
+        "2008-06-10 00:00:00"
+      ],
+      "test_dates": [
+        "2008-06-11 00:00:00",
+        "2008-09-04 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.26730352472986496,
+      "rmse": 8.602575715675721,
+      "mae": 5.724790393803963,
+      "mape": 3.0646475496566357,
+      "directional_accuracy": 43.54838709677419,
+      "correlation": 0.5539612359419884,
+      "n_samples": 63,
+      "split_number": 22,
+      "train_dates": [
+        "2005-07-31 00:00:00",
+        "2008-06-10 00:00:00"
+      ],
+      "test_dates": [
+        "2008-06-11 00:00:00",
+        "2008-09-04 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.7284388304913753,
+    "split_info": {
+      "split_number": 22,
+      "train_dates": [
+        "2005-07-31 00:00:00",
+        "2008-06-10 00:00:00"
+      ],
+      "test_dates": [
+        "2008-06-11 00:00:00",
+        "2008-09-04 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:19.228693",
+    "train_metrics": {
+      "r2": 0.9957108947424322,
+      "rmse": 2.6718057566015174,
+      "mae": 1.9494946570148117,
+      "mape": 2.429665224228738,
+      "directional_accuracy": 53.377483443708606,
+      "correlation": 0.9980035239112689,
+      "n_samples": 756,
+      "split_number": 23,
+      "train_dates": [
+        "2005-08-29 00:00:00",
+        "2008-07-09 00:00:00"
+      ],
+      "test_dates": [
+        "2008-07-10 00:00:00",
+        "2008-10-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.2355055895036654,
+      "rmse": 21.258841107928507,
+      "mae": 15.195951902999887,
+      "mape": 7.0199845906468425,
+      "directional_accuracy": 45.16129032258064,
+      "correlation": 0.8244939373453715,
+      "n_samples": 63,
+      "split_number": 23,
+      "train_dates": [
+        "2005-08-29 00:00:00",
+        "2008-07-09 00:00:00"
+      ],
+      "test_dates": [
+        "2008-07-10 00:00:00",
+        "2008-10-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.7602053052387668,
+    "split_info": {
+      "split_number": 23,
+      "train_dates": [
+        "2005-08-29 00:00:00",
+        "2008-07-09 00:00:00"
+      ],
+      "test_dates": [
+        "2008-07-10 00:00:00",
+        "2008-10-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:19.574849",
+    "train_metrics": {
+      "r2": 0.9957185830565416,
+      "rmse": 2.815610477746861,
+      "mae": 2.0757453836365145,
+      "mape": 2.5261891066606994,
+      "directional_accuracy": 53.64238410596026,
+      "correlation": 0.9980296470435,
+      "n_samples": 756,
+      "split_number": 24,
+      "train_dates": [
+        "2005-09-27 00:00:00",
+        "2008-08-07 00:00:00"
+      ],
+      "test_dates": [
+        "2008-08-08 00:00:00",
+        "2008-11-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.49768592036534054,
+      "rmse": 32.18309019570275,
+      "mae": 27.043623398171132,
+      "mape": 10.984138144283719,
+      "directional_accuracy": 50.0,
+      "correlation": 0.9119177610459057,
+      "n_samples": 63,
+      "split_number": 24,
+      "train_dates": [
+        "2005-09-27 00:00:00",
+        "2008-08-07 00:00:00"
+      ],
+      "test_dates": [
+        "2008-08-08 00:00:00",
+        "2008-11-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.49803266269120106,
+    "split_info": {
+      "split_number": 24,
+      "train_dates": [
+        "2005-09-27 00:00:00",
+        "2008-08-07 00:00:00"
+      ],
+      "test_dates": [
+        "2008-08-08 00:00:00",
+        "2008-11-03 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:19.927276",
+    "train_metrics": {
+      "r2": 0.9944316680924826,
+      "rmse": 3.397167779397491,
+      "mae": 2.5036507275737385,
+      "mape": 2.91793110975524,
+      "directional_accuracy": 52.45033112582781,
+      "correlation": 0.9974473233600635,
+      "n_samples": 756,
+      "split_number": 25,
+      "train_dates": [
+        "2005-10-26 00:00:00",
+        "2008-09-04 00:00:00"
+      ],
+      "test_dates": [
+        "2008-09-05 00:00:00",
+        "2008-12-01 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.30187208252473097,
+      "rmse": 33.044878359127914,
+      "mae": 28.411118360447375,
+      "mape": 10.431952190016904,
+      "directional_accuracy": 61.29032258064516,
+      "correlation": 0.9158364507808161,
+      "n_samples": 63,
+      "split_number": 25,
+      "train_dates": [
+        "2005-10-26 00:00:00",
+        "2008-09-04 00:00:00"
+      ],
+      "test_dates": [
+        "2008-09-05 00:00:00",
+        "2008-12-01 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.6925595855677517,
+    "split_info": {
+      "split_number": 25,
+      "train_dates": [
+        "2005-10-26 00:00:00",
+        "2008-09-04 00:00:00"
+      ],
+      "test_dates": [
+        "2008-09-05 00:00:00",
+        "2008-12-01 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Ridge",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:20.259136",
+    "train_metrics": {
+      "r2": 0.993057576917188,
+      "rmse": 4.169323949008699,
+      "mae": 2.929509133206152,
+      "mape": 3.2206122376782624,
+      "directional_accuracy": 54.56953642384106,
+      "correlation": 0.9967562958376782,
+      "n_samples": 756,
+      "split_number": 26,
+      "train_dates": [
+        "2005-11-24 00:00:00",
+        "2008-10-03 00:00:00"
+      ],
+      "test_dates": [
+        "2008-10-06 00:00:00",
+        "2008-12-30 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.3368419413579976,
+      "rmse": 28.20694155027703,
+      "mae": 22.580699027870686,
+      "mape": 6.674266612359976,
+      "directional_accuracy": 51.61290322580645,
+      "correlation": 0.8503590891795043,
+      "n_samples": 63,
+      "split_number": 26,
+      "train_dates": [
+        "2005-11-24 00:00:00",
+        "2008-10-03 00:00:00"
+      ],
+      "test_dates": [
+        "2008-10-06 00:00:00",
+        "2008-12-30 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.6562156355591904,
+    "split_info": {
+      "split_number": 26,
+      "train_dates": [
+        "2005-11-24 00:00:00",
+        "2008-10-03 00:00:00"
+      ],
+      "test_dates": [
+        "2008-10-06 00:00:00",
+        "2008-12-30 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Lasso",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:20.669611",
+    "train_metrics": {
+      "r2": 0.9145793590500907,
+      "rmse": 17.225774592304436,
+      "mae": 13.900805642486127,
+      "mape": 16.06327540060035,
+      "directional_accuracy": 48.741721854304636,
+      "correlation": 0.9656198193024175,
+      "n_samples": 756,
+      "split_number": 27,
+      "train_dates": [
+        "2005-12-23 00:00:00",
+        "2008-11-03 00:00:00"
+      ],
+      "test_dates": [
+        "2008-11-04 00:00:00",
+        "2009-01-28 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": 0.6901107582450592,
+      "rmse": 17.988085445452914,
+      "mae": 15.787437073886968,
+      "mape": 4.550907866146452,
+      "directional_accuracy": 46.774193548387096,
+      "correlation": 0.912988030558867,
+      "n_samples": 63,
+      "split_number": 27,
+      "train_dates": [
+        "2005-12-23 00:00:00",
+        "2008-11-03 00:00:00"
+      ],
+      "test_dates": [
+        "2008-11-04 00:00:00",
+        "2009-01-28 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 0.2244686008050315,
+    "split_info": {
+      "split_number": 27,
+      "train_dates": [
+        "2005-12-23 00:00:00",
+        "2008-11-03 00:00:00"
+      ],
+      "test_dates": [
+        "2008-11-04 00:00:00",
+        "2009-01-28 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Lasso",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:21.017467",
+    "train_metrics": {
+      "r2": 0.92970116349921,
+      "rmse": 17.85460653090963,
+      "mae": 14.137799366588855,
+      "mape": 16.207544483752027,
+      "directional_accuracy": 47.682119205298015,
+      "correlation": 0.9709324522433129,
+      "n_samples": 756,
+      "split_number": 28,
+      "train_dates": [
+        "2006-01-20 00:00:00",
+        "2008-12-01 00:00:00"
+      ],
+      "test_dates": [
+        "2008-12-02 00:00:00",
+        "2009-02-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -1.4386278069679257,
+      "rmse": 27.42226974142763,
+      "mae": 19.201118012174167,
+      "mape": 5.159311671764427,
+      "directional_accuracy": 53.2258064516129,
+      "correlation": 0.23574192522297782,
+      "n_samples": 63,
+      "split_number": 28,
+      "train_dates": [
+        "2006-01-20 00:00:00",
+        "2008-12-01 00:00:00"
+      ],
+      "test_dates": [
+        "2008-12-02 00:00:00",
+        "2009-02-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 2.3683289704671355,
+    "split_info": {
+      "split_number": 28,
+      "train_dates": [
+        "2006-01-20 00:00:00",
+        "2008-12-01 00:00:00"
+      ],
+      "test_dates": [
+        "2008-12-02 00:00:00",
+        "2009-02-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Lasso",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:21.597724",
+    "train_metrics": {
+      "r2": 0.9475250111193233,
+      "rmse": 18.035981757960208,
+      "mae": 14.636069272926104,
+      "mape": 15.760445593248862,
+      "directional_accuracy": 51.39072847682119,
+      "correlation": 0.9779021729974219,
+      "n_samples": 756,
+      "split_number": 29,
+      "train_dates": [
+        "2006-02-20 00:00:00",
+        "2008-12-30 00:00:00"
+      ],
+      "test_dates": [
+        "2008-12-31 00:00:00",
+        "2009-03-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -2.0846193436823595,
+      "rmse": 27.313232942325826,
+      "mae": 24.802486936559713,
+      "mape": 6.871584064080463,
+      "directional_accuracy": 58.06451612903226,
+      "correlation": 0.6547479020022328,
+      "n_samples": 63,
+      "split_number": 29,
+      "train_dates": [
+        "2006-02-20 00:00:00",
+        "2008-12-30 00:00:00"
+      ],
+      "test_dates": [
+        "2008-12-31 00:00:00",
+        "2009-03-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 3.032144354801683,
+    "split_info": {
+      "split_number": 29,
+      "train_dates": [
+        "2006-02-20 00:00:00",
+        "2008-12-30 00:00:00"
+      ],
+      "test_dates": [
+        "2008-12-31 00:00:00",
+        "2009-03-25 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  },
+  {
+    "model_name": "Ultra Robust Ultra Elastic Net",
+    "iteration": 7,
+    "timestamp": "2025-10-15T14:02:22.196049",
+    "train_metrics": {
+      "r2": 0.962030081265857,
+      "rmse": 17.230399165168443,
+      "mae": 13.740873347159809,
+      "mape": 13.79400462722744,
+      "directional_accuracy": 48.079470198675494,
+      "correlation": 0.9844859767976468,
+      "n_samples": 756,
+      "split_number": 30,
+      "train_dates": [
+        "2006-03-21 00:00:00",
+        "2009-01-28 00:00:00"
+      ],
+      "test_dates": [
+        "2009-01-29 00:00:00",
+        "2009-04-23 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "train"
+    },
+    "test_metrics": {
+      "r2": -1.0078437798780642,
+      "rmse": 22.116298769397552,
+      "mae": 11.339757639558782,
+      "mape": 3.346324240921681,
+      "directional_accuracy": 50.0,
+      "correlation": 0.6780646921706047,
+      "n_samples": 63,
+      "split_number": 30,
+      "train_dates": [
+        "2006-03-21 00:00:00",
+        "2009-01-28 00:00:00"
+      ],
+      "test_dates": [
+        "2009-01-29 00:00:00",
+        "2009-04-23 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63,
+      "split_type": "test"
+    },
+    "overfitting": 1.9698738611439213,
+    "split_info": {
+      "split_number": 30,
+      "train_dates": [
+        "2006-03-21 00:00:00",
+        "2009-01-28 00:00:00"
+      ],
+      "test_dates": [
+        "2009-01-29 00:00:00",
+        "2009-04-23 00:00:00"
+      ],
+      "train_size": 756,
+      "test_size": 63
+    }
+  }
+]
