@@ -46,6 +46,117 @@ from core import (
 from strategies import StrategyFactory
 
 
+def print_usage_examples():
+    """Print comprehensive usage examples for all strategies."""
+    print("\n" + "="*100)
+    print(" BACKTESTING FRAMEWORK - USAGE EXAMPLES")
+    print("="*100)
+
+    print("\n" + "-"*100)
+    print("AVAILABLE STRATEGIES:")
+    print("-"*100)
+    available = StrategyFactory.get_available_strategies()
+    for i, name in enumerate(available, 1):
+        print(f"  {i}. {name}")
+
+    print("\n" + "-"*100)
+    print("QUICK START - RUN FROM ANYWHERE (main.py auto-detects its location):")
+    print("-"*100)
+
+    # Get the actual path to main.py for display
+    main_path = Path(__file__).absolute()
+
+    print("\n# Run from ANY directory - use full path to main.py:")
+    print(f"poetry run python \"{main_path}\" --examples")
+    print(f"poetry run python \"{main_path}\" --list-strategies")
+    print(f"poetry run python \"{main_path}\" --config configs/rf_ensemble_config.yaml")
+
+    print("\n# Or use relative path from your current location:")
+    print("poetry run python cad_ig_er_index_backtesting/main.py --examples")
+    print("poetry run python cad_ig_er_index_backtesting/main.py --config configs/rf_ensemble_config.yaml")
+
+    print("\n" + "-"*100)
+    print("SINGLE STRATEGY COMMANDS (Copy & Paste Ready):")
+    print("-"*100)
+
+    print("\n# 1. RF Ensemble Strategy (3.86% annualized - YOUR NEW ML STRATEGY)")
+    print("poetry run python main.py --config configs/rf_ensemble_config.yaml")
+
+    print("\n# 2. LightGBM Strategy")
+    print("poetry run python main.py --config configs/lightgbm_config.yaml")
+
+    print("\n# 3. Cross Asset Momentum")
+    print("poetry run python main.py --config configs/config.yaml --strategies cross_asset_momentum")
+
+    print("\n# 4. Multi Asset Momentum")
+    print("poetry run python main.py --config configs/config.yaml --strategies multi_asset_momentum")
+
+    print("\n# 5. Genetic Algorithm")
+    print("poetry run python main.py --config configs/config.yaml --strategies genetic_algorithm")
+
+    print("\n# 6. Vol Adaptive Momentum")
+    print("poetry run python main.py --config configs/config.yaml --strategies vol_adaptive_momentum")
+
+    print("\n" + "-"*100)
+    print("MULTIPLE STRATEGIES - COMPARISON RUNS:")
+    print("-"*100)
+
+    print("\n# Compare RF Ensemble vs LightGBM (ML Battle)")
+    print("poetry run python main.py --config configs/config.yaml --strategies rf_ensemble_strategy lightgbm_strategy")
+
+    print("\n# Compare All ML Strategies (RF Ensemble + LightGBM + Genetic)")
+    print("poetry run python main.py --config configs/config.yaml --strategies rf_ensemble_strategy lightgbm_strategy genetic_algorithm")
+
+    print("\n# Compare RF Ensemble vs Cross Asset Momentum")
+    print("poetry run python main.py --config configs/config.yaml --strategies rf_ensemble_strategy cross_asset_momentum")
+
+    print("\n# Compare All Momentum Strategies")
+    print("poetry run python main.py --config configs/config.yaml --strategies cross_asset_momentum multi_asset_momentum vol_adaptive_momentum")
+
+    print("\n# Run 4 Strategies (Mixed Comparison)")
+    print("poetry run python main.py --config configs/config.yaml --strategies rf_ensemble_strategy lightgbm_strategy cross_asset_momentum vol_adaptive_momentum")
+
+    print("\n# Run ALL 6 Strategies (Full Benchmark)")
+    print("poetry run python main.py --config configs/config.yaml --strategies cross_asset_momentum multi_asset_momentum genetic_algorithm vol_adaptive_momentum lightgbm_strategy rf_ensemble_strategy")
+
+    print("\n" + "-"*100)
+    print("UTILITY COMMANDS:")
+    print("-"*100)
+
+    print("\n# List all available strategies")
+    print("poetry run python main.py --list-strategies")
+
+    print("\n# Show this help (usage examples)")
+    print("poetry run python main.py --examples")
+
+    print("\n# Show argparse help")
+    print("poetry run python main.py --help")
+
+    print("\n" + "-"*100)
+    print("EXPECTED OUTPUTS:")
+    print("-"*100)
+    print("  - Reports saved to: outputs/reports/")
+    print("  - Results saved to: outputs/results/")
+    print("  - Plots saved to: outputs/plots/")
+    print("  - HTML reports generated (if enabled in config)")
+    print("  - Trade blotters with entry/exit details")
+
+    print("\n" + "-"*100)
+    print("RF ENSEMBLE STRATEGY DETAILS:")
+    print("-"*100)
+    print("  - Expected Return: 3.86% annualized")
+    print("  - Buy & Hold: 1.33% annualized")
+    print("  - Outperformance: +2.53% (2.9x better)")
+    print("  - Time Invested: ~80%")
+    print("  - Trade Frequency: ~6 trades/year")
+    print("  - Features: 96 engineered features")
+    print("  - Models: 4 Random Forests with ensemble")
+    print("  - Runtime: 5-10 minutes (model training)")
+
+    print("\n" + "="*100)
+    print()
+
+
 def load_config(config_path: str) -> dict:
     """Load configuration from YAML file."""
     try:
@@ -1033,8 +1144,18 @@ def main():
         action='store_true',
         help='List all available strategies and exit.'
     )
-    
+    parser.add_argument(
+        '--examples',
+        action='store_true',
+        help='Show comprehensive usage examples with all command options.'
+    )
+
     args = parser.parse_args()
+
+    # If --examples is used, print them and exit
+    if args.examples:
+        print_usage_examples()
+        sys.exit(0)
 
     # If --list-strategies is used, print them and exit
     if args.list_strategies:

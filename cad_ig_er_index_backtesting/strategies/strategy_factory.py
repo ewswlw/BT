@@ -9,6 +9,7 @@ from .multi_asset_momentum import MultiAssetMomentumStrategy
 from .genetic_algorithm import GeneticAlgorithmStrategy
 from .vol_adaptive_momentum import VolAdaptiveMomentumStrategy
 from .lightgbm_strategy import LightGBMStrategy
+from .rf_ensemble_strategy import RFEnsembleStrategy
 
 
 class StrategyFactory:
@@ -20,6 +21,7 @@ class StrategyFactory:
         'genetic_algorithm': GeneticAlgorithmStrategy,
         'vol_adaptive_momentum': VolAdaptiveMomentumStrategy,
         'lightgbm_strategy': LightGBMStrategy,
+        'rf_ensemble_strategy': RFEnsembleStrategy,
     }
     
     @classmethod
