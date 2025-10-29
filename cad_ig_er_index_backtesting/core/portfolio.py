@@ -154,15 +154,9 @@ class PortfolioEngine:
         """Calculate basic performance metrics."""
         total_return = (equity_curve.iloc[-1] / equity_curve.iloc[0]) - 1
         
-        # Dynamically determine annualization factor
-        if len(returns.index) > 1:
-            median_days = returns.index.to_series().diff().median().days
-            if median_days is not None and median_days > 0:
-                annual_factor = 365.25 / median_days
-            else:
-                annual_factor = 252 # Default for daily data if diff fails
-        else:
-            annual_factor = 252
+        # Use standard trading days per year (252) for financial returns
+        # This excludes weekends and holidays, standard in finance industry
+        annual_factor = 252
 
         # Annualized metrics
         cagr = (1 + total_return) ** (annual_factor / len(returns)) - 1
