@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(poetry run python -c \"import pandas as pd; import numpy as np; df = pd.read_csv(''data_pipelines/data_processed/with_er_daily.csv''); df[''Date''] = pd.to_datetime(df[''Date'']); df = df.set_index(''Date''); price = df[''cad_ig_er_index'']; total_ret = (price.iloc[-1] / price.iloc[0] - 1) * 100; years = (price.index[-1] - price.index[0]).days / 365.25; ann_ret = ((price.iloc[-1] / price.iloc[0]) ** (1/years) - 1) * 100; print(f''Buy & Hold Total Return: {total_ret:.2f}%''); print(f''Time Period: {years:.2f} years''); print(f''Buy & Hold Annualized Return: {ann_ret:.2f}%''); print(f''Target Strategy Ann. Return: {ann_ret + 2.5:.2f}%'')\")"
-    ],
-    "deny": [],
-    "ask": []
-  }
-}
