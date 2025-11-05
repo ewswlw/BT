@@ -1,0 +1,1469 @@
+{
+  "summary": {
+    "total_categories": 18,
+    "total_tickers": 92,
+    "total_successful": 56,
+    "total_failed": 36,
+    "total_partial": 0
+  },
+  "config": {
+    "start_date": "2006-01-01",
+    "end_date": "2025-11-05",
+    "periodicity": "D",
+    "pipeline_params": {
+      "align_start": true,
+      "fill": "ffill",
+      "start_date_align": "yes"
+    }
+  },
+  "results": {
+    "Credit Spreads & Relative Value": {
+      "category": "Credit Spreads & Relative Value",
+      "total_tickers": 10,
+      "successful": [
+        {
+          "ticker": "LUACTRUU Index",
+          "field": "INDEX_OAS_TSY_BP",
+          "column": "us_ig_oas",
+          "non_null_pct": 100.0,
+          "non_null_count": "4991",
+          "total_count": 4991,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 90.562777,
+            "last": 81.169,
+            "mean": 148.36970406531756
+          }
+        },
+        {
+          "ticker": "LF98TRUU Index",
+          "field": "INDEX_OAS_TSY_BP",
+          "column": "us_hy_oas",
+          "non_null_pct": 100.0,
+          "non_null_count": "4991",
+          "total_count": 4991,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 357.425504,
+            "last": 299.1807,
+            "mean": 488.5060491384492
+          }
+        },
+        {
+          "ticker": "USGG10YR Index",
+          "field": "PX_LAST",
+          "column": "us_10y_yield",
+          "non_null_pct": 100.0,
+          "non_null_count": "5176",
+          "total_count": 5176,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 4.3911,
+            "last": 4.1474,
+            "mean": 2.8872687017001546
+          }
+        },
+        {
+          "ticker": "USGG2YR Index",
+          "field": "PX_LAST",
+          "column": "us_2y_yield",
+          "non_null_pct": 100.0,
+          "non_null_count": "5176",
+          "total_count": 5176,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 4.3996,
+            "last": 3.6191,
+            "mean": 1.8880880216383304
+          }
+        },
+        {
+          "ticker": "USYC2Y10 Index",
+          "field": "PX_LAST",
+          "column": "us_2s10s_spread",
+          "non_null_pct": 100.0,
+          "non_null_count": "5148",
+          "total_count": 5148,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 3.549,
+            "last": 52.616,
+            "mean": 99.81515015540015
+          }
+        },
+        {
+          "ticker": "USGG30YR Index",
+          "field": "PX_LAST",
+          "column": "us_30y_yield",
+          "non_null_pct": 100.0,
+          "non_null_count": "5176",
+          "total_count": 5176,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 4.5347,
+            "last": 4.7299,
+            "mean": 3.484982071097373
+          }
+        },
+        {
+          "ticker": "USGG3M Index",
+          "field": "PX_LAST",
+          "column": "us_3m_tbill",
+          "non_null_pct": 100.0,
+          "non_null_count": "5178",
+          "total_count": 5178,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 4.0736,
+            "last": 3.885,
+            "mean": 1.6446294708381615
+          }
+        },
+        {
+          "ticker": "USYC3M30 Index",
+          "field": "PX_LAST",
+          "column": "us_3m_30y_spread",
+          "non_null_pct": 100.0,
+          "non_null_count": "5141",
+          "total_count": 5141,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 43.167,
+            "last": 84.073,
+            "mean": 183.67737346819683
+          }
+        },
+        {
+          "ticker": "USYC5Y30 Index",
+          "field": "PX_LAST",
+          "column": "us_5y30y_spread",
+          "non_null_pct": 100.0,
+          "non_null_count": "5141",
+          "total_count": 5141,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 24.315,
+            "last": 97.598,
+            "mean": 114.41438708422487
+          }
+        },
+        {
+          "ticker": "USYC3M10 Index",
+          "field": "PX_LAST",
+          "column": "us_3m10y_spread",
+          "non_null_pct": 100.0,
+          "non_null_count": "5141",
+          "total_count": 5141,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 24.978,
+            "last": 25.722,
+            "mean": 123.79657673604358
+          }
+        }
+      ],
+      "failed": [],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Macro Indicators": {
+      "category": "Macro Indicators",
+      "total_tickers": 9,
+      "successful": [
+        {
+          "ticker": "FDTR Index",
+          "field": "PX_LAST",
+          "column": "fed_funds_rate",
+          "non_null_pct": 100.0,
+          "non_null_count": "5158",
+          "total_count": 5158,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 4.25,
+            "last": 4.0,
+            "mean": 1.8347227607599845
+          }
+        },
+        {
+          "ticker": "BCMPUSGR Index",
+          "field": "PX_LAST",
+          "column": "us_growth_surprises",
+          "non_null_pct": 100.0,
+          "non_null_count": "5174",
+          "total_count": 5174,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-10-30 00:00:00"
+          },
+          "sample_values": {
+            "first": 0.06885,
+            "last": -0.09385,
+            "mean": 0.0459704425976034
+          }
+        },
+        {
+          "ticker": "BCMPUSIF Index",
+          "field": "PX_LAST",
+          "column": "us_inflation_surprises",
+          "non_null_pct": 100.0,
+          "non_null_count": "5174",
+          "total_count": 5174,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-10-30 00:00:00"
+          },
+          "sample_values": {
+            "first": 0.01594,
+            "last": -0.22264,
+            "mean": 0.1928604735214534
+          }
+        },
+        {
+          "ticker": ".HARDATA G Index",
+          "field": "PX_LAST",
+          "column": "us_hard_data_surprises",
+          "non_null_pct": 100.0,
+          "non_null_count": "3364",
+          "total_count": 3364,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-09 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": -0.0165,
+            "last": 0.3944,
+            "mean": -0.016190190249702734
+          }
+        },
+        {
+          "ticker": "LEI YOY  Index",
+          "field": "PX_LAST",
+          "column": "us_lei_yoy",
+          "non_null_pct": 100.0,
+          "non_null_count": "236",
+          "total_count": 236,
+          "is_lower_frequency": true,
+          "frequency_type": "MONTHLY",
+          "date_range": {
+            "start": "2006-01-31 00:00:00",
+            "end": "2025-08-31 00:00:00"
+          },
+          "sample_values": {
+            "first": 3.9,
+            "last": -3.6,
+            "mean": 0.40889830508474556
+          }
+        },
+        {
+          "ticker": ".ECONREGI G Index",
+          "field": "PX_LAST",
+          "column": "us_economic_regime",
+          "non_null_pct": 100.0,
+          "non_null_count": "236",
+          "total_count": 236,
+          "is_lower_frequency": true,
+          "frequency_type": "MONTHLY",
+          "date_range": {
+            "start": "2006-01-31 00:00:00",
+            "end": "2025-08-31 00:00:00"
+          },
+          "sample_values": {
+            "first": 0.99,
+            "last": 0.51,
+            "mean": 0.7991101694915255
+          }
+        },
+        {
+          "ticker": "USGGBE10 Index",
+          "field": "PX_LAST",
+          "column": "us_10y_breakeven",
+          "non_null_pct": 100.0,
+          "non_null_count": "5174",
+          "total_count": 5174,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 2.3368,
+            "last": 2.3159,
+            "mean": 2.079204986470815
+          }
+        }
+      ],
+      "failed": [
+        {
+          "ticker": "USGGBE5 Index",
+          "field": "PX_LAST",
+          "column": "us_5y_breakeven",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USGGR10 Index",
+          "field": "PX_LAST",
+          "column": "us_10y_real_rate",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Equity & Volatility": {
+      "category": "Equity & Volatility",
+      "total_tickers": 7,
+      "successful": [
+        {
+          "ticker": "SPX Index",
+          "field": "PX_LAST",
+          "column": "spx_close",
+          "non_null_pct": 100.0,
+          "non_null_count": "4993",
+          "total_count": 4993,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 1268.8,
+            "last": 6822.87,
+            "mean": 2571.5228539955942
+          }
+        },
+        {
+          "ticker": "SPX Index",
+          "field": "TOT_RETURN_INDEX_GROSS_DVDS",
+          "column": "spx_tr",
+          "non_null_pct": 100.0,
+          "non_null_count": "4993",
+          "total_count": 4993,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 1268.8,
+            "last": 9994.9907,
+            "mean": 3362.0340161025442
+          }
+        },
+        {
+          "ticker": "NDX Index",
+          "field": "PX_LAST",
+          "column": "nasdaq100",
+          "non_null_pct": 100.0,
+          "non_null_count": "4993",
+          "total_count": 4993,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 1679.93,
+            "last": 25683.0,
+            "mean": 7022.885523733227
+          }
+        },
+        {
+          "ticker": "VIX Index",
+          "field": "PX_LAST",
+          "column": "vix",
+          "non_null_pct": 100.0,
+          "non_null_count": "5019",
+          "total_count": 5019,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 11.14,
+            "last": 17.48,
+            "mean": 19.46841203426977
+          }
+        },
+        {
+          "ticker": "VVIX Index",
+          "field": "PX_LAST",
+          "column": "vvix",
+          "non_null_pct": 100.0,
+          "non_null_count": "4887",
+          "total_count": 4887,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-03-06 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 71.73,
+            "last": 99.74,
+            "mean": 93.2046306527522
+          }
+        },
+        {
+          "ticker": "SPX Index",
+          "field": "VOLUME",
+          "column": "spx_volume",
+          "non_null_pct": 100.0,
+          "non_null_count": "4992",
+          "total_count": 4992,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 1498317979.0,
+            "last": 972610370.0,
+            "mean": 798757367.4971955
+          }
+        }
+      ],
+      "failed": [
+        {
+          "ticker": "SPXSKEW Index",
+          "field": "PX_LAST",
+          "column": "spx_skew",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Cross-Asset Momentum": {
+      "category": "Cross-Asset Momentum",
+      "total_tickers": 9,
+      "successful": [
+        {
+          "ticker": "HYG US Equity",
+          "field": "PX_LAST",
+          "column": "hyg_etf",
+          "non_null_pct": 100.0,
+          "non_null_count": "4630",
+          "total_count": 4630,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2007-06-01 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 105.0,
+            "last": 80.23,
+            "mean": 85.79002181425486
+          }
+        },
+        {
+          "ticker": "LQD US Equity",
+          "field": "PX_LAST",
+          "column": "lqd_etf",
+          "non_null_pct": 100.0,
+          "non_null_count": "4983",
+          "total_count": 4983,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 108.1801,
+            "last": 110.465,
+            "mean": 114.13466558298214
+          }
+        },
+        {
+          "ticker": "TLT US Equity",
+          "field": "PX_LAST",
+          "column": "tlt_etf",
+          "non_null_pct": 100.0,
+          "non_null_count": "4983",
+          "total_count": 4983,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 91.8,
+            "last": 89.035,
+            "mean": 112.61970022075053
+          }
+        },
+        {
+          "ticker": "SPY US Equity",
+          "field": "PX_LAST",
+          "column": "spy_etf",
+          "non_null_pct": 100.0,
+          "non_null_count": "4993",
+          "total_count": 4993,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 126.78,
+            "last": 680.21,
+            "mean": 256.8527549569397
+          }
+        },
+        {
+          "ticker": "XAU Curncy",
+          "field": "PX_LAST",
+          "column": "gold_spot",
+          "non_null_pct": 100.0,
+          "non_null_count": "5162",
+          "total_count": 5162,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 516.88,
+            "last": 3982.17,
+            "mean": 1466.550519178613
+          }
+        },
+        {
+          "ticker": "DXY Curncy",
+          "field": "PX_LAST",
+          "column": "dollar_index",
+          "non_null_pct": 100.0,
+          "non_null_count": "5161",
+          "total_count": 5161,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 89.84,
+            "last": 100.24,
+            "mean": 90.36246250726603
+          }
+        },
+        {
+          "ticker": "EURUSD Curncy",
+          "field": "PX_LAST",
+          "column": "eurusd",
+          "non_null_pct": 100.0,
+          "non_null_count": "5178",
+          "total_count": 5178,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 1.1821,
+            "last": 1.1482,
+            "mean": 1.2242515256855928
+          }
+        },
+        {
+          "ticker": "JPYUSD Curncy",
+          "field": "PX_LAST",
+          "column": "jpyusd",
+          "non_null_pct": 100.0,
+          "non_null_count": "5178",
+          "total_count": 5178,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 0.008482,
+            "last": 0.006492,
+            "mean": 0.009268152182309773
+          }
+        },
+        {
+          "ticker": "CL1 Comdty",
+          "field": "PX_LAST",
+          "column": "wti_crude",
+          "non_null_pct": 100.0,
+          "non_null_count": "5000",
+          "total_count": 5000,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 63.14,
+            "last": 59.77,
+            "mean": 72.362464
+          }
+        }
+      ],
+      "failed": [],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Financial Conditions": {
+      "category": "Financial Conditions",
+      "total_tickers": 3,
+      "successful": [
+        {
+          "ticker": "BFCIUS Index",
+          "field": "PX_LAST",
+          "column": "us_bloomberg_fci",
+          "non_null_pct": 100.0,
+          "non_null_count": "5175",
+          "total_count": 5175,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-02 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 0.342,
+            "last": 0.521,
+            "mean": -0.29968289855072466
+          }
+        }
+      ],
+      "failed": [
+        {
+          "ticker": "NFCI Index",
+          "field": "PX_LAST",
+          "column": "us_financial_conditions",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "STLFSI2 Index",
+          "field": "PX_LAST",
+          "column": "us_stlouis_financial_stress",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Credit Market Specific": {
+      "category": "Credit Market Specific",
+      "total_tickers": 5,
+      "successful": [
+        {
+          "ticker": "LUACTRUU Index",
+          "field": "INDEX_EXCESS_RETURN_YTD",
+          "column": "us_ig_er_ytd",
+          "non_null_pct": 100.0,
+          "non_null_count": "4991",
+          "total_count": 4991,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": -0.00304,
+            "last": 0.731804,
+            "mean": 0.5874016445602084
+          }
+        },
+        {
+          "ticker": "LF98TRUU Index",
+          "field": "INDEX_EXCESS_RETURN_YTD",
+          "column": "us_hy_er_ytd",
+          "non_null_pct": 100.0,
+          "non_null_count": "4991",
+          "total_count": 4991,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 0.037768,
+            "last": 1.703003,
+            "mean": 2.856370057703867
+          }
+        },
+        {
+          "ticker": "CGERGLOB Index",
+          "field": "PX_LAST",
+          "column": "us_equity_revisions",
+          "non_null_pct": 100.0,
+          "non_null_count": "1043",
+          "total_count": 1043,
+          "is_lower_frequency": true,
+          "frequency_type": "WEEKLY",
+          "date_range": {
+            "start": "2006-01-06 00:00:00",
+            "end": "2025-10-31 00:00:00"
+          },
+          "sample_values": {
+            "first": 0.18,
+            "last": 0.09,
+            "mean": -0.08178331735378713
+          }
+        }
+      ],
+      "failed": [
+        {
+          "ticker": "USCORPIG Index",
+          "field": "TOT_RETURN_INDEX_GROSS_DVDS",
+          "column": "us_ig_corp_tr",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USCORPHY Index",
+          "field": "TOT_RETURN_INDEX_GROSS_DVDS",
+          "column": "us_hy_corp_tr",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Swap Spreads": {
+      "category": "Swap Spreads",
+      "total_tickers": 4,
+      "successful": [
+        {
+          "ticker": "USSW2 Curncy",
+          "field": "PX_LAST",
+          "column": "us_2y_swap_rate",
+          "non_null_pct": 100.0,
+          "non_null_count": "3580",
+          "total_count": 3580,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2009-09-30 00:00:00",
+            "end": "2023-06-30 00:00:00"
+          },
+          "sample_values": {
+            "first": 1.2865,
+            "last": 5.103,
+            "mean": 1.3217048603351953
+          }
+        },
+        {
+          "ticker": "USSW5 Curncy",
+          "field": "PX_LAST",
+          "column": "us_5y_swap_rate",
+          "non_null_pct": 100.0,
+          "non_null_count": "3585",
+          "total_count": 3585,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2009-09-30 00:00:00",
+            "end": "2023-06-30 00:00:00"
+          },
+          "sample_values": {
+            "first": 2.6485,
+            "last": 4.219,
+            "mean": 1.8105657182705719
+          }
+        },
+        {
+          "ticker": "USSW10 Curncy",
+          "field": "PX_LAST",
+          "column": "us_10y_swap_rate",
+          "non_null_pct": 100.0,
+          "non_null_count": "3574",
+          "total_count": 3574,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2009-09-30 00:00:00",
+            "end": "2023-06-30 00:00:00"
+          },
+          "sample_values": {
+            "first": 3.4593,
+            "last": 3.8605,
+            "mean": 2.3548615277000557
+          }
+        },
+        {
+          "ticker": "USSW30 Curncy",
+          "field": "PX_LAST",
+          "column": "us_30y_swap_rate",
+          "non_null_pct": 100.0,
+          "non_null_count": "3570",
+          "total_count": 3570,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2009-09-30 00:00:00",
+            "end": "2023-06-30 00:00:00"
+          },
+          "sample_values": {
+            "first": 3.9375,
+            "last": 3.483,
+            "mean": 2.765843865546219
+          }
+        }
+      ],
+      "failed": [],
+      "partial_data": [],
+      "errors": {}
+    },
+    "OIS Rates": {
+      "category": "OIS Rates",
+      "total_tickers": 2,
+      "successful": [],
+      "failed": [
+        {
+          "ticker": "USOIS3M Index",
+          "field": "PX_LAST",
+          "column": "us_ois_3m",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USOIS1Y Index",
+          "field": "PX_LAST",
+          "column": "us_ois_1y",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "CDX Term Structure": {
+      "category": "CDX Term Structure",
+      "total_tickers": 3,
+      "successful": [
+        {
+          "ticker": "CDX IG CDSI GEN 3Y SPRD MKIT Corp",
+          "field": "ROLL_ADJUSTED_MID_PRICE",
+          "column": "ig_cdx_3y_spread",
+          "non_null_pct": 100.0,
+          "non_null_count": "3826",
+          "total_count": 3826,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2010-04-29 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 64.296,
+            "last": 33.559,
+            "mean": 46.72980527966544
+          }
+        },
+        {
+          "ticker": "CDX IG CDSI GEN 7Y SPRD MKIT Corp",
+          "field": "ROLL_ADJUSTED_MID_PRICE",
+          "column": "ig_cdx_7y_spread",
+          "non_null_pct": 100.0,
+          "non_null_count": "3833",
+          "total_count": 3833,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2010-04-29 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 97.634,
+            "last": 73.291,
+            "mean": 94.63800443516827
+          }
+        },
+        {
+          "ticker": "CDX IG CDSI GEN 10Y SPRD MKIT Corp",
+          "field": "ROLL_ADJUSTED_MID_PRICE",
+          "column": "ig_cdx_10y_spread",
+          "non_null_pct": 100.0,
+          "non_null_count": "4977",
+          "total_count": 4977,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-05 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 66.0,
+            "last": 91.911,
+            "mean": 109.54455093429776
+          }
+        }
+      ],
+      "failed": [],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Advanced Credit Metrics": {
+      "category": "Advanced Credit Metrics",
+      "total_tickers": 8,
+      "successful": [
+        {
+          "ticker": "LUACTRUU Index",
+          "field": "MODIFIED_DURATION",
+          "column": "us_ig_duration",
+          "non_null_pct": 100.0,
+          "non_null_count": "4991",
+          "total_count": 4991,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 6.127539,
+            "last": 7.028523,
+            "mean": 7.119580503105589
+          }
+        },
+        {
+          "ticker": "LF98TRUU Index",
+          "field": "MODIFIED_DURATION",
+          "column": "us_hy_duration",
+          "non_null_pct": 100.0,
+          "non_null_count": "4991",
+          "total_count": 4991,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-04 00:00:00"
+          },
+          "sample_values": {
+            "first": 4.684229,
+            "last": 3.225918,
+            "mean": 4.087522978561411
+          }
+        }
+      ],
+      "failed": [
+        {
+          "ticker": "LUACTRUU Index",
+          "field": "CONVEXITY",
+          "column": "us_ig_convexity",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "LF98TRUU Index",
+          "field": "CONVEXITY",
+          "column": "us_hy_convexity",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "LUACTRUU Index",
+          "field": "OAS_SPREAD_STD_DEV",
+          "column": "us_ig_oas_volatility",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "LUACTRUU Index",
+          "field": "OAS_SPREAD_SKEW",
+          "column": "us_ig_oas_skew",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "LUACTRUU Index",
+          "field": "INDEX_AVG_CREDIT_RATING",
+          "column": "us_ig_avg_rating",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "LUACTRUU Index",
+          "field": "NUM_CONSTITUENTS",
+          "column": "us_ig_num_constituents",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Liquidity & Issuance": {
+      "category": "Liquidity & Issuance",
+      "total_tickers": 8,
+      "successful": [
+        {
+          "ticker": "LQD US Equity",
+          "field": "VOLUME",
+          "column": "lqd_volume",
+          "non_null_pct": 100.0,
+          "non_null_count": "4994",
+          "total_count": 4994,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 361200.0,
+            "last": 10373671.0,
+            "mean": 4510926.0560672805
+          }
+        },
+        {
+          "ticker": "HYG US Equity",
+          "field": "VOLUME",
+          "column": "hyg_volume",
+          "non_null_pct": 100.0,
+          "non_null_count": "4671",
+          "total_count": 4671,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2007-04-11 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 200.0,
+            "last": 13486939.0,
+            "mean": 7732947.88118176
+          }
+        }
+      ],
+      "failed": [
+        {
+          "ticker": "LQD US Equity",
+          "field": "FUND_TOTAL_ASSETS",
+          "column": "lqd_assets",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "HYG US Equity",
+          "field": "FUND_TOTAL_ASSETS",
+          "column": "hyg_assets",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USIGISSUE Index",
+          "field": "PX_LAST",
+          "column": "us_ig_issuance",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USHYISSUE Index",
+          "field": "PX_LAST",
+          "column": "us_hy_issuance",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USIGLIQ Index",
+          "field": "PX_LAST",
+          "column": "us_ig_liquidity_index",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USHYLIQ Index",
+          "field": "PX_LAST",
+          "column": "us_hy_liquidity_index",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Default & Rating Metrics": {
+      "category": "Default & Rating Metrics",
+      "total_tickers": 6,
+      "successful": [],
+      "failed": [
+        {
+          "ticker": "USCORPDEF Index",
+          "field": "PX_LAST",
+          "column": "us_corp_default_rate",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USIGDEF Index",
+          "field": "PX_LAST",
+          "column": "us_ig_default_rate",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USHYDEF Index",
+          "field": "PX_LAST",
+          "column": "us_hy_default_rate",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USCORPREC Index",
+          "field": "PX_LAST",
+          "column": "us_corp_recovery_rate",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USIGDOWNG Index",
+          "field": "PX_LAST",
+          "column": "us_ig_downgrade_rate",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USIGUPG Index",
+          "field": "PX_LAST",
+          "column": "us_ig_upgrade_rate",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "SLOOS & Credit Conditions": {
+      "category": "SLOOS & Credit Conditions",
+      "total_tickers": 3,
+      "successful": [],
+      "failed": [
+        {
+          "ticker": "SLOOSCIL Index",
+          "field": "PX_LAST",
+          "column": "sloos_ci_standards",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "SLOOSCRE Index",
+          "field": "PX_LAST",
+          "column": "sloos_cre_standards",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "BKCSCREU Index",
+          "field": "PX_LAST",
+          "column": "us_bank_credit_conditions",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Swaption Volatility": {
+      "category": "Swaption Volatility",
+      "total_tickers": 2,
+      "successful": [],
+      "failed": [
+        {
+          "ticker": "USSV010Y Index",
+          "field": "PX_LAST",
+          "column": "us_10y_swaption_vol",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "USSV030Y Index",
+          "field": "PX_LAST",
+          "column": "us_30y_swaption_vol",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Fed Funds Futures": {
+      "category": "Fed Funds Futures",
+      "total_tickers": 3,
+      "successful": [
+        {
+          "ticker": "FF1 Comdty",
+          "field": "PX_LAST",
+          "column": "fed_funds_fut_1m",
+          "non_null_pct": 100.0,
+          "non_null_count": "5001",
+          "total_count": 5001,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 95.735,
+            "last": 96.125,
+            "mean": 98.27903309338132
+          }
+        },
+        {
+          "ticker": "FF2 Comdty",
+          "field": "PX_LAST",
+          "column": "fed_funds_fut_2m",
+          "non_null_pct": 100.0,
+          "non_null_count": "5001",
+          "total_count": 5001,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 95.525,
+            "last": 96.23,
+            "mean": 98.26364387122575
+          }
+        },
+        {
+          "ticker": "FF3 Comdty",
+          "field": "PX_LAST",
+          "column": "fed_funds_fut_3m",
+          "non_null_pct": 100.0,
+          "non_null_count": "5001",
+          "total_count": 5001,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 95.49,
+            "last": 96.29,
+            "mean": 98.24726754649069
+          }
+        }
+      ],
+      "failed": [],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Eurodollar Futures": {
+      "category": "Eurodollar Futures",
+      "total_tickers": 3,
+      "successful": [
+        {
+          "ticker": "ED1 Comdty",
+          "field": "PX_LAST",
+          "column": "eurodollar_fut_1m",
+          "non_null_pct": 100.0,
+          "non_null_count": "4405",
+          "total_count": 4405,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2023-06-16 00:00:00"
+          },
+          "sample_values": {
+            "first": 95.255,
+            "last": 94.49,
+            "mean": 98.35686992054484
+          }
+        },
+        {
+          "ticker": "ED2 Comdty",
+          "field": "PX_LAST",
+          "column": "eurodollar_fut_2m",
+          "non_null_pct": 100.0,
+          "non_null_count": "4361",
+          "total_count": 4361,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2023-04-14 00:00:00"
+          },
+          "sample_values": {
+            "first": 95.205,
+            "last": 94.965,
+            "mean": 98.34301650997477
+          }
+        },
+        {
+          "ticker": "ED3 Comdty",
+          "field": "PX_LAST",
+          "column": "eurodollar_fut_3m",
+          "non_null_pct": 100.0,
+          "non_null_count": "4361",
+          "total_count": 4361,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2023-04-14 00:00:00"
+          },
+          "sample_values": {
+            "first": 95.225,
+            "last": 95.33,
+            "mean": 98.29108232056869
+          }
+        }
+      ],
+      "failed": [],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Economic Surprises": {
+      "category": "Economic Surprises",
+      "total_tickers": 4,
+      "successful": [],
+      "failed": [
+        {
+          "ticker": "BCMPUSUR Index",
+          "field": "PX_LAST",
+          "column": "us_unemployment_surprises",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "BCMPUSEM Index",
+          "field": "PX_LAST",
+          "column": "us_employment_surprises",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "BCMPUSPMI Index",
+          "field": "PX_LAST",
+          "column": "us_pmi_surprises",
+          "reason": "Empty DataFrame"
+        },
+        {
+          "ticker": "BCMPUSRS Index",
+          "field": "PX_LAST",
+          "column": "us_retail_sales_surprises",
+          "reason": "Empty DataFrame"
+        }
+      ],
+      "partial_data": [],
+      "errors": {}
+    },
+    "Sector & Energy": {
+      "category": "Sector & Energy",
+      "total_tickers": 3,
+      "successful": [
+        {
+          "ticker": "XLE US Equity",
+          "field": "PX_LAST",
+          "column": "xle_energy_etf",
+          "non_null_pct": 100.0,
+          "non_null_count": "4994",
+          "total_count": 4994,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 52.62,
+            "last": 88.13,
+            "mean": 69.0931695234281
+          }
+        },
+        {
+          "ticker": "XLE US Equity",
+          "field": "TOT_RETURN_INDEX_GROSS_DVDS",
+          "column": "xle_tr",
+          "non_null_pct": 100.0,
+          "non_null_count": "4994",
+          "total_count": 4994,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 52.62,
+            "last": 156.9367,
+            "mean": 88.82669108930718
+          }
+        },
+        {
+          "ticker": "CO1 Comdty",
+          "field": "PX_LAST",
+          "column": "brent_crude",
+          "non_null_pct": 100.0,
+          "non_null_count": "5123",
+          "total_count": 5123,
+          "is_lower_frequency": false,
+          "frequency_type": "DAILY",
+          "date_range": {
+            "start": "2006-01-03 00:00:00",
+            "end": "2025-11-05 00:00:00"
+          },
+          "sample_values": {
+            "first": 61.35,
+            "last": 63.66,
+            "mean": 77.3077688854187
+          }
+        }
+      ],
+      "failed": [],
+      "partial_data": [],
+      "errors": {}
+    }
+  }
+}

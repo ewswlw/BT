@@ -1,0 +1,57 @@
+category,ticker,field,column_name,non_null_pct,non_null_count,total_count,start_date,end_date
+Credit Spreads & Relative Value,LUACTRUU Index,INDEX_OAS_TSY_BP,us_ig_oas,100.0,4991,4991,2006-01-03 00:00:00,2025-11-04 00:00:00
+Credit Spreads & Relative Value,LF98TRUU Index,INDEX_OAS_TSY_BP,us_hy_oas,100.0,4991,4991,2006-01-03 00:00:00,2025-11-04 00:00:00
+Credit Spreads & Relative Value,USGG10YR Index,PX_LAST,us_10y_yield,100.0,5176,5176,2006-01-02 00:00:00,2025-11-05 00:00:00
+Credit Spreads & Relative Value,USGG2YR Index,PX_LAST,us_2y_yield,100.0,5176,5176,2006-01-02 00:00:00,2025-11-05 00:00:00
+Credit Spreads & Relative Value,USYC2Y10 Index,PX_LAST,us_2s10s_spread,100.0,5148,5148,2006-01-03 00:00:00,2025-11-05 00:00:00
+Credit Spreads & Relative Value,USGG30YR Index,PX_LAST,us_30y_yield,100.0,5176,5176,2006-01-02 00:00:00,2025-11-05 00:00:00
+Credit Spreads & Relative Value,USGG3M Index,PX_LAST,us_3m_tbill,100.0,5178,5178,2006-01-02 00:00:00,2025-11-05 00:00:00
+Credit Spreads & Relative Value,USYC3M30 Index,PX_LAST,us_3m_30y_spread,100.0,5141,5141,2006-01-03 00:00:00,2025-11-05 00:00:00
+Credit Spreads & Relative Value,USYC5Y30 Index,PX_LAST,us_5y30y_spread,100.0,5141,5141,2006-01-03 00:00:00,2025-11-05 00:00:00
+Credit Spreads & Relative Value,USYC3M10 Index,PX_LAST,us_3m10y_spread,100.0,5141,5141,2006-01-03 00:00:00,2025-11-05 00:00:00
+Macro Indicators,FDTR Index,PX_LAST,fed_funds_rate,100.0,5158,5158,2006-01-03 00:00:00,2025-11-05 00:00:00
+Macro Indicators,BCMPUSGR Index,PX_LAST,us_growth_surprises,100.0,5174,5174,2006-01-02 00:00:00,2025-10-30 00:00:00
+Macro Indicators,BCMPUSIF Index,PX_LAST,us_inflation_surprises,100.0,5174,5174,2006-01-02 00:00:00,2025-10-30 00:00:00
+Macro Indicators,.HARDATA G Index,PX_LAST,us_hard_data_surprises,100.0,3364,3364,2006-01-09 00:00:00,2025-11-05 00:00:00
+Macro Indicators,LEI YOY  Index,PX_LAST,us_lei_yoy,100.0,236,236,2006-01-31 00:00:00,2025-08-31 00:00:00
+Macro Indicators,.ECONREGI G Index,PX_LAST,us_economic_regime,100.0,236,236,2006-01-31 00:00:00,2025-08-31 00:00:00
+Macro Indicators,USGGBE10 Index,PX_LAST,us_10y_breakeven,100.0,5174,5174,2006-01-02 00:00:00,2025-11-05 00:00:00
+Equity & Volatility,SPX Index,PX_LAST,spx_close,100.0,4993,4993,2006-01-03 00:00:00,2025-11-05 00:00:00
+Equity & Volatility,SPX Index,TOT_RETURN_INDEX_GROSS_DVDS,spx_tr,100.0,4993,4993,2006-01-03 00:00:00,2025-11-05 00:00:00
+Equity & Volatility,NDX Index,PX_LAST,nasdaq100,100.0,4993,4993,2006-01-03 00:00:00,2025-11-05 00:00:00
+Equity & Volatility,VIX Index,PX_LAST,vix,100.0,5019,5019,2006-01-03 00:00:00,2025-11-05 00:00:00
+Equity & Volatility,VVIX Index,PX_LAST,vvix,100.0,4887,4887,2006-03-06 00:00:00,2025-11-05 00:00:00
+Equity & Volatility,SPX Index,VOLUME,spx_volume,100.0,4992,4992,2006-01-03 00:00:00,2025-11-04 00:00:00
+Cross-Asset Momentum,HYG US Equity,PX_LAST,hyg_etf,100.0,4630,4630,2007-06-01 00:00:00,2025-11-05 00:00:00
+Cross-Asset Momentum,LQD US Equity,PX_LAST,lqd_etf,100.0,4983,4983,2006-01-03 00:00:00,2025-11-05 00:00:00
+Cross-Asset Momentum,TLT US Equity,PX_LAST,tlt_etf,100.0,4983,4983,2006-01-03 00:00:00,2025-11-05 00:00:00
+Cross-Asset Momentum,SPY US Equity,PX_LAST,spy_etf,100.0,4993,4993,2006-01-03 00:00:00,2025-11-05 00:00:00
+Cross-Asset Momentum,XAU Curncy,PX_LAST,gold_spot,100.0,5162,5162,2006-01-02 00:00:00,2025-11-05 00:00:00
+Cross-Asset Momentum,DXY Curncy,PX_LAST,dollar_index,100.0,5161,5161,2006-01-03 00:00:00,2025-11-05 00:00:00
+Cross-Asset Momentum,EURUSD Curncy,PX_LAST,eurusd,100.0,5178,5178,2006-01-02 00:00:00,2025-11-05 00:00:00
+Cross-Asset Momentum,JPYUSD Curncy,PX_LAST,jpyusd,100.0,5178,5178,2006-01-02 00:00:00,2025-11-05 00:00:00
+Cross-Asset Momentum,CL1 Comdty,PX_LAST,wti_crude,100.0,5000,5000,2006-01-03 00:00:00,2025-11-05 00:00:00
+Financial Conditions,BFCIUS Index,PX_LAST,us_bloomberg_fci,100.0,5175,5175,2006-01-02 00:00:00,2025-11-04 00:00:00
+Credit Market Specific,LUACTRUU Index,INDEX_EXCESS_RETURN_YTD,us_ig_er_ytd,100.0,4991,4991,2006-01-03 00:00:00,2025-11-04 00:00:00
+Credit Market Specific,LF98TRUU Index,INDEX_EXCESS_RETURN_YTD,us_hy_er_ytd,100.0,4991,4991,2006-01-03 00:00:00,2025-11-04 00:00:00
+Credit Market Specific,CGERGLOB Index,PX_LAST,us_equity_revisions,100.0,1043,1043,2006-01-06 00:00:00,2025-10-31 00:00:00
+Swap Spreads,USSW2 Curncy,PX_LAST,us_2y_swap_rate,100.0,3580,3580,2009-09-30 00:00:00,2023-06-30 00:00:00
+Swap Spreads,USSW5 Curncy,PX_LAST,us_5y_swap_rate,100.0,3585,3585,2009-09-30 00:00:00,2023-06-30 00:00:00
+Swap Spreads,USSW10 Curncy,PX_LAST,us_10y_swap_rate,100.0,3574,3574,2009-09-30 00:00:00,2023-06-30 00:00:00
+Swap Spreads,USSW30 Curncy,PX_LAST,us_30y_swap_rate,100.0,3570,3570,2009-09-30 00:00:00,2023-06-30 00:00:00
+CDX Term Structure,CDX IG CDSI GEN 3Y SPRD MKIT Corp,ROLL_ADJUSTED_MID_PRICE,ig_cdx_3y_spread,100.0,3826,3826,2010-04-29 00:00:00,2025-11-04 00:00:00
+CDX Term Structure,CDX IG CDSI GEN 7Y SPRD MKIT Corp,ROLL_ADJUSTED_MID_PRICE,ig_cdx_7y_spread,100.0,3833,3833,2010-04-29 00:00:00,2025-11-04 00:00:00
+CDX Term Structure,CDX IG CDSI GEN 10Y SPRD MKIT Corp,ROLL_ADJUSTED_MID_PRICE,ig_cdx_10y_spread,100.0,4977,4977,2006-01-05 00:00:00,2025-11-05 00:00:00
+Advanced Credit Metrics,LUACTRUU Index,MODIFIED_DURATION,us_ig_duration,100.0,4991,4991,2006-01-03 00:00:00,2025-11-04 00:00:00
+Advanced Credit Metrics,LF98TRUU Index,MODIFIED_DURATION,us_hy_duration,100.0,4991,4991,2006-01-03 00:00:00,2025-11-04 00:00:00
+Liquidity & Issuance,LQD US Equity,VOLUME,lqd_volume,100.0,4994,4994,2006-01-03 00:00:00,2025-11-05 00:00:00
+Liquidity & Issuance,HYG US Equity,VOLUME,hyg_volume,100.0,4671,4671,2007-04-11 00:00:00,2025-11-05 00:00:00
+Fed Funds Futures,FF1 Comdty,PX_LAST,fed_funds_fut_1m,100.0,5001,5001,2006-01-03 00:00:00,2025-11-05 00:00:00
+Fed Funds Futures,FF2 Comdty,PX_LAST,fed_funds_fut_2m,100.0,5001,5001,2006-01-03 00:00:00,2025-11-05 00:00:00
+Fed Funds Futures,FF3 Comdty,PX_LAST,fed_funds_fut_3m,100.0,5001,5001,2006-01-03 00:00:00,2025-11-05 00:00:00
+Eurodollar Futures,ED1 Comdty,PX_LAST,eurodollar_fut_1m,100.0,4405,4405,2006-01-03 00:00:00,2023-06-16 00:00:00
+Eurodollar Futures,ED2 Comdty,PX_LAST,eurodollar_fut_2m,100.0,4361,4361,2006-01-03 00:00:00,2023-04-14 00:00:00
+Eurodollar Futures,ED3 Comdty,PX_LAST,eurodollar_fut_3m,100.0,4361,4361,2006-01-03 00:00:00,2023-04-14 00:00:00
+Sector & Energy,XLE US Equity,PX_LAST,xle_energy_etf,100.0,4994,4994,2006-01-03 00:00:00,2025-11-05 00:00:00
+Sector & Energy,XLE US Equity,TOT_RETURN_INDEX_GROSS_DVDS,xle_tr,100.0,4994,4994,2006-01-03 00:00:00,2025-11-05 00:00:00
+Sector & Energy,CO1 Comdty,PX_LAST,brent_crude,100.0,5123,5123,2006-01-03 00:00:00,2025-11-05 00:00:00

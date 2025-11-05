@@ -1,0 +1,4 @@
+ticker,field,column,total_rows,start_date,end_date,date_range_days,avg_gap_days,median_gap_days,min_gap_days,max_gap_days,frequency_type,needs_fill,expected_daily_rows
+LEI YOY  Index,PX_LAST,us_lei_yoy,236,2006-01-31,2025-08-31,7152,30.43404255319149,31.0,28.0,31.0,MONTHLY,True,4000
+.ECONREGI G Index,PX_LAST,us_economic_regime,236,2006-01-31,2025-08-31,7152,30.43404255319149,31.0,28.0,31.0,MONTHLY,True,4000
+CGERGLOB Index,PX_LAST,us_equity_revisions,1043,2006-01-06,2025-10-31,7238,6.946257197696737,7.0,3.0,28.0,WEEKLY,True,4000
