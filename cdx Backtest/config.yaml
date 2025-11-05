@@ -1,0 +1,110 @@
+data:
+  file_path: ../data_pipelines/data_processed/cdx_related.csv
+  date_column: Date
+  start_date: null
+  end_date: null
+  trading_asset: us_ig_cdx_er_index
+  benchmark_asset: us_ig_cdx_er_index
+portfolio:
+  initial_capital: 100000
+  fees: 0.0
+  slippage: 0.0
+  holding_period_days: 7
+  leverage: 1.0
+features:
+  primary_asset: us_ig_cdx_er_index
+  momentum_windows:
+  - 5
+  - 10
+  - 20
+  - 30
+  - 60
+  - 90
+  - 120
+  zscore_windows:
+  - 5
+  - 10
+  - 20
+  - 40
+  - 60
+  - 120
+  - 252
+  correlation_windows:
+  - 20
+  - 60
+  - 120
+  volatility_windows:
+  - 20
+  - 40
+  - 60
+  - 120
+  sma_windows:
+  - 20
+  - 40
+  - 60
+  - 120
+  fill_na_value: 0.0
+ml_strategy:
+  name: ML_Ensemble
+  description: ML ensemble with Random Forest, LightGBM, XGBoost
+  use_random_forest: true
+  use_lightgbm: true
+  use_xgboost: false
+  use_catboost: false
+  ensemble_weights:
+  - 0.5
+  - 0.5
+  - 0.0
+  - 0.0
+  probability_threshold: 0.40
+  forward_return_periods: 7
+  optimize_hyperparameters: false
+  n_trials: 50
+  use_feature_selection: true
+  feature_selection_method: combined
+  top_k_features: 150
+rule_based_strategy:
+  name: Rule_Based_Momentum
+  description: Rule-based momentum strategy
+  strategy_type: momentum
+  momentum_assets:
+  - spx_tr
+  - nasdaq100
+  - vix
+  - gold_spot
+  momentum_lookback_days: 20
+  momentum_threshold: 0.0
+  min_confirmations: 2
+  zscore_window: 60
+  zscore_lower: -1.5
+  zscore_upper: 1.5
+  regime_asset: vix
+  regime_window: 252
+  regime_percentile_low: 0.2
+  regime_percentile_high: 0.8
+  use_momentum_filter: true
+  use_regime_filter: true
+  use_mean_reversion_filter: false
+hybrid_strategy:
+  name: Hybrid_ML_Rules
+  description: Hybrid ML + rule-based strategy
+  ml_weight: 0.7
+  rule_weight: 0.3
+  use_ml_for_entry: true
+  use_rules_for_filter: true
+  require_both_signals: false
+  rule_strategy_type: combination
+validation:
+  initial_train_ratio: 0.7
+  test_periods: 6
+  min_test_period_size: 20
+reporting:
+  output_dir: outputs
+  generate_html: true
+  generate_pdf: false
+  include_plots: true
+  metrics_precision: 4
+target:
+  min_outperformance_annualized: 0.025
+  min_psr: 0.95
+  min_consistency: 0.5
