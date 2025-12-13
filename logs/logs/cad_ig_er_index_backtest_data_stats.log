@@ -1,0 +1,124 @@
+2025-12-13 14:02:51,389 - cad_ig_er_index_backtest_data_stats - INFO - ====================================================================================================
+2025-12-13 14:02:51,390 - cad_ig_er_index_backtest_data_stats - INFO - CAD IG ER INDEX BACKTEST DATA DIAGNOSTICS @ 2025-12-13 14:02:51
+2025-12-13 14:02:51,390 - cad_ig_er_index_backtest_data_stats - INFO - ----------------------------------------------------------------------------------------------------
+2025-12-13 14:02:51,390 - cad_ig_er_index_backtest_data_stats - INFO - Dataset: cad_ig_er_index_data_for_backtest.csv
+2025-12-13 14:02:51,392 - cad_ig_er_index_backtest_data_stats - INFO - Path: c:\Users\Eddy\YTM Capital Dropbox\Eddy Winiarz\Trading\COF\Models\Unfinished Models\Eddy\Python Projects\BT\market data pipeline\processed market data\cad_ig_er_index_data_for_backtest.csv
+2025-12-13 14:02:51,392 - cad_ig_er_index_backtest_data_stats - INFO - Shape: 6,109 rows x 16 columns
+2025-12-13 14:02:51,392 - cad_ig_er_index_backtest_data_stats - INFO - Date Range: 2002-11-01 00:00:00 to 2025-12-12 00:00:00
+2025-12-13 14:02:51,392 - cad_ig_er_index_backtest_data_stats - INFO - Total Days: 8,443
+2025-12-13 14:02:51,392 - cad_ig_er_index_backtest_data_stats - INFO - Business Days: 6,109
+2025-12-13 14:02:51,392 - cad_ig_er_index_backtest_data_stats - INFO - Column Structure: Single-level (16 columns)
+2025-12-13 14:02:51,392 - cad_ig_er_index_backtest_data_stats - INFO - Columns: cad_oas, cad_ig_er_index, tsx, s&p_500, vix, us_3m_10y, us_growth_surprises, us_inflation_surprises, us_lei_yoy, us_hard_data_surprises, us_equity_revisions, us_economic_regime, spx_1bf_eps, spx_1bf_sales, tsx_1bf_eps, tsx_1bf_sales
+2025-12-13 14:02:51,392 - cad_ig_er_index_backtest_data_stats - INFO - 
+DataFrame info():
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -     <class 'pandas.core.frame.DataFrame'>
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -     DatetimeIndex: 6109 entries, 2002-11-01 to 2025-12-12
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -     Data columns (total 16 columns):
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      #   Column                  Non-Null Count  Dtype  
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -     ---  ------                  --------------  -----  
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      0   cad_oas                 6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      1   cad_ig_er_index         6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      2   tsx                     6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      3   s&p_500                 6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      4   vix                     6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      5   us_3m_10y               6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      6   us_growth_surprises     6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      7   us_inflation_surprises  6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      8   us_lei_yoy              6088 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      9   us_hard_data_surprises  6096 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      10  us_equity_revisions     6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      11  us_economic_regime      6088 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      12  spx_1bf_eps             6109 non-null   float64
+2025-12-13 14:02:51,396 - cad_ig_er_index_backtest_data_stats - INFO -      13  spx_1bf_sales           6109 non-null   float64
+2025-12-13 14:02:51,397 - cad_ig_er_index_backtest_data_stats - INFO -      14  tsx_1bf_eps             6109 non-null   float64
+2025-12-13 14:02:51,397 - cad_ig_er_index_backtest_data_stats - INFO -      15  tsx_1bf_sales           5834 non-null   float64
+2025-12-13 14:02:51,397 - cad_ig_er_index_backtest_data_stats - INFO -     dtypes: float64(16)
+2025-12-13 14:02:51,397 - cad_ig_er_index_backtest_data_stats - INFO -     memory usage: 811.4 KB
+2025-12-13 14:02:51,397 - cad_ig_er_index_backtest_data_stats - INFO - 
+Missing Data Statistics:
+2025-12-13 14:02:51,397 - cad_ig_er_index_backtest_data_stats - INFO - Columns with missing data: 4
+2025-12-13 14:02:51,397 - cad_ig_er_index_backtest_data_stats - INFO -   tsx_1bf_sales: 275 (4.5%)
+2025-12-13 14:02:51,398 - cad_ig_er_index_backtest_data_stats - INFO -   us_lei_yoy: 21 (0.34%)
+2025-12-13 14:02:51,398 - cad_ig_er_index_backtest_data_stats - INFO -   us_economic_regime: 21 (0.34%)
+2025-12-13 14:02:51,398 - cad_ig_er_index_backtest_data_stats - INFO -   us_hard_data_surprises: 13 (0.21%)
+2025-12-13 14:02:51,398 - cad_ig_er_index_backtest_data_stats - INFO - 
+Basic Statistics (numeric columns only):
+2025-12-13 14:02:51,412 - cad_ig_er_index_backtest_data_stats - INFO -   Numeric columns: 16
+2025-12-13 14:02:51,412 - cad_ig_er_index_backtest_data_stats - INFO -   Mean values range: -0.0636 to 14722.9712
+2025-12-13 14:02:51,412 - cad_ig_er_index_backtest_data_stats - INFO -   Std dev range: 0.1929 to 4688.0782
+2025-12-13 14:02:51,412 - cad_ig_er_index_backtest_data_stats - INFO - 
+Head (3 rows):
+2025-12-13 14:02:51,416 - cad_ig_er_index_backtest_data_stats - INFO -                   cad_oas  cad_ig_er_index      tsx  s&p_500    vix  us_3m_10y  us_growth_surprises  us_inflation_surprises  us_lei_yoy  us_hard_data_surprises  us_equity_revisions  us_economic_regime  spx_1bf_eps  spx_1bf_sales  tsx_1bf_eps  tsx_1bf_sales
+2025-12-13 14:02:51,416 - cad_ig_er_index_backtest_data_stats - INFO -     Date                                                                                                                                                                                                                                                        
+2025-12-13 14:02:51,416 - cad_ig_er_index_backtest_data_stats - INFO -     2002-11-01  96.391472       100.005722  6321.40  1287.13  29.30    361.891              0.09228                -0.05664         NaN                     NaN                -0.36                 NaN      58.0701       684.9876     495.3329            NaN
+2025-12-13 14:02:51,416 - cad_ig_er_index_backtest_data_stats - INFO -     2002-11-04  97.038166       100.018898  6432.65  1297.69  30.82    362.832              0.11054                -0.05636         NaN                     NaN                -0.36                 NaN      58.4263       687.9674     492.9595            NaN
+2025-12-13 14:02:51,416 - cad_ig_er_index_backtest_data_stats - INFO -     2002-11-05  98.000565       100.147307  6399.64  1307.80  31.23    366.201              0.10998                -0.05608         NaN                     NaN                -0.36                 NaN      58.5269       684.4088     491.5380            NaN
+2025-12-13 14:02:51,416 - cad_ig_er_index_backtest_data_stats - INFO - 
+Tail (3 rows):
+2025-12-13 14:02:51,418 - cad_ig_er_index_backtest_data_stats - INFO -                 cad_oas  cad_ig_er_index       tsx   s&p_500    vix  us_3m_10y  us_growth_surprises  us_inflation_surprises  us_lei_yoy  us_hard_data_surprises  us_equity_revisions  us_economic_regime  spx_1bf_eps  spx_1bf_sales  tsx_1bf_eps  tsx_1bf_sales
+2025-12-13 14:02:51,418 - cad_ig_er_index_backtest_data_stats - INFO -     Date                                                                                                                                                                                                                                                        
+2025-12-13 14:02:51,418 - cad_ig_er_index_backtest_data_stats - INFO -     2025-12-10  85.9334       137.024809  31490.85  15302.75  15.77    110.583             -0.07337                -0.28304        -3.3                  0.4740                 0.15                 0.3     306.2337      2097.1219    1886.6650     13087.8568
+2025-12-13 14:02:51,418 - cad_ig_er_index_backtest_data_stats - INFO -     2025-12-11  85.5495       137.065847  31660.73  15334.74  14.85    114.253             -0.00341                -0.28162        -3.3                  0.4387                 0.15                 0.3     306.4203      2096.8418    1888.1916     13083.2716
+2025-12-13 14:02:51,418 - cad_ig_er_index_backtest_data_stats - INFO -     2025-12-12  84.9166       137.129692  31527.39  15172.13  15.74    122.181             -0.00339                -0.28021        -3.3                  0.4387                 0.15                 0.3     306.7316      2097.6254    1889.5444     13079.8643
+2025-12-13 14:02:51,418 - cad_ig_er_index_backtest_data_stats - INFO - 
+====================================================================================================
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - ====================================================================================================
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - CAD IG ER INDEX BACKTEST DATA DIAGNOSTICS @ 2025-12-13 14:05:37
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - ----------------------------------------------------------------------------------------------------
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - Dataset: cad_ig_er_index_data_for_backtest.csv
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - Path: c:\Users\Eddy\YTM Capital Dropbox\Eddy Winiarz\Trading\COF\Models\Unfinished Models\Eddy\Python Projects\BT\market data pipeline\processed market data\cad_ig_er_index_data_for_backtest.csv
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - Shape: 5,834 rows x 16 columns
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - Date Range: 2003-11-18 00:00:00 to 2025-12-12 00:00:00
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - Total Days: 8,061
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - Business Days: 5,834
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - Column Structure: Single-level (16 columns)
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - Columns: cad_oas, cad_ig_er_index, tsx, s&p_500, vix, us_3m_10y, us_growth_surprises, us_inflation_surprises, us_lei_yoy, us_hard_data_surprises, us_equity_revisions, us_economic_regime, spx_1bf_eps, spx_1bf_sales, tsx_1bf_eps, tsx_1bf_sales
+2025-12-13 14:05:37,016 - cad_ig_er_index_backtest_data_stats - INFO - 
+DataFrame info():
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -     <class 'pandas.core.frame.DataFrame'>
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -     DatetimeIndex: 5834 entries, 2003-11-18 to 2025-12-12
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -     Data columns (total 16 columns):
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      #   Column                  Non-Null Count  Dtype  
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -     ---  ------                  --------------  -----  
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      0   cad_oas                 5834 non-null   float64
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      1   cad_ig_er_index         5834 non-null   float64
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      2   tsx                     5834 non-null   float64
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      3   s&p_500                 5834 non-null   float64
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      4   vix                     5834 non-null   float64
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      5   us_3m_10y               5834 non-null   float64
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      6   us_growth_surprises     5834 non-null   float64
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      7   us_inflation_surprises  5834 non-null   float64
+2025-12-13 14:05:37,019 - cad_ig_er_index_backtest_data_stats - INFO -      8   us_lei_yoy              5834 non-null   float64
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -      9   us_hard_data_surprises  5834 non-null   float64
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -      10  us_equity_revisions     5834 non-null   float64
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -      11  us_economic_regime      5834 non-null   float64
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -      12  spx_1bf_eps             5834 non-null   float64
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -      13  spx_1bf_sales           5834 non-null   float64
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -      14  tsx_1bf_eps             5834 non-null   float64
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -      15  tsx_1bf_sales           5834 non-null   float64
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -     dtypes: float64(16)
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO -     memory usage: 774.8 KB
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO - 
+Missing Data Statistics:
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO - No missing data
+2025-12-13 14:05:37,020 - cad_ig_er_index_backtest_data_stats - INFO - 
+Basic Statistics (numeric columns only):
+2025-12-13 14:05:37,034 - cad_ig_er_index_backtest_data_stats - INFO -   Numeric columns: 16
+2025-12-13 14:05:37,035 - cad_ig_er_index_backtest_data_stats - INFO -   Mean values range: -0.0625 to 15090.2194
+2025-12-13 14:05:37,035 - cad_ig_er_index_backtest_data_stats - INFO -   Std dev range: 0.1940 to 4472.9456
+2025-12-13 14:05:37,035 - cad_ig_er_index_backtest_data_stats - INFO - 
+Head (3 rows):
+2025-12-13 14:05:37,039 - cad_ig_er_index_backtest_data_stats - INFO -                   cad_oas  cad_ig_er_index      tsx  s&p_500    vix  us_3m_10y  us_growth_surprises  us_inflation_surprises  us_lei_yoy  us_hard_data_surprises  us_equity_revisions  us_economic_regime  spx_1bf_eps  spx_1bf_sales  tsx_1bf_eps  tsx_1bf_sales
+2025-12-13 14:05:37,039 - cad_ig_er_index_backtest_data_stats - INFO -     Date                                                                                                                                                                                                                                                        
+2025-12-13 14:05:37,039 - cad_ig_er_index_backtest_data_stats - INFO -     2003-11-18  80.250545       101.904002  7737.39  1506.32  19.11    405.524              0.36977                -0.17776         5.7                  0.3537                  0.1                 1.0      64.6115       738.9341     560.4854      6378.6926
+2025-12-13 14:05:37,039 - cad_ig_er_index_backtest_data_stats - INFO -     2003-11-19  82.801336       101.951609  7801.09  1518.51  18.80    413.633              0.40873                -0.17687         5.7                  0.4087                  0.1                 1.0      64.6173       739.3311     560.9816      6389.3538
+2025-12-13 14:05:37,039 - cad_ig_er_index_backtest_data_stats - INFO -     2003-11-20  74.367794       101.935797  7809.78  1505.76  19.48    406.952              0.42674                -0.17598         5.7                  0.4209                  0.1                 1.0      64.5790       739.1984     560.1786      6395.5928
+2025-12-13 14:05:37,039 - cad_ig_er_index_backtest_data_stats - INFO - 
+Tail (3 rows):
+2025-12-13 14:05:37,041 - cad_ig_er_index_backtest_data_stats - INFO -                 cad_oas  cad_ig_er_index       tsx   s&p_500    vix  us_3m_10y  us_growth_surprises  us_inflation_surprises  us_lei_yoy  us_hard_data_surprises  us_equity_revisions  us_economic_regime  spx_1bf_eps  spx_1bf_sales  tsx_1bf_eps  tsx_1bf_sales
+2025-12-13 14:05:37,041 - cad_ig_er_index_backtest_data_stats - INFO -     Date                                                                                                                                                                                                                                                        
+2025-12-13 14:05:37,041 - cad_ig_er_index_backtest_data_stats - INFO -     2025-12-10  85.9334       137.024809  31490.85  15302.75  15.77    110.583             -0.07337                -0.28304        -3.3                  0.4740                 0.15                 0.3     306.2337      2097.1219    1886.6650     13087.8568
+2025-12-13 14:05:37,041 - cad_ig_er_index_backtest_data_stats - INFO -     2025-12-11  85.5495       137.065847  31660.73  15334.74  14.85    114.253             -0.00341                -0.28162        -3.3                  0.4387                 0.15                 0.3     306.4203      2096.8418    1888.1916     13083.2716
+2025-12-13 14:05:37,042 - cad_ig_er_index_backtest_data_stats - INFO -     2025-12-12  84.9166       137.129692  31527.39  15172.13  15.74    122.181             -0.00339                -0.28021        -3.3                  0.4387                 0.15                 0.3     306.7316      2097.6254    1889.5444     13079.8643
+2025-12-13 14:05:37,042 - cad_ig_er_index_backtest_data_stats - INFO - 
+====================================================================================================
