@@ -3,7 +3,7 @@ Core backtesting framework components.
 """
 
 from .config import DataConfig, PortfolioConfig, ReportingConfig, BaseConfig, create_config_from_dict
-from .data_loader import DataLoader, CSVDataProvider
+from .data_loader import DataLoader, CSVDataProvider, MultiIndexCSVDataProvider
 from .feature_engineering import TechnicalFeatureEngineer, CrossAssetFeatureEngineer, MultiAssetFeatureEngineer
 from .portfolio import PortfolioEngine, BacktestResult
 from .metrics import MetricsCalculator
@@ -17,6 +17,7 @@ __all__ = [
     "create_config_from_dict",
     "DataLoader",
     "CSVDataProvider",
+    "MultiIndexCSVDataProvider",
     "TechnicalFeatureEngineer",
     "CrossAssetFeatureEngineer",
     "MultiAssetFeatureEngineer", 

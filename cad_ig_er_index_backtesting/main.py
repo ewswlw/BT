@@ -38,7 +38,7 @@ sys.path.insert(0, str(script_dir))
 os.chdir(script_dir)
 
 from core import (
-    DataLoader, CSVDataProvider, 
+    DataLoader, CSVDataProvider, MultiIndexCSVDataProvider,
     TechnicalFeatureEngineer, CrossAssetFeatureEngineer, MultiAssetFeatureEngineer,
     PortfolioEngine, MetricsCalculator, ReportGenerator,
     create_config_from_dict
@@ -849,7 +849,7 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
         f.write("END OF COMPREHENSIVE STRATEGY COMPARISON REPORT\n")
         f.write("="*100 + "\n")
     
-    print(f"\n✓ Comprehensive statistics file saved: {file_path}")
+    print(f"\n[OK] Comprehensive statistics file saved: {file_path}")
     return str(file_path)
 
 
@@ -905,7 +905,7 @@ def generate_trade_blotter(results: dict, output_path: Path):
                 f.write(f"An error occurred while generating the blotter for this strategy: {e}\n\n")
                 print(f"Warning: Could not get trades for {strategy_name}: {e}")
     
-    print(f"\n✓ Trade blotter saved to: {file_path}")
+    print(f"\n[OK] Trade blotter saved to: {file_path}")
 
 
 def run_single_strategy(strategy_name: str, config_dict: dict):
@@ -928,7 +928,11 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
         
         # Load and prepare data
         print("Loading data...")
-        data_loader = DataLoader(CSVDataProvider())
+        # Use appropriate data provider based on config
+        if base_config.data.use_multi_index:
+            data_loader = DataLoader(MultiIndexCSVDataProvider())
+        else:
+            data_loader = DataLoader(CSVDataProvider())
         data = data_loader.load_and_prepare(base_config.data)
         
         print(f"Data loaded. Period: {data.index[0]} to {data.index[-1]}")
@@ -997,7 +1001,7 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
             results_path = Path(base_config.reporting.output_dir).parent / 'results'
             generate_trade_blotter({strategy_name: result}, results_path)
         except Exception as e:
-            print(f"✗ Error generating trade blotter: {e}")
+            print(f"[ERROR] Error generating trade blotter: {e}")
             
     except Exception as e:
         print(f"Error running strategy {strategy_name}: {e}")
@@ -1018,7 +1022,11 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
         
         # Load and prepare data
         print("Loading data...")
-        data_loader = DataLoader(CSVDataProvider())
+        # Use appropriate data provider based on config
+        if base_config.data.use_multi_index:
+            data_loader = DataLoader(MultiIndexCSVDataProvider())
+        else:
+            data_loader = DataLoader(CSVDataProvider())
         data = data_loader.load_and_prepare(base_config.data)
         
         print(f"Data loaded. Period: {data.index[0]} to {data.index[-1]}")
@@ -1066,13 +1074,13 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
                 result = strategy.backtest(data, features, base_config.portfolio, base_config.data.benchmark_asset)
                 results[strategy_name] = result
                 
-                print(f"✓ {strategy_name} completed")
+                print(f"[OK] {strategy_name} completed")
                 print(f"  Total Return: {result.metrics['total_return']:.2%}")
                 print(f"  Sharpe Ratio: {result.metrics['sharpe_ratio']:.3f}")
                 print(f"  Max Drawdown: {result.metrics['max_drawdown']:.2%}")
                 
             except Exception as e:
-                print(f"✗ Error running {strategy_name}: {e}")
+                print(f"[ERROR] Error running {strategy_name}: {e}")
                 continue
         
         if results:
@@ -1094,9 +1102,9 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
             if enhanced_config.get('generate_detailed_stats_file', True):
                 try:
                     stats_file_path = generate_comprehensive_stats_file(results, benchmark_data, config_dict)
-                    print(f"\n✓ Comprehensive statistics saved to: {stats_file_path}")
+                    print(f"\n[OK] Comprehensive statistics saved to: {stats_file_path}")
                 except Exception as e:
-                    print(f"✗ Error generating comprehensive statistics file: {e}")
+                    print(f"[ERROR] Error generating comprehensive statistics file: {e}")
                     import traceback
                     traceback.print_exc()
             
@@ -1105,7 +1113,7 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
                 results_path = Path(base_config.reporting.output_dir).parent / 'results'
                 generate_trade_blotter(results, results_path)
             except Exception as e:
-                print(f"✗ Error generating trade blotter: {e}")
+                print(f"[ERROR] Error generating trade blotter: {e}")
 
             # Save individual reports
             for strategy_name, result in results.items():
@@ -1114,9 +1122,9 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
                         result, benchmark_data, base_config.reporting.generate_html
                     )
                     artifacts = report_generator.save_artifacts(result)
-                    print(f"\n✓ {strategy_name} reports saved")
+                    print(f"\n[OK] {strategy_name} reports saved")
                 except Exception as e:
-                    print(f"✗ Error saving {strategy_name} reports: {e}")
+                    print(f"[ERROR] Error saving {strategy_name} reports: {e}")
                     
     except Exception as e:
         print(f"Error in strategy comparison: {e}")
