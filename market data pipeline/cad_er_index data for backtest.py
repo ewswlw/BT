@@ -133,11 +133,20 @@ def load_multi_index_csv(file_path: str) -> pd.DataFrame:
     df = pd.read_csv(file_path, header=[0, 1], skiprows=[2])
     
     # The first column should be the Date column
+    # Extract the first column values explicitly to avoid MultiIndex issues
     first_col = df.columns[0]
-    df = df.set_index(first_col).sort_index()
+    date_values = df[first_col].values
     
-    # Convert index to datetime
-    df.index = pd.to_datetime(df.index, errors="coerce")
+    # Convert date values to datetime before setting as index
+    # This ensures we have a proper DatetimeIndex, not trying to convert a MultiIndex
+    date_index = pd.to_datetime(date_values, errors="coerce")
+    
+    # Set the datetime index and keep all other columns
+    # Using iloc[:, 1:] to keep all columns except the first one (which becomes the index)
+    df = df.iloc[:, 1:].copy()
+    df.index = date_index
+    
+    # Sort by index
     df = df.sort_index()
     
     return df
@@ -775,4 +784,3 @@ if __name__ == "__main__":
         print(f"ERROR: {str(e)}")
         print("=" * 80)
         raise
-
