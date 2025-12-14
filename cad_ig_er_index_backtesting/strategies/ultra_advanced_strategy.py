@@ -107,6 +107,34 @@ class UltraAdvancedStrategy(BaseStrategy):
         """Returns empty list as features are generated internally."""
         return []
 
+    def validate_data(self, data: pd.DataFrame, features: pd.DataFrame) -> bool:
+        """
+        Override validation to skip features check since we generate features internally.
+
+        Args:
+            data: Price data DataFrame
+            features: Features DataFrame (ignored, we create our own)
+
+        Returns:
+            True if data is valid
+
+        Raises:
+            ValueError: If data is invalid
+        """
+        # Only check if data is empty
+        if data.empty:
+            raise ValueError("Data DataFrame is empty")
+
+        # Check for sufficient data
+        if len(data) < 50:
+            raise ValueError(f"Insufficient data: {len(data)} periods. Need at least 50.")
+
+        # Check if trading asset is in data
+        if self.trading_asset not in data.columns:
+            raise ValueError(f"Trading asset {self.trading_asset} not found in data columns")
+
+        return True
+
     def engineer_ultra_features(self, data: pd.DataFrame) -> pd.DataFrame:
         """
         Create 200+ ultra-advanced features with creative transformations.
@@ -511,9 +539,16 @@ class UltraAdvancedStrategy(BaseStrategy):
 
         return features
 
-    def generate_signals(self, data: pd.DataFrame) -> pd.DataFrame:
+    def generate_signals(self, data: pd.DataFrame, features: pd.DataFrame) -> Tuple[pd.Series, pd.Series]:
         """
         Generate trading signals using ultra-advanced ensemble approach.
+
+        Args:
+            data: Price data DataFrame
+            features: Pre-computed features (ignored, we create our own)
+
+        Returns:
+            Tuple of (entry_signals, exit_signals)
 
         Process:
         1. Engineer 200+ features
@@ -716,14 +751,20 @@ class UltraAdvancedStrategy(BaseStrategy):
         print(f"   Long signals: {test_signals.sum()} ({test_signals.mean()*100:.1f}%)")
         print(f"   Cash signals: {(1-test_signals).sum()} ({(1-test_signals).mean()*100:.1f}%)")
 
-        # Create output DataFrame
-        result = pd.DataFrame(index=data.index)
-        result['signal'] = signals
-        result['probability'] = 0.0
-        result.loc[ensemble_proba.index, 'probability'] = ensemble_proba
+        # Convert to entry/exit signals (matching base strategy signature)
+        positions = signals.astype(int)
+        positions_shifted = positions.shift(1).fillna(0).astype(int)
+
+        entry_signals = (positions == 1) & (positions_shifted == 0)
+        exit_signals = (positions == 0) & (positions_shifted == 1)
+
+        print(f"\n✓ Entry/Exit Signal Generation:")
+        print(f"  Total entry signals: {entry_signals.sum()}")
+        print(f"  Total exit signals: {exit_signals.sum()}")
+        print(f"  Time in market: {positions.mean():.2%}")
 
         print("\n" + "="*100)
         print("✅ SIGNAL GENERATION COMPLETE")
         print("="*100)
 
-        return result
+        return entry_signals, exit_signals
