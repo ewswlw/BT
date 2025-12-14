@@ -2,32 +2,18 @@
 # Optimized for 144.6%+ total return breakthrough performance
 
 data:
-  file_path: "../market data pipeline/processed market data/market_data_time_series.csv"
+  file_path: "../market data pipeline/processed market data/cad_ig_er_index_data_for_backtest.csv"
   date_column: "Date"
-  use_multi_index: true  # Enable multi-index CSV loading
+  use_multi_index: false  # Simple CSV format (not multi-index)
   multi_index_header_rows: 2
   date_header_row: 2
   
-  # Asset class filtering - include all needed asset classes
-  asset_classes_include:
-    - "cad_credit_spreads"
-    - "cad_credit_exposure"
-    - "equity_indices"
-    - "volatility"
-    - "yield_curves"
-    - "economic_indicators"
-    - "forecasts"
+  # Asset class filtering (not used for simple CSV)
+  asset_classes_include: null
   asset_classes_exclude: null
   
-  # Column filtering - include all columns needed by LightGBM strategy
-  columns_include:
-    cad_credit_spreads: ["cad_oas"]
-    cad_credit_exposure: ["cad_ig_er_index"]
-    equity_indices: ["tsx", "s&p_500"]
-    volatility: ["vix"]
-    yield_curves: ["us_3m_10y"]
-    economic_indicators: ["us_growth_surprises", "us_inflation_surprises", "us_lei_yoy", "us_hard_data_surprises", "us_equity_revisions", "us_economic_regime"]
-    forecasts: ["spx_1bf_eps", "spx_1bf_sales", "tsx_1bf_eps", "tsx_1bf_sales"]
+  # Column filtering (not used for simple CSV - all columns are loaded directly)
+  columns_include: null
   columns_exclude: null
   
   # Date range
