@@ -142,7 +142,7 @@ class RFEnsembleStrategy(BaseStrategy):
         # Fill NaN values (forward fill, then zero)
         features = features.fillna(method='ffill').fillna(0)
 
-        print(f"  ✓ Feature engineering complete: {len(features.columns)} features created")
+        print(f"  Feature engineering complete: {len(features.columns)} features created")
 
         return features
 

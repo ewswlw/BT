@@ -64,20 +64,9 @@ DataFrame info():
 2025-12-13 13:06:00,648 - market_data_stats - INFO -      31  (us_credit_exposure, us_hy_er_index)                            6109 non-null   float64
 2025-12-13 13:06:00,649 - market_data_stats - INFO -      32  (us_credit_exposure, cdx_ig_er)                                 4953 non-null   float64
 2025-12-13 13:06:00,649 - market_data_stats - INFO -      33  (us_credit_exposure, cdx_hy_er)                                 4947 non-null   float64
-2025-12-13 13:06:00,649 - market_data_stats - INFO -      34  (equity_indices, tsx)                                           6109 non-null   float64
-2025-12-13 13:06:00,649 - market_data_stats - INFO -      35  (equity_indices, s&p_500)                                       6109 non-null   float64
-2025-12-13 13:06:00,649 - market_data_stats - INFO -      36  (volatility, vix)                                               6109 non-null   float64
-2025-12-13 13:06:00,650 - market_data_stats - INFO -      37  (yield_curves, us_3m_10y)                                       6109 non-null   float64
-2025-12-13 13:06:00,650 - market_data_stats - INFO -      38  (economic_indicators, us_growth_surprises)                      6109 non-null   float64
-2025-12-13 13:06:00,650 - market_data_stats - INFO -      39  (economic_indicators, us_inflation_surprises)                   6109 non-null   float64
-2025-12-13 13:06:00,650 - market_data_stats - INFO -      40  (economic_indicators, us_lei_yoy)                               6088 non-null   float64
-2025-12-13 13:06:00,650 - market_data_stats - INFO -      41  (economic_indicators, us_hard_data_surprises)                   6096 non-null   float64
-2025-12-13 13:06:00,650 - market_data_stats - INFO -      42  (economic_indicators, us_equity_revisions)                      6109 non-null   float64
-2025-12-13 13:06:00,650 - market_data_stats - INFO -      43  (economic_indicators, us_economic_regime)                       6088 non-null   float64
-2025-12-13 13:06:00,651 - market_data_stats - INFO -      44  (forecasts, spx_1bf_eps)                                        6109 non-null   float64
-2025-12-13 13:06:00,651 - market_data_stats - INFO -      45  (forecasts, spx_1bf_sales)                                      6109 non-null   float64
-2025-12-13 13:06:00,651 - market_data_stats - INFO -      46  (forecasts, tsx_1bf_eps)                                        6109 non-null   float64
-2025-12-13 13:06:00,651 - market_data_stats - INFO -      47  (forecasts, tsx_1bf_sales)                                      5834 non-null   float64
+2025-12-13 13:06:00,649 - market_data_stats - INFO -      34  
+
+                                     5834 non-null   float64
 2025-12-13 13:06:00,651 - market_data_stats - INFO -     dtypes: float64(48)
 2025-12-13 13:06:00,651 - market_data_stats - INFO -     memory usage: 2.4 MB
 2025-12-13 13:06:00,651 - market_data_stats - INFO - 
