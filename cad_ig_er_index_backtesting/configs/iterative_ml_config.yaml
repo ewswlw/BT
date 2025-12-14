@@ -1,0 +1,98 @@
+# Iterative ML Strategy Configuration
+# Goal: Beat buy-and-hold by at least 2.5% annualized return
+
+data:
+  file_path: "../market data pipeline/processed market data/cad_ig_er_index_data_for_backtest.csv"
+  date_column: "Date"
+  use_multi_index: false
+  resample_frequency: null  # Use raw daily data
+  start_date: null
+  end_date: null
+  
+  missing_data_strategy: "forward_fill"
+  missing_data_fill_value: 0.0
+  
+  outlier_detection_enabled: false
+  gap_detection_enabled: false
+  data_validation_enabled: true
+  
+  force_numeric: true
+  flatten_columns: true
+  
+  benchmark_asset: "cad_ig_er_index"
+  trading_asset: "cad_ig_er_index"
+  assets: []
+  required_columns: []
+
+portfolio:
+  initial_capital: 100
+  frequency: "D"  # Daily frequency
+  fees: 0.0
+  slippage: 0.0
+  position_size: 1.0
+  leverage: 1.0
+
+reporting:
+  output_dir: "outputs/reports"
+  generate_html: true
+  generate_pdf: false
+  include_plots: true
+  metrics_precision: 4
+
+# Iterative ML Strategy Configuration
+iterative_ml_strategy:
+  # Iteration parameters
+  iteration: 0
+  max_iterations: 20
+  min_outperformance: 0.025  # 2.5% annualized outperformance target
+  results_dir: "outputs/iterative_ml"
+  
+  # Feature engineering
+  momentum_windows: [1, 2, 3, 5, 7, 10, 12, 15, 20, 25, 30, 40, 50, 60, 90, 120, 180, 252]
+  volatility_windows: [5, 10, 20, 40, 60, 120, 252]
+  zscore_windows: [5, 10, 20, 40, 60, 120, 252]
+  correlation_windows: [20, 60, 120, 252]
+  
+  # Model selection
+  use_rf: true
+  use_lightgbm: true
+  use_xgboost: true
+  use_catboost: true
+  
+  # Walk-forward validation
+  walk_forward_train_size: 0.7
+  walk_forward_test_size: 0.15
+  walk_forward_step: 0.05
+  use_walk_forward: true
+  
+  # Prediction parameters
+  prediction_horizon: 7  # Days ahead
+  probability_threshold: 0.5
+  optimize_threshold: true
+  
+  # Risk management
+  min_holding_days: 5
+  max_holding_days: 60
+  
+  # Statistical validation
+  min_sharpe: 0.5
+  max_drawdown_limit: -0.20  # -20%
+  min_trades: 20
+  
+  # Ensemble weights (learned from iterations)
+  ensemble_weights: null
+
+strategies:
+  enabled:
+    - "iterative_ml_strategy"
+
+enhanced_reporting:
+  generate_detailed_stats_file: true
+  stats_file_name: "iterative_ml_strategy_comparison.txt"
+  include_vectorbt_stats: true
+  include_quantstats_metrics: true
+  include_manual_calculations: true
+
+random_seed: 42
+verbose: true
+log_level: "INFO"
