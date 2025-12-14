@@ -10,11 +10,12 @@ from .genetic_algorithm import GeneticAlgorithmStrategy
 from .vol_adaptive_momentum import VolAdaptiveMomentumStrategy
 from .lightgbm_strategy import LightGBMStrategy
 from .rf_ensemble_strategy import RFEnsembleStrategy
+from .ultra_advanced_strategy import UltraAdvancedStrategy
 
 
 class StrategyFactory:
     """Factory for creating strategy instances."""
-    
+
     _strategies: Dict[str, Type[BaseStrategy]] = {
         'cross_asset_momentum': CrossAssetMomentumStrategy,
         'multi_asset_momentum': MultiAssetMomentumStrategy,
@@ -22,6 +23,7 @@ class StrategyFactory:
         'vol_adaptive_momentum': VolAdaptiveMomentumStrategy,
         'lightgbm_strategy': LightGBMStrategy,
         'rf_ensemble_strategy': RFEnsembleStrategy,
+        'ultra_advanced_strategy': UltraAdvancedStrategy,
     }
     
     @classmethod

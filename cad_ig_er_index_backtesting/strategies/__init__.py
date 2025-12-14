@@ -8,6 +8,7 @@ from .multi_asset_momentum import MultiAssetMomentumStrategy
 from .genetic_algorithm import GeneticAlgorithmStrategy
 from .lightgbm_strategy import LightGBMStrategy
 from .rf_ensemble_strategy import RFEnsembleStrategy
+from .ultra_advanced_strategy import UltraAdvancedStrategy
 from .strategy_factory import StrategyFactory
 
 __all__ = [
@@ -17,5 +18,6 @@ __all__ = [
     "GeneticAlgorithmStrategy",
     "LightGBMStrategy",
     "RFEnsembleStrategy",
+    "UltraAdvancedStrategy",
     "StrategyFactory",
 ] 
