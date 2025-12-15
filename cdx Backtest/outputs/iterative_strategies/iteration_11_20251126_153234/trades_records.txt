@@ -1,0 +1,2 @@
+ Exit Trade Id  Column        Size Entry Timestamp  Avg Entry Price  Entry Fees Exit Timestamp  Duration  Avg Exit Price  Exit Fees          PnL  Return Direction Status  Position Id
+             0       0 1048.277366      2009-06-19          95.3946         0.0     2025-11-05      5983         118.126        0.0 23828.812113    0.24      Long   Open            0
