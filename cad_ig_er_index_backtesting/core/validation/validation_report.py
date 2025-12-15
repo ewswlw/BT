@@ -44,11 +44,12 @@ class ValidationReportGenerator:
             Path to generated report file
         """
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        report_path = self.output_dir / f"{strategy_name}_validation_report_{timestamp}.txt"
+        # Use fixed filename (no timestamp) so it overwrites on each run
+        report_path = self.output_dir / f"{strategy_name}_validation_report.txt"
         
         report_lines = []
         
-        # Header
+        # Header (still includes timestamp for reference)
         report_lines.extend(self._generate_header(strategy_name, timestamp))
         
         # Executive Summary

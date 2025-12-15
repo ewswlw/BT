@@ -1049,28 +1049,29 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
             print("RUNNING VALIDATION FRAMEWORK")
             print("="*80)
             try:
-                benchmark_data = data[base_config.data.benchmark_asset]
-                benchmark_returns = benchmark_data.pct_change().dropna()
+                # Use strategy returns from backtest result, not benchmark returns
+                strategy_returns = result.returns.dropna()
                 
                 # Prepare data for validation
                 if hasattr(strategy, 'create_target'):
                     target = strategy.create_target(data)
                 else:
+                    benchmark_data = data[base_config.data.benchmark_asset]
                     # Default: predict positive returns
                     returns = benchmark_data.pct_change().shift(-1)
                     target = (returns > 0).astype(int)
                 
-                # Align data
-                common_idx = features.index.intersection(target.index).intersection(benchmark_returns.index)
+                # Align data - use strategy returns instead of benchmark returns
+                common_idx = features.index.intersection(target.index).intersection(strategy_returns.index)
                 X = features.loc[common_idx]
                 y = target.loc[common_idx]
-                returns_aligned = benchmark_returns.loc[common_idx]
+                returns_aligned = strategy_returns.loc[common_idx]  # Use strategy returns, not benchmark!
                 
                 # Prepare samples_info_sets for purged CV
                 # Use default prediction horizon of 7 days
                 samples_info_sets = strategy._prepare_samples_info_sets(data.loc[common_idx], prediction_horizon=7)
                 
-                # Run validation
+                # Run validation with strategy-specific returns
                 validation_framework = ValidationFramework(base_config.validation)
                 validation_results = validation_framework.validate(
                     X, y, returns_aligned, samples_info_sets
@@ -1203,6 +1204,11 @@ def run_validation(strategy_names: list, config_dict: dict):
             feature_config = config_dict.get('features', {})
             features = feature_engineer.create_features(data, feature_config)
             
+            # Run backtest first to get strategy-specific returns
+            print(f"  Running backtest to get strategy returns...")
+            backtest_result = strategy.backtest(data, features, base_config.portfolio, base_config.data.benchmark_asset)
+            strategy_returns = backtest_result.returns.dropna()
+            
             # Prepare data for validation
             # For ML strategies, we need targets
             if hasattr(strategy, 'create_target'):
@@ -1212,16 +1218,16 @@ def run_validation(strategy_names: list, config_dict: dict):
                 returns = benchmark_data.pct_change().shift(-1)
                 target = (returns > 0).astype(int)
             
-            # Align data
-            common_idx = features.index.intersection(target.index).intersection(benchmark_returns.index)
+            # Align data - use strategy returns instead of benchmark returns
+            common_idx = features.index.intersection(target.index).intersection(strategy_returns.index)
             X = features.loc[common_idx]
             y = target.loc[common_idx]
-            returns_aligned = benchmark_returns.loc[common_idx]
+            returns_aligned = strategy_returns.loc[common_idx]  # Use strategy returns, not benchmark!
             
             # Prepare samples_info_sets for purged CV
             samples_info_sets = strategy._prepare_samples_info_sets(data.loc[common_idx], prediction_horizon=7)
             
-            # Run validation
+            # Run validation with strategy-specific returns
             validation_framework = ValidationFramework(validation_config)
             validation_results = validation_framework.validate(
                 X, y, returns_aligned, samples_info_sets
@@ -1326,26 +1332,27 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
                     base_config.validation and 
                     base_config.validation.auto_run):
                     try:
-                        benchmark_data = data[base_config.data.benchmark_asset]
-                        benchmark_returns = benchmark_data.pct_change().dropna()
+                        # Use strategy returns from backtest result, not benchmark returns
+                        strategy_returns = result.returns.dropna()
                         
                         # Prepare data for validation
                         if hasattr(strategy, 'create_target'):
                             target = strategy.create_target(data)
                         else:
+                            benchmark_data = data[base_config.data.benchmark_asset]
                             returns = benchmark_data.pct_change().shift(-1)
                             target = (returns > 0).astype(int)
                         
-                        # Align data
-                        common_idx = features.index.intersection(target.index).intersection(benchmark_returns.index)
+                        # Align data - use strategy returns instead of benchmark returns
+                        common_idx = features.index.intersection(target.index).intersection(strategy_returns.index)
                         X = features.loc[common_idx]
                         y = target.loc[common_idx]
-                        returns_aligned = benchmark_returns.loc[common_idx]
+                        returns_aligned = strategy_returns.loc[common_idx]  # Use strategy returns, not benchmark!
                         
                         # Prepare samples_info_sets
                         samples_info_sets = strategy._prepare_samples_info_sets(data.loc[common_idx], prediction_horizon=7)
                         
-                        # Run validation
+                        # Run validation with strategy-specific returns
                         validation_framework = ValidationFramework(base_config.validation)
                         validation_results = validation_framework.validate(
                             X, y, returns_aligned, samples_info_sets
