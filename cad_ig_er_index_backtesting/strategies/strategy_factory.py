@@ -10,6 +10,7 @@ from .genetic_algorithm import GeneticAlgorithmStrategy
 from .vol_adaptive_momentum import VolAdaptiveMomentumStrategy
 from .lightgbm_strategy import LightGBMStrategy
 from .rf_ensemble_strategy import RFEnsembleStrategy
+from .iterative_ml_strategy import IterativeMLStrategy
 
 
 class StrategyFactory:
@@ -22,6 +23,7 @@ class StrategyFactory:
         'vol_adaptive_momentum': VolAdaptiveMomentumStrategy,
         'lightgbm_strategy': LightGBMStrategy,
         'rf_ensemble_strategy': RFEnsembleStrategy,
+        'iterative_ml_strategy': IterativeMLStrategy,
     }
     
     @classmethod
