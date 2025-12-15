@@ -1,13 +1,40 @@
-# Comprehensive Backtesting Framework Configuration
-# Contains all strategy configurations in a single file
+# ============================================================================
+# COMPREHENSIVE BACKTESTING FRAMEWORK CONFIGURATION
+# ============================================================================
+# This file contains all configuration settings for the backtesting framework.
+# 
+# QUICK NAVIGATION:
+#   1. DATA CONFIGURATION (lines ~10-60)
+#   2. PORTFOLIO CONFIGURATION (lines ~62-70)
+#   3. REPORTING CONFIGURATION (lines ~72-80)
+#   4. FEATURE ENGINEERING CONFIGURATION (lines ~82-140)
+#   5. STRATEGY CONFIGURATIONS (lines ~142-300)
+#      - Cross-Asset Momentum
+#      - Multi-Asset Momentum
+#      - Genetic Algorithm
+#      - Volatility-Adaptive Momentum
+#      - LightGBM Machine Learning
+#      - Random Forest Ensemble
+#      - Logistic Regression
+#   6. STRATEGY SELECTION CONTROL (lines ~302-320)
+#   7. ENHANCED REPORTING CONFIGURATION (lines ~322-330)
+#   8. COMMON SETTINGS (lines ~332-340)
+# ============================================================================
 
+# ============================================================================
+# SECTION 1: DATA CONFIGURATION
+# ============================================================================
+# Configure data loading, preprocessing, and validation settings
+# ============================================================================
 data:
+  # --- File Path and Format ---
   file_path: "../market data pipeline/processed market data/cad_ig_er_index_data_for_backtest.csv"
   date_column: "Date"
   use_multi_index: false  # Simple CSV format (not multi-index)
   multi_index_header_rows: 2
   date_header_row: 2
   
+  # --- Asset Filtering ---
   # Asset class filtering (not used for simple CSV)
   asset_classes_include: null
   asset_classes_exclude: null
@@ -16,44 +43,49 @@ data:
   columns_include: null
   columns_exclude: null
   
-  # Date range
+  # --- Date Range Filtering ---
   resample_frequency: null # Use raw daily data, or specify frequency like "W-FRI"
   start_date: null  # "2002-11-01" - specify to filter date range
   end_date: null
   
-  # Missing data handling
-  missing_data_strategy: "forward_fill"  # forward_fill, backward_fill, interpolate, drop, fill_value
+  # --- Missing Data Handling ---
+  missing_data_strategy: "forward_fill"  # Options: forward_fill, backward_fill, interpolate, drop, fill_value
   missing_data_fill_value: 0.0
   
-  # Outlier detection
+  # --- Outlier Detection ---
   outlier_detection_enabled: false
-  outlier_method: "iqr"  # iqr, zscore
+  outlier_method: "iqr"  # Options: iqr, zscore
   outlier_threshold: 3.0
-  outlier_action: "flag"  # flag, remove, clip
+  outlier_action: "flag"  # Options: flag, remove, clip
   
-  # Gap detection
+  # --- Gap Detection ---
   gap_detection_enabled: false
   max_gap_days: 7
-  gap_action: "flag"  # flag, fill, drop
+  gap_action: "flag"  # Options: flag, fill, drop
   
-  # Data validation
+  # --- Data Validation ---
   data_validation_enabled: true
   min_value: null
   max_value: null
   
-  # Column transformations
-  column_rename_map: null  # {"old_name": "new_name"}
+  # --- Column Transformations ---
+  column_rename_map: null  # Format: {"old_name": "new_name"}
   force_numeric: true
   
-  # Multi-index flattening
+  # --- Multi-Index Flattening ---
   flatten_columns: true  # Always use 2nd level (column names)
   
-  # Existing fields
+  # --- Asset Identification ---
   benchmark_asset: "cad_ig_er_index"
   trading_asset: "cad_ig_er_index"
   assets: []  # Will be populated after flattening, or specify explicitly
   required_columns: []
 
+# ============================================================================
+# SECTION 2: PORTFOLIO CONFIGURATION
+# ============================================================================
+# Configure portfolio settings for backtesting
+# ============================================================================
 portfolio:
   initial_capital: 100
   frequency: "D" # Daily frequency for calculations
@@ -62,6 +94,11 @@ portfolio:
   position_size: 1.0
   leverage: 1.0
 
+# ============================================================================
+# SECTION 3: REPORTING CONFIGURATION
+# ============================================================================
+# Configure report generation and output settings
+# ============================================================================
 reporting:
   output_dir: "outputs/reports"
   generate_html: true
@@ -69,22 +106,27 @@ reporting:
   include_plots: true
   metrics_precision: 4
 
-# Feature engineering configuration (parameters are in trading days)
+# ============================================================================
+# SECTION 4: FEATURE ENGINEERING CONFIGURATION
+# ============================================================================
+# Configure technical indicators and feature creation
+# All parameters are in trading days
+# ============================================================================
 features:
-  # Primary asset
+  # --- Primary Settings ---
   primary_asset: "cad_ig_er_index"
   fill_na_value: 0.0
   
-  # Momentum features
+  # --- Momentum Features ---
   momentum_periods: [5, 10, 15, 20, 30, 40, 60, 65, 130, 260] # Scaled from weeks
   
-  # Volatility features
+  # --- Volatility Features ---
   volatility_windows: [20, 40, 65, 130] # Scaled from weeks
   
-  # SMA features
+  # --- Moving Average Features ---
   sma_windows: [20, 40, 65, 130] # Scaled from weeks
   
-  # Technical indicators
+  # --- Technical Indicators ---
   include_macd: true
   macd_fast: 12
   macd_slow: 26
@@ -96,30 +138,30 @@ features:
   include_rsi: false
   include_bollinger: false
   
-  # OAS and VIX features
+  # --- OAS and VIX Features ---
   include_oas_features: true
   oas_momentum_period: 20 # Scaled from 4 weeks
   include_vix: true
   
-  # Correlation and relative strength
+  # --- Correlation and Relative Strength ---
   include_correlations: false
   include_relative_strength: false
   
-  # Features for logistic regression strategy
+  # --- Z-Score Features (for Logistic Regression) ---
   include_zscore_features: true
   zscore_columns: ["cad_oas", "vix", "us_3m_10y"]
   zscore_window: 252
   
-  # Equity index returns
+  # --- Equity Index Returns ---
   include_equity_index_features: true
   equity_index_columns: ["tsx", "s&p_500"]
   equity_index_periods: [1, 5, 21]
   
-  # Daily changes for OAS, VIX, yield curve
+  # --- Daily Change Features ---
   include_daily_change_features: true
   daily_change_columns: ["cad_oas", "vix", "us_3m_10y"]
   
-  # Macro surprise indicators
+  # --- Macro Surprise Indicators ---
   include_macro_surprise_features: true
   macro_surprise_columns:
     - "us_growth_surprises"
@@ -129,16 +171,20 @@ features:
     - "us_lei_yoy"
 
 # ============================================================================
-# STRATEGY CONFIGURATIONS
+# SECTION 5: STRATEGY CONFIGURATIONS
+# ============================================================================
+# Individual strategy parameter settings
 # ============================================================================
 
-# Cross-Asset Momentum Strategy
+# --- Strategy 5.1: Cross-Asset Momentum ---
+# Weekly rebalancing strategy using momentum across multiple assets
 cross_asset_momentum:
   momentum_assets: ["cad_ig_er_index", "tsx", "s&p_500"]
   momentum_lookback_days: 10 # Scaled from 2 weeks
   min_confirmations: 2  # Updated to match number of available assets
 
-# Multi-Asset Momentum Strategy
+# --- Strategy 5.2: Multi-Asset Momentum ---
+# Combined momentum signal from multiple assets with time-based exits
 multi_asset_momentum:
   momentum_assets_map:
     tsx: "tsx"
@@ -148,7 +194,8 @@ multi_asset_momentum:
   signal_threshold: -0.005
   exit_hold_days: 5 # Scaled from 1 week
 
-# Genetic Algorithm Strategy
+# --- Strategy 5.3: Genetic Algorithm ---
+# Evolves trading rules using genetic algorithm optimization
 genetic_algorithm:
   population_size: 120
   max_generations: 120
@@ -160,7 +207,8 @@ genetic_algorithm:
   fitness_drawdown_penalty_factor: 0.1
   initial_cash_ga: 10000
 
-# Volatility-Adaptive Momentum Strategy
+# --- Strategy 5.4: Volatility-Adaptive Momentum ---
+# Momentum strategy that adapts to volatility regimes using VIX
 vol_adaptive_momentum:
   price_column: "cad_ig_er_index"
   vix_column: "vix"
@@ -172,7 +220,8 @@ vol_adaptive_momentum:
   max_hold: 10
   scale: 0.005
 
-# LightGBM Machine Learning Strategy
+# --- Strategy 5.5: LightGBM Machine Learning ---
+# Advanced ML strategy using LightGBM gradient boosting
 # Optimized for 144.6%+ total return breakthrough performance
 lightgbm_strategy:
   trading_asset: "cad_ig_er_index"
@@ -212,8 +261,8 @@ lightgbm_strategy:
   # Random seed for reproducibility
   random_seed: 42
 
-# Random Forest Ensemble Strategy
-# Achieves 3.86% annualized return with 4-model ensemble
+# --- Strategy 5.6: Random Forest Ensemble ---
+# 4-model Random Forest ensemble achieving 3.86% annualized return
 rf_ensemble_strategy:
   trading_asset: "cad_ig_er_index"
   benchmark_asset: "cad_ig_er_index"
@@ -262,8 +311,8 @@ rf_ensemble_strategy:
   holding_period_days: 7                       # Minimum holding period
   train_test_split: 0.70                       # 70% train, 30% test
 
-# Logistic Regression Strategy
-# Uses logistic regression with comprehensive feature engineering
+# --- Strategy 5.7: Logistic Regression ---
+# Logistic regression with comprehensive feature engineering and threshold optimization
 logistic_regression_strategy:
   trading_asset: "cad_ig_er_index"
   benchmark_asset: "cad_ig_er_index"
@@ -293,7 +342,9 @@ logistic_regression_strategy:
   save_diagnostics: true  # Save diagnostics to file
 
 # ============================================================================
-# STRATEGY SELECTION CONTROL
+# SECTION 6: STRATEGY SELECTION CONTROL
+# ============================================================================
+# Control which strategies are enabled and how they run
 # ============================================================================
 strategies:
   enabled:
@@ -310,7 +361,9 @@ strategies:
   run_all_by_default: true
 
 # ============================================================================
-# ENHANCED REPORTING CONFIGURATION
+# SECTION 7: ENHANCED REPORTING CONFIGURATION
+# ============================================================================
+# Configure detailed reporting and statistics generation
 # ============================================================================
 enhanced_reporting:
   generate_detailed_stats_file: true
@@ -321,7 +374,9 @@ enhanced_reporting:
   include_drawdown_analysis: true
 
 # ============================================================================
-# COMMON SETTINGS
+# SECTION 8: COMMON SETTINGS
+# ============================================================================
+# Global settings applied across all strategies
 # ============================================================================
 random_seed: 7
 verbose: true
