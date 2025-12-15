@@ -526,6 +526,57 @@ PARAMETERS FOR EVOLUTION:
 - Rebalancing Frequency: Weekly (Monday)
 """
 
+    elif strategy_name.lower() == 'logistic_regression_strategy':
+        trading_asset = strategy_config.get('trading_asset', 'cad_ig_er_index')
+        prediction_horizon = strategy_config.get('prediction_horizon', 5)
+        optimal_threshold = strategy_config.get('default_threshold', 0.55)
+        C = strategy_config.get('C', 1.0)
+        
+        return f"""Logistic Regression Machine Learning Trading Strategy
+
+TRADING RULES:
+1. Data & Methodology:
+   - Uses logistic regression to predict profitable trading opportunities
+   - Analyzes {trading_asset} with comprehensive feature engineering
+   - Operates on DAILY data with daily signal generation
+   - Predicts {prediction_horizon}-day forward returns
+
+2. Feature Engineering:
+   - Uses TechnicalFeatureEngineer for comprehensive feature creation
+   - Includes momentum, volatility, technical indicators, and macro features
+   - Rolling z-scores (252-day window) for OAS, VIX, yield curve
+   - Equity index returns (TSX, S&P500) over multiple horizons
+   - Daily changes for OAS, VIX, yield curve
+   - Macro surprise indicators (growth, inflation, equity revisions, LEI)
+
+3. Logistic Regression Model:
+   - Binary classification (positive vs negative forward returns)
+   - Regularization strength (C): {C}
+   - Features are standardized before model training
+   - Train/test split: 70/30
+
+4. Threshold Optimization:
+   - Optimized prediction threshold: {optimal_threshold:.3f}
+   - Maximizes return while controlling drawdown
+   - Walk-forward validation for robustness
+
+5. Signal Generation:
+   - Binary classification (long/cash positions)
+   - Entry when predicted probability > {optimal_threshold:.3f}
+   - Exit when predicted probability <= {optimal_threshold:.3f}
+
+6. Model Persistence:
+   - Models are saved to disk for reuse
+   - Scaler and optimal threshold are saved with model
+
+PARAMETERS:
+- Trading Asset: {trading_asset}
+- Prediction Horizon: {prediction_horizon} days
+- Optimal Threshold: {optimal_threshold:.3f}
+- Regularization (C): {C}
+- Features: Comprehensive technical and macro indicators
+"""
+    
     else:
         return f"""Strategy: {strategy_name.upper()}
 

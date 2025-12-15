@@ -94,6 +94,43 @@ class TechnicalFeatureEngineer(FeatureEngineer):
                     # Fill with default value if column not found (matching reference)
                                          features[f"{col}_mom{momentum_period}"] = config.get('fill_na_value', 0.0)
         
+        # Rolling z-scores (for logistic regression strategy)
+        if config.get('include_zscore_features', False):
+            zscore_cols = config.get('zscore_columns', ['cad_oas', 'vix', 'us_3m_10y'])
+            zscore_window = config.get('zscore_window', 252)
+            for col in zscore_cols:
+                if col in price_data.columns:
+                    roll_mean = price_data[col].rolling(zscore_window).mean()
+                    roll_std = price_data[col].rolling(zscore_window).std()
+                    features[f"{col}_z"] = (price_data[col] - roll_mean) / roll_std
+        
+        # Equity index returns (TSX, S&P500)
+        if config.get('include_equity_index_features', False):
+            equity_cols = config.get('equity_index_columns', ['tsx', 's&p_500'])
+            equity_periods = config.get('equity_index_periods', [1, 5, 21])
+            for col in equity_cols:
+                if col in price_data.columns:
+                    for period in equity_periods:
+                        features[f"{col}_ret_{period}d"] = price_data[col].pct_change(period)
+        
+        # Daily changes for OAS, VIX, yield curve
+        if config.get('include_daily_change_features', False):
+            change_cols = config.get('daily_change_columns', ['cad_oas', 'vix', 'us_3m_10y'])
+            for col in change_cols:
+                if col in price_data.columns:
+                    features[f"{col}_chg_1d"] = price_data[col].diff()
+                    features[col] = price_data[col]  # Also include level
+        
+        # Macro surprise indicators
+        if config.get('include_macro_surprise_features', False):
+            macro_cols = config.get('macro_surprise_columns', [
+                'us_growth_surprises', 'us_inflation_surprises', 
+                'us_hard_data_surprises', 'us_equity_revisions', 'us_lei_yoy'
+            ])
+            for col in macro_cols:
+                if col in price_data.columns:
+                    features[col] = price_data[col]
+        
         return features.fillna(config.get('fill_na_value', 0))
     
     def _calculate_rsi(self, price_series: pd.Series, period: int = 14) -> pd.Series:

@@ -1,8 +1,8 @@
 ====================================================================================================
 COMPREHENSIVE STRATEGY COMPARISON REPORT
 ====================================================================================================
-Generated: 2025-12-14 18:01:22
-Total Strategies Analyzed: 6
+Generated: 2025-12-15 12:20:57
+Total Strategies Analyzed: 3
 Benchmark Asset: cad_ig_er_index
 ====================================================================================================
 
@@ -11,164 +11,36 @@ Benchmark Asset: cad_ig_er_index
 ====================================================================================================
 
 ------------------------------------------------------------
-CROSS_ASSET_MOMENTUM - VectorBT Portfolio Stats
+LOGISTIC_REGRESSION_STRATEGY - VectorBT Portfolio Stats
 ------------------------------------------------------------
 Start                         : 2003-11-18 00:00:00
 End                           : 2025-12-12 00:00:00
 Period                        : 5834 days 00:00:00
 Start Value                   :       100.00
-End Value                     :       180.60
-Total Return [%]              :      80.6029
+End Value                     :       203.98
+Total Return [%]              :     103.9839
 Benchmark Return [%]          :      34.5675
 Max Gross Exposure [%]        :       100.00
 Total Fees Paid               :         0.00
-Max Drawdown [%]              :         3.11
-Max Drawdown Duration         : 549 days 00:00:00
-Total Trades                  :       169.00
-Total Closed Trades           :       168.00
-Total Open Trades             :         1.00
-Open Trade PnL                :         0.54
-Win Rate [%]                  :        64.29
-Best Trade [%]                :         6.14
-Worst Trade [%]               :        -2.02
-Avg Winning Trade [%]         :         0.66
-Avg Losing Trade [%]          :        -0.20
-Avg Winning Trade Duration    : 28 days 15:46:40
-Avg Losing Trade Duration     : 10 days 06:48:00
-Profit Factor                 :         6.38
-Expectancy                    :         0.48
-Sharpe Ratio                  :       3.2741
-Calmar Ratio                  :       1.2131
-Omega Ratio                   :       2.1663
-Sortino Ratio                 :       5.9109
-
-------------------------------------------------------------
-MULTI_ASSET_MOMENTUM - VectorBT Portfolio Stats
-------------------------------------------------------------
-Start                         : 2003-11-18 00:00:00
-End                           : 2025-12-12 00:00:00
-Period                        : 5834 days 00:00:00
-Start Value                   :       100.00
-End Value                     :       174.41
-Total Return [%]              :      74.4081
-Benchmark Return [%]          :      34.5675
-Max Gross Exposure [%]        :       100.00
-Total Fees Paid               :         0.00
-Max Drawdown [%]              :         2.68
-Max Drawdown Duration         : 564 days 00:00:00
-Total Trades                  :       151.00
-Total Closed Trades           :       150.00
-Total Open Trades             :         1.00
-Open Trade PnL                :         0.61
-Win Rate [%]                  :        69.33
-Best Trade [%]                :         6.14
-Worst Trade [%]               :        -0.79
-Avg Winning Trade [%]         :         0.64
-Avg Losing Trade [%]          :        -0.23
-Avg Winning Trade Duration    : 32 days 14:18:27.692307692
-Avg Losing Trade Duration     : 16 days 12:31:18.260869565
-Profit Factor                 :         6.64
-Expectancy                    :         0.49
-Sharpe Ratio                  :       3.1351
-Calmar Ratio                  :       1.3225
-Omega Ratio                   :       1.9646
-Sortino Ratio                 :       5.4421
-
-------------------------------------------------------------
-GENETIC_ALGORITHM - VectorBT Portfolio Stats
-------------------------------------------------------------
-Start                         : 2003-11-18 00:00:00
-End                           : 2025-12-12 00:00:00
-Period                        : 5834 days 00:00:00
-Start Value                   :       100.00
-End Value                     :       180.46
-Total Return [%]              :      80.4596
-Benchmark Return [%]          :      34.5675
-Max Gross Exposure [%]        :       100.00
-Total Fees Paid               :         0.00
-Max Drawdown [%]              :         2.06
-Max Drawdown Duration         : 549 days 00:00:00
-Total Trades                  :        74.00
-Total Closed Trades           :        73.00
-Total Open Trades             :         1.00
-Open Trade PnL                :         0.54
-Win Rate [%]                  :        60.27
-Best Trade [%]                :        15.15
-Worst Trade [%]               :        -1.03
-Avg Winning Trade [%]         :         1.53
-Avg Losing Trade [%]          :        -0.23
-Avg Winning Trade Duration    : 96 days 03:16:21.818181819
-Avg Losing Trade Duration     : 14 days 07:26:53.793103448
-Profit Factor                 :         9.74
-Expectancy                    :         1.09
-Sharpe Ratio                  :       3.1750
-Calmar Ratio                  :       1.8305
-Omega Ratio                   :       1.9233
-Sortino Ratio                 :       5.6549
-
-------------------------------------------------------------
-VOL_ADAPTIVE_MOMENTUM - VectorBT Portfolio Stats
-------------------------------------------------------------
-Start                         : 2003-11-18 00:00:00
-End                           : 2025-12-12 00:00:00
-Period                        : 5834 days 00:00:00
-Start Value                   :       100.00
-End Value                     :       172.52
-Total Return [%]              :      72.5242
-Benchmark Return [%]          :      34.5675
-Max Gross Exposure [%]        :       100.00
-Total Fees Paid               :         0.00
-Max Drawdown [%]              :         1.23
-Max Drawdown Duration         : 306 days 00:00:00
-Total Trades                  :       183.00
-Total Closed Trades           :       182.00
-Total Open Trades             :         1.00
-Open Trade PnL                :         0.60
-Win Rate [%]                  :        63.19
-Best Trade [%]                :        13.83
-Worst Trade [%]               :        -0.67
-Avg Winning Trade [%]         :         0.53
-Avg Losing Trade [%]          :        -0.08
-Avg Winning Trade Duration    : 27 days 13:46:26.086956521
-Avg Losing Trade Duration     : 6 days 15:16:21.818181818
-Profit Factor                 :        11.63
-Expectancy                    :         0.39
-Sharpe Ratio                  :       3.7249
-Calmar Ratio                  :       2.8263
-Omega Ratio                   :       2.2742
-Sortino Ratio                 :       6.8744
-
-------------------------------------------------------------
-LIGHTGBM_STRATEGY - VectorBT Portfolio Stats
-------------------------------------------------------------
-Start                         : 2003-11-18 00:00:00
-End                           : 2025-12-12 00:00:00
-Period                        : 5834 days 00:00:00
-Start Value                   :       100.00
-End Value                     :       193.69
-Total Return [%]              :      93.6882
-Benchmark Return [%]          :      34.5675
-Max Gross Exposure [%]        :       100.00
-Total Fees Paid               :         0.00
-Max Drawdown [%]              :         7.51
-Max Drawdown Duration         : 195 days 00:00:00
-Total Trades                  :       215.00
-Total Closed Trades           :       214.00
+Max Drawdown [%]              :         2.53
+Max Drawdown Duration         : 218 days 00:00:00
+Total Trades                  :       328.00
+Total Closed Trades           :       327.00
 Total Open Trades             :         1.00
 Open Trade PnL                :         0.69
-Win Rate [%]                  :        55.61
-Best Trade [%]                :        16.14
-Worst Trade [%]               :        -1.86
-Avg Winning Trade [%]         :         0.71
-Avg Losing Trade [%]          :        -0.17
-Avg Winning Trade Duration    : 39 days 18:09:04.537815126
-Avg Losing Trade Duration     : 5 days 21:43:34.736842105
-Profit Factor                 :         5.00
-Expectancy                    :         0.43
-Sharpe Ratio                  :       2.6943
-Calmar Ratio                  :       0.5623
-Omega Ratio                   :       1.7772
-Sortino Ratio                 :       3.9064
+Win Rate [%]                  :        54.13
+Best Trade [%]                :         9.78
+Worst Trade [%]               :        -0.66
+Avg Winning Trade [%]         :         0.48
+Avg Losing Trade [%]          :        -0.09
+Avg Winning Trade Duration    : 22 days 22:22:22.372881356
+Avg Losing Trade Duration     : 3 days 06:04:55.890410958
+Profit Factor                 :         7.11
+Expectancy                    :         0.31
+Sharpe Ratio                  :       3.6754
+Calmar Ratio                  :       1.8021
+Omega Ratio                   :       2.1839
+Sortino Ratio                 :       6.7027
 
 ------------------------------------------------------------
 RF_ENSEMBLE_STRATEGY - VectorBT Portfolio Stats
@@ -202,113 +74,61 @@ Calmar Ratio                  :       5.6142
 Omega Ratio                   :       2.8027
 Sortino Ratio                 :       9.3350
 
+------------------------------------------------------------
+LIGHTGBM_STRATEGY - VectorBT Portfolio Stats
+------------------------------------------------------------
+Start                         : 2003-11-18 00:00:00
+End                           : 2025-12-12 00:00:00
+Period                        : 5834 days 00:00:00
+Start Value                   :       100.00
+End Value                     :       193.69
+Total Return [%]              :      93.6882
+Benchmark Return [%]          :      34.5675
+Max Gross Exposure [%]        :       100.00
+Total Fees Paid               :         0.00
+Max Drawdown [%]              :         7.51
+Max Drawdown Duration         : 195 days 00:00:00
+Total Trades                  :       215.00
+Total Closed Trades           :       214.00
+Total Open Trades             :         1.00
+Open Trade PnL                :         0.69
+Win Rate [%]                  :        55.61
+Best Trade [%]                :        16.14
+Worst Trade [%]               :        -1.86
+Avg Winning Trade [%]         :         0.71
+Avg Losing Trade [%]          :        -0.17
+Avg Winning Trade Duration    : 39 days 18:09:04.537815126
+Avg Losing Trade Duration     : 5 days 21:43:34.736842105
+Profit Factor                 :         5.00
+Expectancy                    :         0.43
+Sharpe Ratio                  :       2.6943
+Calmar Ratio                  :       0.5623
+Omega Ratio                   :       1.7772
+Sortino Ratio                 :       3.9064
+
 ====================================================================================================
 2. VECTORBT RETURNS STATS (pf.vbt.returns.stats())
 ====================================================================================================
 
 ------------------------------------------------------------
-CROSS_ASSET_MOMENTUM - VectorBT Returns Stats
+LOGISTIC_REGRESSION_STRATEGY - VectorBT Returns Stats
 ------------------------------------------------------------
 Start                         : 2003-11-18 00:00:00
 End                           : 2025-12-12 00:00:00
 Period                        : 40838 days 00:00:00
-Total Return [%]              :      80.6029
-Annualized Return [%]         :       2.5863
-Annualized Volatility [%]     :         0.94
-Max Drawdown [%]              :         3.11
-Max Drawdown Duration         : 3843 days 00:00:00
-Sharpe Ratio                  :       1.2375
-Calmar Ratio                  :       0.1706
-Omega Ratio                   :       2.1663
-Sortino Ratio                 :       2.2341
-Skew                          :         1.92
-Kurtosis                      :        35.32
-Tail Ratio                    :       1.6152
-Common Sense Ratio            :       1.6238
-Value at Risk                 :        -0.00
-
-------------------------------------------------------------
-MULTI_ASSET_MOMENTUM - VectorBT Returns Stats
-------------------------------------------------------------
-Start                         : 2003-11-18 00:00:00
-End                           : 2025-12-12 00:00:00
-Period                        : 40838 days 00:00:00
-Total Return [%]              :      74.4081
-Annualized Return [%]         :       2.4317
-Annualized Volatility [%]     :         0.92
-Max Drawdown [%]              :         2.68
-Max Drawdown Duration         : 3948 days 00:00:00
-Sharpe Ratio                  :       1.1850
-Calmar Ratio                  :       0.1861
-Omega Ratio                   :       1.9646
-Sortino Ratio                 :       2.0569
-Skew                          :         1.46
-Kurtosis                      :        28.00
-Tail Ratio                    :       1.4779
-Common Sense Ratio            :       1.4853
-Value at Risk                 :        -0.00
-
-------------------------------------------------------------
-GENETIC_ALGORITHM - VectorBT Returns Stats
-------------------------------------------------------------
-Start                         : 2003-11-18 00:00:00
-End                           : 2025-12-12 00:00:00
-Period                        : 40838 days 00:00:00
-Total Return [%]              :      80.4596
-Annualized Return [%]         :       2.5828
-Annualized Volatility [%]     :         0.97
-Max Drawdown [%]              :         2.06
-Max Drawdown Duration         : 3843 days 00:00:00
-Sharpe Ratio                  :       1.2000
-Calmar Ratio                  :       0.2574
-Omega Ratio                   :       1.9233
-Sortino Ratio                 :       2.1374
-Skew                          :         1.87
-Kurtosis                      :        27.62
-Tail Ratio                    :       1.4421
-Common Sense Ratio            :       1.4497
-Value at Risk                 :        -0.00
-
-------------------------------------------------------------
-VOL_ADAPTIVE_MOMENTUM - VectorBT Returns Stats
-------------------------------------------------------------
-Start                         : 2003-11-18 00:00:00
-End                           : 2025-12-12 00:00:00
-Period                        : 40838 days 00:00:00
-Total Return [%]              :      72.5242
-Annualized Return [%]         :       2.3837
-Annualized Volatility [%]     :         0.76
-Max Drawdown [%]              :         1.23
-Max Drawdown Duration         : 2142 days 00:00:00
-Sharpe Ratio                  :       1.4079
-Calmar Ratio                  :       0.3979
-Omega Ratio                   :       2.2742
-Sortino Ratio                 :       2.5983
-Skew                          :         1.92
-Kurtosis                      :        29.24
-Tail Ratio                    :       1.6345
-Common Sense Ratio            :       1.6424
-Value at Risk                 :        -0.00
-
-------------------------------------------------------------
-LIGHTGBM_STRATEGY - VectorBT Returns Stats
-------------------------------------------------------------
-Start                         : 2003-11-18 00:00:00
-End                           : 2025-12-12 00:00:00
-Period                        : 40838 days 00:00:00
-Total Return [%]              :      93.6882
-Annualized Return [%]         :       2.8967
-Annualized Volatility [%]     :         1.28
-Max Drawdown [%]              :         7.51
-Max Drawdown Duration         : 1365 days 00:00:00
-Sharpe Ratio                  :       1.0183
-Calmar Ratio                  :       0.0789
-Omega Ratio                   :       1.7772
-Sortino Ratio                 :       1.4765
-Skew                          :        -2.74
-Kurtosis                      :        81.41
-Tail Ratio                    :       1.4102
-Common Sense Ratio            :       1.4186
+Total Return [%]              :     103.9839
+Annualized Return [%]         :       3.1271
+Annualized Volatility [%]     :         1.01
+Max Drawdown [%]              :         2.53
+Max Drawdown Duration         : 1526 days 00:00:00
+Sharpe Ratio                  :       1.3892
+Calmar Ratio                  :       0.2525
+Omega Ratio                   :       2.1839
+Sortino Ratio                 :       2.5334
+Skew                          :         1.75
+Kurtosis                      :        27.48
+Tail Ratio                    :       1.6194
+Common Sense Ratio            :       1.6298
 Value at Risk                 :        -0.00
 
 ------------------------------------------------------------
@@ -332,113 +152,50 @@ Tail Ratio                    :       1.9389
 Common Sense Ratio            :       1.9533
 Value at Risk                 :        -0.00
 
+------------------------------------------------------------
+LIGHTGBM_STRATEGY - VectorBT Returns Stats
+------------------------------------------------------------
+Start                         : 2003-11-18 00:00:00
+End                           : 2025-12-12 00:00:00
+Period                        : 40838 days 00:00:00
+Total Return [%]              :      93.6882
+Annualized Return [%]         :       2.8967
+Annualized Volatility [%]     :         1.28
+Max Drawdown [%]              :         7.51
+Max Drawdown Duration         : 1365 days 00:00:00
+Sharpe Ratio                  :       1.0183
+Calmar Ratio                  :       0.0789
+Omega Ratio                   :       1.7772
+Sortino Ratio                 :       1.4765
+Skew                          :        -2.74
+Kurtosis                      :        81.41
+Tail Ratio                    :       1.4102
+Common Sense Ratio            :       1.4186
+Value at Risk                 :        -0.00
+
 ====================================================================================================
 3. MANUAL PORTFOLIO CALCULATIONS
 ====================================================================================================
 
 ------------------------------------------------------------
-CROSS_ASSET_MOMENTUM - Manual Calculations
+LOGISTIC_REGRESSION_STRATEGY - Manual Calculations
 ------------------------------------------------------------
 Metric                         Strategy        Benchmark      
 ------------------------------------------------------------
 Start Period                   2003-11-18      2003-11-18     
 End Period                     2025-12-12      2025-12-12     
 Total Periods                  5834            5834           
-Time in Market                 63.80%          100.0%         
-Total Trades                   169             N/A            
+Time in Market                 78.03%          100.0%         
+Total Trades                   328             N/A            
 
-Total Return                   0.8060          0.3457         
-CAGR                           2.59%           1.29%          
-Volatility (ann.)              0.0094          0.0145         
-Sharpe Ratio                   2.7207          0.8899         
-Sortino Ratio                  2.7505          0.8348         
-Max Drawdown                   -0.0311         -0.1548        
-Skewness                       1.9208          -2.8318        
-Kurtosis                       35.3183         56.6969        
-
-
-------------------------------------------------------------
-MULTI_ASSET_MOMENTUM - Manual Calculations
-------------------------------------------------------------
-Metric                         Strategy        Benchmark      
-------------------------------------------------------------
-Start Period                   2003-11-18      2003-11-18     
-End Period                     2025-12-12      2025-12-12     
-Total Periods                  5834            5834           
-Time in Market                 71.39%          100.0%         
-Total Trades                   151             N/A            
-
-Total Return                   0.7441          0.3457         
-CAGR                           2.43%           1.29%          
-Volatility (ann.)              0.0092          0.0145         
-Sharpe Ratio                   2.6052          0.8899         
-Sortino Ratio                  2.7780          0.8348         
-Max Drawdown                   -0.0268         -0.1548        
-Skewness                       1.4575          -2.8318        
-Kurtosis                       27.9997         56.6969        
-
-
-------------------------------------------------------------
-GENETIC_ALGORITHM - Manual Calculations
-------------------------------------------------------------
-Metric                         Strategy        Benchmark      
-------------------------------------------------------------
-Start Period                   2003-11-18      2003-11-18     
-End Period                     2025-12-12      2025-12-12     
-Total Periods                  5834            5834           
-Time in Market                 79.79%          100.0%         
-Total Trades                   74              N/A            
-
-Total Return                   0.8046          0.3457         
-CAGR                           2.58%           1.29%          
-Volatility (ann.)              0.0097          0.0145         
-Sharpe Ratio                   2.6384          0.8899         
-Sortino Ratio                  3.1114          0.8348         
-Max Drawdown                   -0.0206         -0.1548        
-Skewness                       1.8704          -2.8318        
-Kurtosis                       27.6142         56.6969        
-
-
-------------------------------------------------------------
-VOL_ADAPTIVE_MOMENTUM - Manual Calculations
-------------------------------------------------------------
-Metric                         Strategy        Benchmark      
-------------------------------------------------------------
-Start Period                   2003-11-18      2003-11-18     
-End Period                     2025-12-12      2025-12-12     
-Total Periods                  5834            5834           
-Time in Market                 62.14%          100.0%         
-Total Trades                   183             N/A            
-
-Total Return                   0.7252          0.3457         
-CAGR                           2.38%           1.29%          
-Volatility (ann.)              0.0076          0.0145         
-Sharpe Ratio                   3.0953          0.8899         
-Sortino Ratio                  3.2829          0.8348         
-Max Drawdown                   -0.0123         -0.1548        
-Skewness                       1.9185          -2.8318        
-Kurtosis                       29.2364         56.6969        
-
-
-------------------------------------------------------------
-LIGHTGBM_STRATEGY - Manual Calculations
-------------------------------------------------------------
-Metric                         Strategy        Benchmark      
-------------------------------------------------------------
-Start Period                   2003-11-18      2003-11-18     
-End Period                     2025-12-12      2025-12-12     
-Total Periods                  5834            5834           
-Time in Market                 90.98%          100.0%         
-Total Trades                   215             N/A            
-
-Total Return                   0.9369          0.3457         
-CAGR                           2.90%           1.29%          
-Volatility (ann.)              0.0128          0.0145         
-Sharpe Ratio                   2.2389          0.8899         
-Sortino Ratio                  2.0376          0.8348         
-Max Drawdown                   -0.0751         -0.1548        
-Skewness                       -2.7422         -2.8318        
-Kurtosis                       81.3998         56.6969        
+Total Return                   1.0398          0.3457         
+CAGR                           3.13%           1.29%          
+Volatility (ann.)              0.0101          0.0145         
+Sharpe Ratio                   3.0542          0.8899         
+Sortino Ratio                  3.4630          0.8348         
+Max Drawdown                   -0.0253         -0.1548        
+Skewness                       1.7533          -2.8318        
+Kurtosis                       27.4701         56.6969        
 
 
 ------------------------------------------------------------
@@ -461,213 +218,70 @@ Max Drawdown                   -0.0095         -0.1548
 Skewness                       2.4361          -2.8318        
 Kurtosis                       30.1170         56.6969        
 
+
+------------------------------------------------------------
+LIGHTGBM_STRATEGY - Manual Calculations
+------------------------------------------------------------
+Metric                         Strategy        Benchmark      
+------------------------------------------------------------
+Start Period                   2003-11-18      2003-11-18     
+End Period                     2025-12-12      2025-12-12     
+Total Periods                  5834            5834           
+Time in Market                 90.98%          100.0%         
+Total Trades                   215             N/A            
+
+Total Return                   0.9369          0.3457         
+CAGR                           2.90%           1.29%          
+Volatility (ann.)              0.0128          0.0145         
+Sharpe Ratio                   2.2389          0.8899         
+Sortino Ratio                  2.0376          0.8348         
+Max Drawdown                   -0.0751         -0.1548        
+Skewness                       -2.7422         -2.8318        
+Kurtosis                       81.3998         56.6969        
+
 ====================================================================================================
 4. QUANTSTATS STYLE COMPREHENSIVE COMPARISON
 ====================================================================================================
 
 --------------------------------------------------------------------------------
-CROSS_ASSET_MOMENTUM vs BENCHMARK
+LOGISTIC_REGRESSION_STRATEGY vs BENCHMARK
 --------------------------------------------------------------------------------
 Metric                              Benchmark       Strategy       
 -----------------------------------------------------------------
 Start Period                        2003-11-18      2003-11-18     
 End Period                          2025-12-12      2025-12-12     
 Risk-Free Rate                      0.0%            0.0%           
-Time in Market                      100.0%          63.8%          
+Time in Market                      100.0%          78.0%          
 
-Cumulative Return                           34.57%         80.60%
-CAGR%                                        1.29%          2.59%
+Cumulative Return                           34.57%        103.98%
+CAGR%                                        1.29%          3.13%
 
-Sharpe                                        0.89           2.72
+Sharpe                                        0.89           3.05
 Prob. Sharpe Ratio                           0.00%          0.00%
-Smart Sharpe                                  0.69           2.15
-Sortino                                       0.83           2.75
-Smart Sortino                                 0.91           3.89
+Smart Sharpe                                  0.69           2.61
+Sortino                                       0.83           3.46
+Smart Sortino                                 0.91           4.76
 Omega                                         0.00           0.00
 
-Max Drawdown                               -15.48%         -3.11%
+Max Drawdown                               -15.48%         -2.53%
 Longest DD Days                                  0              0
-Volatility (ann.)                            1.45%          0.94%
-Calmar                                        0.06           0.60
-Skew                                         -2.83           1.92
-Kurtosis                                     56.70          35.32
-
-Expected Daily %                             0.00%          0.00%
-Expected Weekly %                            0.01%          0.01%
-Expected Monthly %                           0.02%          0.04%
-Expected Yearly %                            1.29%          2.56%
-Daily Value-at-Risk                         -0.02%         -0.01%
-Expected Shortfall (cVaR)                   -0.04%         -0.02%
-
-Gain/Pain Ratio                               0.00           0.00
-Payoff Ratio                                  0.82           1.12
-Profit Factor                                 1.24           2.17
-Common Sense Ratio                            1.28           3.50
-Tail Ratio                                     1.0            1.6
-
-
---------------------------------------------------------------------------------
-MULTI_ASSET_MOMENTUM vs BENCHMARK
---------------------------------------------------------------------------------
-Metric                              Benchmark       Strategy       
------------------------------------------------------------------
-Start Period                        2003-11-18      2003-11-18     
-End Period                          2025-12-12      2025-12-12     
-Risk-Free Rate                      0.0%            0.0%           
-Time in Market                      100.0%          71.4%          
-
-Cumulative Return                           34.57%         74.41%
-CAGR%                                        1.29%          2.43%
-
-Sharpe                                        0.89           2.61
-Prob. Sharpe Ratio                           0.00%          0.00%
-Smart Sharpe                                  0.69           2.07
-Sortino                                       0.83           2.78
-Smart Sortino                                 0.91           3.60
-Omega                                         0.00           0.00
-
-Max Drawdown                               -15.48%         -2.68%
-Longest DD Days                                  0              0
-Volatility (ann.)                            1.45%          0.92%
-Calmar                                        0.06           0.66
-Skew                                         -2.83           1.46
-Kurtosis                                     56.70          28.00
-
-Expected Daily %                             0.00%          0.00%
-Expected Weekly %                            0.01%          0.01%
-Expected Monthly %                           0.02%          0.04%
-Expected Yearly %                            1.29%          2.41%
-Daily Value-at-Risk                         -0.02%         -0.01%
-Expected Shortfall (cVaR)                   -0.04%         -0.02%
-
-Gain/Pain Ratio                               0.00           0.00
-Payoff Ratio                                  0.82           1.08
-Profit Factor                                 1.24           1.96
-Common Sense Ratio                            1.28           2.90
-Tail Ratio                                     1.0            1.5
-
-
---------------------------------------------------------------------------------
-GENETIC_ALGORITHM vs BENCHMARK
---------------------------------------------------------------------------------
-Metric                              Benchmark       Strategy       
------------------------------------------------------------------
-Start Period                        2003-11-18      2003-11-18     
-End Period                          2025-12-12      2025-12-12     
-Risk-Free Rate                      0.0%            0.0%           
-Time in Market                      100.0%          79.8%          
-
-Cumulative Return                           34.57%         80.46%
-CAGR%                                        1.29%          2.58%
-
-Sharpe                                        0.89           2.64
-Prob. Sharpe Ratio                           0.00%          0.00%
-Smart Sharpe                                  0.69           2.15
-Sortino                                       0.83           3.11
-Smart Sortino                                 0.91           3.84
-Omega                                         0.00           0.00
-
-Max Drawdown                               -15.48%         -2.06%
-Longest DD Days                                  0              0
-Volatility (ann.)                            1.45%          0.97%
-Calmar                                        0.06           0.91
-Skew                                         -2.83           1.87
-Kurtosis                                     56.70          27.61
-
-Expected Daily %                             0.00%          0.00%
-Expected Weekly %                            0.01%          0.01%
-Expected Monthly %                           0.02%          0.04%
-Expected Yearly %                            1.29%          2.56%
-Daily Value-at-Risk                         -0.02%         -0.01%
-Expected Shortfall (cVaR)                   -0.04%         -0.02%
-
-Gain/Pain Ratio                               0.00           0.00
-Payoff Ratio                                  0.82           1.10
-Profit Factor                                 1.24           1.92
-Common Sense Ratio                            1.28           2.77
-Tail Ratio                                     1.0            1.4
-
-
---------------------------------------------------------------------------------
-VOL_ADAPTIVE_MOMENTUM vs BENCHMARK
---------------------------------------------------------------------------------
-Metric                              Benchmark       Strategy       
------------------------------------------------------------------
-Start Period                        2003-11-18      2003-11-18     
-End Period                          2025-12-12      2025-12-12     
-Risk-Free Rate                      0.0%            0.0%           
-Time in Market                      100.0%          62.1%          
-
-Cumulative Return                           34.57%         72.52%
-CAGR%                                        1.29%          2.38%
-
-Sharpe                                        0.89           3.10
-Prob. Sharpe Ratio                           0.00%          0.00%
-Smart Sharpe                                  0.69           2.65
-Sortino                                       0.83           3.28
-Smart Sortino                                 0.91           4.88
-Omega                                         0.00           0.00
-
-Max Drawdown                               -15.48%         -1.23%
-Longest DD Days                                  0              0
-Volatility (ann.)                            1.45%          0.76%
-Calmar                                        0.06           1.40
-Skew                                         -2.83           1.92
-Kurtosis                                     56.70          29.24
-
-Expected Daily %                             0.00%          0.00%
-Expected Weekly %                            0.01%          0.01%
-Expected Monthly %                           0.02%          0.04%
-Expected Yearly %                            1.29%          2.36%
-Daily Value-at-Risk                         -0.02%         -0.01%
-Expected Shortfall (cVaR)                   -0.04%         -0.02%
-
-Gain/Pain Ratio                               0.00           0.00
-Payoff Ratio                                  0.82           1.14
-Profit Factor                                 1.24           2.27
-Common Sense Ratio                            1.28           3.72
-Tail Ratio                                     1.0            1.6
-
-
---------------------------------------------------------------------------------
-LIGHTGBM_STRATEGY vs BENCHMARK
---------------------------------------------------------------------------------
-Metric                              Benchmark       Strategy       
------------------------------------------------------------------
-Start Period                        2003-11-18      2003-11-18     
-End Period                          2025-12-12      2025-12-12     
-Risk-Free Rate                      0.0%            0.0%           
-Time in Market                      100.0%          91.0%          
-
-Cumulative Return                           34.57%         93.69%
-CAGR%                                        1.29%          2.90%
-
-Sharpe                                        0.89           2.24
-Prob. Sharpe Ratio                           0.00%          0.00%
-Smart Sharpe                                  0.69           1.88
-Sortino                                       0.83           2.04
-Smart Sortino                                 0.91           2.72
-Omega                                         0.00           0.00
-
-Max Drawdown                               -15.48%         -7.51%
-Longest DD Days                                  0              0
-Volatility (ann.)                            1.45%          1.28%
-Calmar                                        0.06           0.28
-Skew                                         -2.83          -2.74
-Kurtosis                                     56.70          81.40
+Volatility (ann.)                            1.45%          1.01%
+Calmar                                        0.06           0.89
+Skew                                         -2.83           1.75
+Kurtosis                                     56.70          27.47
 
 Expected Daily %                             0.00%          0.00%
 Expected Weekly %                            0.01%          0.01%
 Expected Monthly %                           0.02%          0.05%
-Expected Yearly %                            1.29%          2.86%
-Daily Value-at-Risk                         -0.02%         -0.02%
-Expected Shortfall (cVaR)                   -0.04%         -0.03%
+Expected Yearly %                            1.29%          3.09%
+Daily Value-at-Risk                         -0.02%         -0.01%
+Expected Shortfall (cVaR)                   -0.04%         -0.02%
 
 Gain/Pain Ratio                               0.00           0.00
-Payoff Ratio                                  0.82           0.97
-Profit Factor                                 1.24           1.78
-Common Sense Ratio                            1.28           2.51
-Tail Ratio                                     1.0            1.4
+Payoff Ratio                                  0.82           1.13
+Profit Factor                                 1.24           2.18
+Common Sense Ratio                            1.28           3.54
+Tail Ratio                                     1.0            1.6
 
 
 --------------------------------------------------------------------------------
@@ -710,18 +324,56 @@ Profit Factor                                 1.24           2.80
 Common Sense Ratio                            1.28           5.43
 Tail Ratio                                     1.0            1.9
 
+
+--------------------------------------------------------------------------------
+LIGHTGBM_STRATEGY vs BENCHMARK
+--------------------------------------------------------------------------------
+Metric                              Benchmark       Strategy       
+-----------------------------------------------------------------
+Start Period                        2003-11-18      2003-11-18     
+End Period                          2025-12-12      2025-12-12     
+Risk-Free Rate                      0.0%            0.0%           
+Time in Market                      100.0%          91.0%          
+
+Cumulative Return                           34.57%         93.69%
+CAGR%                                        1.29%          2.90%
+
+Sharpe                                        0.89           2.24
+Prob. Sharpe Ratio                           0.00%          0.00%
+Smart Sharpe                                  0.69           1.88
+Sortino                                       0.83           2.04
+Smart Sortino                                 0.91           2.72
+Omega                                         0.00           0.00
+
+Max Drawdown                               -15.48%         -7.51%
+Longest DD Days                                  0              0
+Volatility (ann.)                            1.45%          1.28%
+Calmar                                        0.06           0.28
+Skew                                         -2.83          -2.74
+Kurtosis                                     56.70          81.40
+
+Expected Daily %                             0.00%          0.00%
+Expected Weekly %                            0.01%          0.01%
+Expected Monthly %                           0.02%          0.05%
+Expected Yearly %                            1.29%          2.86%
+Daily Value-at-Risk                         -0.02%         -0.02%
+Expected Shortfall (cVaR)                   -0.04%         -0.03%
+
+Gain/Pain Ratio                               0.00           0.00
+Payoff Ratio                                  0.82           0.97
+Profit Factor                                 1.24           1.78
+Common Sense Ratio                            1.28           2.51
+Tail Ratio                                     1.0            1.4
+
 ====================================================================================================
 5. STRATEGY SUMMARY COMPARISON
 ====================================================================================================
 Strategy                  Total Return    CAGR       Sharpe     Sortino    Max DD       Volatility  
 ----------------------------------------------------------------------------------------------
 BENCHMARK                         34.57%     1.29%      0.89      0.83     -15.48%       1.45%
-CROSS_ASSET_MOMENTUM              80.60%     2.59%      2.72      2.75      -3.11%       0.94%
-MULTI_ASSET_MOMENTUM              74.41%     2.43%      2.61      2.78      -2.68%       0.92%
-GENETIC_ALGORITHM                 80.46%     2.58%      2.64      3.11      -2.06%       0.97%
-VOL_ADAPTIVE_MOMENTUM             72.52%     2.38%      3.10      3.28      -1.23%       0.76%
-LIGHTGBM_STRATEGY                 93.69%     2.90%      2.24      2.04      -7.51%       1.28%
+LOGISTIC_REGRESSION_STRATEGY        103.98%     3.13%      3.05      3.46      -2.53%       1.01%
 RF_ENSEMBLE_STRATEGY             129.55%     3.65%      3.77      4.41      -0.95%       0.95%
+LIGHTGBM_STRATEGY                 93.69%     2.90%      2.24      2.04      -7.51%       1.28%
 
 ====================================================================================================
 6. DYNAMIC TRADING RULES
@@ -729,176 +381,80 @@ RF_ENSEMBLE_STRATEGY             129.55%     3.65%      3.77      4.41      -0.9
 Detailed trading rules and parameters for each strategy (extracted dynamically from code):
 
 --------------------------------------------------------------------------------
-CROSS_ASSET_MOMENTUM TRADING RULES
+LOGISTIC_REGRESSION_STRATEGY TRADING RULES
 --------------------------------------------------------------------------------
-Cross-Asset 10-Day Momentum Strategy (Weekly Rebalance)
+Logistic Regression Machine Learning Trading Strategy
 
 TRADING RULES:
-1. Data & Frequency:
-   - This strategy operates on DAILY data but only makes trading decisions once per week.
-   - Rebalancing Day: Monday.
+1. Data & Methodology:
+   - Uses logistic regression to predict profitable trading opportunities
+   - Analyzes cad_ig_er_index with comprehensive feature engineering
+   - Operates on DAILY data with daily signal generation
+   - Predicts 5-day forward returns
 
-2. Signal Universe:
-   - A basket of 3 diverse assets is monitored to gauge market breadth.
-   - Assets: cad_ig_er_index, tsx, s&p_500
+2. Feature Engineering:
+   - Uses TechnicalFeatureEngineer for comprehensive feature creation
+   - Includes momentum, volatility, technical indicators, and macro features
+   - Rolling z-scores (252-day window) for OAS, VIX, yield curve
+   - Equity index returns (TSX, S&P500) over multiple horizons
+   - Daily changes for OAS, VIX, yield curve
+   - Macro surprise indicators (growth, inflation, equity revisions, LEI)
 
-3. Momentum Calculation (Monday Only):
-   - For each asset, a 10-day momentum is calculated on Monday.
-   - Momentum = (Monday's Price / Price 10 trading days ago) - 1.
+3. Logistic Regression Model:
+   - Binary classification (positive vs negative forward returns)
+   - Regularization strength (C): 1.0
+   - Features are standardized before model training
+   - Train/test split: 70/30
 
-4. Entry Condition (Monday Only):
-   - A position is entered in 'cad_ig_er_index' if enough assets show positive momentum.
-   - Entry Threshold: LONG when >= 2 of the 3 assets have positive momentum.
+4. Threshold Optimization:
+   - Optimized prediction threshold: 0.550
+   - Maximizes return while controlling drawdown
+   - Walk-forward validation for robustness
 
-5. Position Management:
-   - If the entry condition is met on Monday, the position is held for the entire week.
-   - The position is exited on the next Monday if the entry condition is no longer met.
+5. Signal Generation:
+   - Binary classification (long/cash positions)
+   - Entry when predicted probability > 0.550
+   - Exit when predicted probability <= 0.550
+
+6. Model Persistence:
+   - Models are saved to disk for reuse
+   - Scaler and optimal threshold are saved with model
 
 PARAMETERS:
 - Trading Asset: cad_ig_er_index
-- Momentum Lookback: 10 trading days
-- Confirmation Threshold: 2 out of 3 assets
-- Rebalancing Frequency: Weekly (Monday)
+- Prediction Horizon: 5 days
+- Optimal Threshold: 0.550
+- Regularization (C): 1.0
+- Features: Comprehensive technical and macro indicators
 
 
 --------------------------------------------------------------------------------
-CROSS_ASSET_MOMENTUM - LAST 3 TRADES
+LOGISTIC_REGRESSION_STRATEGY - LAST 3 TRADES
 --------------------------------------------------------------------------------
- Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
-            0      Long Closed 1.3164      2025-04-21        133.3505     2025-10-13       136.5841            175 4.26  2.42%       0.00      0.00
-            0      Long Closed 1.3168      2025-10-27        136.5450     2025-11-17       136.7415             21 0.26  0.14%       0.00      0.00
-            0      Long   Open 1.3170      2025-12-01        136.7161     2025-12-12       137.1297             11 0.54  0.30%       0.00      0.00
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade   PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.4871      2025-11-05        136.7064     2025-11-06       136.6940              1 -0.02 -0.01%       0.00      0.00
+            0      Long Closed 1.4862      2025-11-10        136.7813     2025-11-12       136.7892              2  0.01  0.01%       0.00      0.00
+            0      Long   Open 1.4875      2025-11-25        136.6655     2025-12-12       137.1297             17  0.69  0.34%       0.00      0.00
 
 --------------------------------------------------------------------------------
-MULTI_ASSET_MOMENTUM TRADING RULES
+RF_ENSEMBLE_STRATEGY TRADING RULES
 --------------------------------------------------------------------------------
-Multi-Asset 20-Day Combined Momentum (Weekly Rebalance)
+Strategy: RF_ENSEMBLE_STRATEGY
 
 TRADING RULES:
-1. Data & Frequency:
-   - This strategy operates on DAILY data but only makes trading decisions once per week.
-   - Rebalancing Day: Monday.
+Configuration-based strategy implementation.
+Parameters: {'trading_asset': 'cad_ig_er_index', 'benchmark_asset': 'cad_ig_er_index', 'momentum_windows': [2, 3, 5, 7, 10, 12, 15, 20, 25, 30, 40, 50, 60, 90, 120], 'zscore_windows': [5, 10, 20, 40, 60, 120, 252], 'macro_windows': [3, 5, 10, 20, 40, 60, 90], 'models': [{'n_estimators': 600, 'max_depth': 15, 'min_samples_leaf': 5, 'max_features': 0.4, 'random_state': 42}, {'n_estimators': 700, 'max_depth': 12, 'min_samples_leaf': 8, 'max_features': 0.5, 'random_state': 42}, {'n_estimators': 500, 'max_depth': 18, 'min_samples_leaf': 5, 'max_features': 0.3, 'random_state': 123}, {'n_estimators': 800, 'max_depth': 10, 'min_samples_leaf': 10, 'max_features': 0.4, 'random_state': 456}], 'ensemble_weights': [0.3, 0.3, 0.25, 0.15], 'probability_threshold': 0.55, 'holding_period_days': 7, 'train_test_split': 0.7}
 
-2. Combined Momentum (Monday Only):
-   - On Monday, a 20-day momentum is calculated for 3 assets.
-   - These are averaged into a single composite momentum signal for the market trend.
-
-3. Entry Condition (Monday Only):
-   - A LONG position is entered in 'cad_ig_er_index' if the composite signal is positive.
-   - Entry Signal: Combined Momentum > -0.0050
-
-4. Exit Condition (Time-Based):
-   - Once entered, the position is held for a fixed number of days.
-   - Holding Period: 5 trading days.
-   - The position is exited after the holding period, regardless of the momentum signal.
-
-PARAMETERS:
-- Trading Asset: cad_ig_er_index
-- Momentum Lookback: 20 trading days
-- Entry Threshold: > -0.0050
-- Exit Holding Period: 5 trading days
-- Rebalancing Frequency: Weekly (Monday)
-
+Note: Detailed trading rules not available for this strategy type.
+Please check the strategy implementation for specific logic.
 
 --------------------------------------------------------------------------------
-MULTI_ASSET_MOMENTUM - LAST 3 TRADES
+RF_ENSEMBLE_STRATEGY - LAST 3 TRADES
 --------------------------------------------------------------------------------
- Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
-            0      Long Closed 1.2710      2025-06-02        135.1445     2025-08-31       136.0849             90 1.20  0.70%       0.00      0.00
-            0      Long Closed 1.2710      2025-09-01        136.0849     2025-11-17       136.7415             77 0.83  0.48%       0.00      0.00
-            0      Long   Open 1.2718      2025-11-24        136.6495     2025-12-12       137.1297             18 0.61  0.35%       0.00      0.00
-
---------------------------------------------------------------------------------
-GENETIC_ALGORITHM TRADING RULES
---------------------------------------------------------------------------------
-Genetic Algorithm Evolved Strategy (Weekly Rebalance)
-
-TRADING RULES:
-1. Data & Frequency:
-   - This strategy uses a genetic algorithm to find rules using DAILY data features.
-   - The final, evolved rule is only applied once per week on Monday.
-   - Rebalancing Day: Monday.
-
-2. Feature Engineering (The Gene Pool):
-   - A wide range of daily technical indicators (momentum, volatility, etc.) are created.
-   - These daily features serve as the building blocks for the evolutionary process.
-
-3. Rule Evolution Process:
-   - An initial population of 120 random rules is evolved over 120 generations.
-   - Rules are selected based on historical fitness (profitability vs. risk).
-
-4. Fitness Function (Survival of the Fittest):
-   - Fitness = Total Return - (0.1 * Max Drawdown).
-   - This guides the evolution towards high-return, low-risk rules.
-
-5. Final Rule Execution (Monday Only):
-   - The single best-performing rule is applied every Monday to the daily features.
-   - If the rule is TRUE on Monday, a LONG position is entered and held for the week.
-   - If FALSE, the position is exited.
-
-PARAMETERS FOR EVOLUTION:
-- Population Size: 120 rules per generation
-- Max Generations: 120 iterations
-- Drawdown Penalty Factor: 0.1
-- Rebalancing Frequency: Weekly (Monday)
-
-
---------------------------------------------------------------------------------
-GENETIC_ALGORITHM - LAST 3 TRADES
---------------------------------------------------------------------------------
- Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
-            0      Long Closed 1.3134      2025-04-21        133.3505     2025-08-18       136.3116            119 3.89  2.22%       0.00      0.00
-            0      Long Closed 1.3166      2025-09-08        135.9741     2025-11-24       136.6495             77 0.89  0.50%       0.00      0.00
-            0      Long   Open 1.3160      2025-12-01        136.7161     2025-12-12       137.1297             11 0.54  0.30%       0.00      0.00
-
---------------------------------------------------------------------------------
-VOL_ADAPTIVE_MOMENTUM TRADING RULES
---------------------------------------------------------------------------------
-Volatility-Adaptive 20-Day Momentum Strategy
-
-TRADING RULES:
-1. Core Indicators:
-   - Price Series: cad_ig_er_index
-   - Volatility Index: vix
-   - Momentum: 20-day percentage change of the price series.
-   - Realized Volatility: 20-day rolling standard deviation of daily returns.
-   - Volatility Filter: 252-day z-score of the VIX index.
-
-2. Volatility Regime Detection:
-   - A "High Volatility" regime is active if the current 20-day realized volatility is
-     greater than its long-run median value.
-   - Otherwise, a "Calm" regime is active.
-
-3. Entry Conditions:
-   - The primary entry signal is the VIX z-score falling below a certain threshold.
-   - In Calm Regimes: Enter LONG if VIX z-score <= 0.60 AND 20-day momentum is positive.
-   - In High-Vol Regimes: Enter LONG if VIX z-score <= 0.00 (stricter threshold). The
-     momentum filter is bypassed in high-volatility regimes.
-
-4. Position Management (Adaptive Holding Period):
-   - Upon entry, the holding period ('k') is dynamically calculated.
-   - k = 1 + (Positive Momentum / 0.005)
-   - The holding period is capped at a maximum of 10 days.
-   - The position is held for 'k' days, after which the entry conditions are re-evaluated.
-   - This allows the strategy to hold positions longer during strong momentum trends.
-
-PARAMETERS:
-- Momentum Lookback: 20 days
-- Realized Volatility Lookback: 20 days
-- VIX Z-Score Lookback: 252 days
-- Calm Vol Threshold (VIX z-score): 0.60
-- High Vol Threshold (VIX z-score): 0.00
-- Max Holding Period: 10 days
-- Momentum Scale for Holding: 0.005
-
-
---------------------------------------------------------------------------------
-VOL_ADAPTIVE_MOMENTUM - LAST 3 TRADES
---------------------------------------------------------------------------------
- Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
-            0      Long Closed 1.2571      2025-09-18        136.1656     2025-10-16       136.4446             28 0.35  0.20%       0.00      0.00
-            0      Long Closed 1.2573      2025-10-17        136.4237     2025-11-17       136.7415             31 0.40  0.23%       0.00      0.00
-            0      Long   Open 1.2581      2025-11-24        136.6495     2025-12-12       137.1297             18 0.60  0.35%       0.00      0.00
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade   PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.6753      2025-11-12        136.7892     2025-11-21       136.6401              9 -0.25 -0.11%       0.00      0.00
+            0      Long Closed 1.6747      2025-11-26        136.6893     2025-12-05       136.8428              9  0.26  0.11%       0.00      0.00
+            0      Long   Open 1.6740      2025-12-08        136.8986     2025-12-12       137.1297              4  0.39  0.17%       0.00      0.00
 
 --------------------------------------------------------------------------------
 LIGHTGBM_STRATEGY TRADING RULES
@@ -957,26 +513,6 @@ LIGHTGBM_STRATEGY - LAST 3 TRADES
             0      Long Closed 1.4118      2025-10-17        136.4237     2025-11-18       136.6822             32 0.37  0.19%       0.00      0.00
             0      Long Closed 1.4121      2025-11-19        136.6573     2025-11-20       136.6776              1 0.03  0.01%       0.00      0.00
             0      Long   Open 1.4124      2025-11-21        136.6401     2025-12-12       137.1297             21 0.69  0.36%       0.00      0.00
-
---------------------------------------------------------------------------------
-RF_ENSEMBLE_STRATEGY TRADING RULES
---------------------------------------------------------------------------------
-Strategy: RF_ENSEMBLE_STRATEGY
-
-TRADING RULES:
-Configuration-based strategy implementation.
-Parameters: {'trading_asset': 'cad_ig_er_index', 'benchmark_asset': 'cad_ig_er_index', 'momentum_windows': [2, 3, 5, 7, 10, 12, 15, 20, 25, 30, 40, 50, 60, 90, 120], 'zscore_windows': [5, 10, 20, 40, 60, 120, 252], 'macro_windows': [3, 5, 10, 20, 40, 60, 90], 'models': [{'n_estimators': 600, 'max_depth': 15, 'min_samples_leaf': 5, 'max_features': 0.4, 'random_state': 42}, {'n_estimators': 700, 'max_depth': 12, 'min_samples_leaf': 8, 'max_features': 0.5, 'random_state': 42}, {'n_estimators': 500, 'max_depth': 18, 'min_samples_leaf': 5, 'max_features': 0.3, 'random_state': 123}, {'n_estimators': 800, 'max_depth': 10, 'min_samples_leaf': 10, 'max_features': 0.4, 'random_state': 456}], 'ensemble_weights': [0.3, 0.3, 0.25, 0.15], 'probability_threshold': 0.55, 'holding_period_days': 7, 'train_test_split': 0.7}
-
-Note: Detailed trading rules not available for this strategy type.
-Please check the strategy implementation for specific logic.
-
---------------------------------------------------------------------------------
-RF_ENSEMBLE_STRATEGY - LAST 3 TRADES
---------------------------------------------------------------------------------
- Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade   PnL Return Entry Fees Exit Fees
-            0      Long Closed 1.6753      2025-11-12        136.7892     2025-11-21       136.6401              9 -0.25 -0.11%       0.00      0.00
-            0      Long Closed 1.6747      2025-11-26        136.6893     2025-12-05       136.8428              9  0.26  0.11%       0.00      0.00
-            0      Long   Open 1.6740      2025-12-08        136.8986     2025-12-12       137.1297              4  0.39  0.17%       0.00      0.00
 
 ====================================================================================================
 IMPORTANT NOTES

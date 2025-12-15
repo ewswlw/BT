@@ -72,6 +72,26 @@ features:
   include_correlations: false
   include_relative_strength: false
   
+  # Features for logistic regression strategy
+  include_zscore_features: true
+  zscore_columns: ["cad_oas", "vix", "us_3m_10y"]
+  zscore_window: 252
+  
+  include_equity_index_features: true
+  equity_index_columns: ["tsx", "s&p_500"]
+  equity_index_periods: [1, 5, 21]
+  
+  include_daily_change_features: true
+  daily_change_columns: ["cad_oas", "vix", "us_3m_10y"]
+  
+  include_macro_surprise_features: true
+  macro_surprise_columns:
+    - "us_growth_surprises"
+    - "us_inflation_surprises"
+    - "us_hard_data_surprises"
+    - "us_equity_revisions"
+    - "us_lei_yoy"
+  
   primary_asset: "cad_ig_er_index"
   fill_na_value: 0.0
 
@@ -175,6 +195,25 @@ rf_ensemble_strategy:
   holding_period_days: 7
   train_test_split: 0.70
 
+# Logistic Regression Strategy
+logistic_regression_strategy:
+  trading_asset: "cad_ig_er_index"
+  benchmark_asset: "cad_ig_er_index"
+  prediction_horizon: 5  # Days ahead to predict (5-day forward returns)
+  train_test_split: 0.7  # 70% train, 30% test
+  random_seed: 42
+  max_iter: 1000  # Maximum iterations for convergence
+  C: 1.0  # Regularization strength (inverse of regularization)
+  optimize_threshold: true  # Enable threshold optimization
+  threshold_range: [0.45, 0.65]  # Range to search for optimal threshold
+  threshold_steps: 20  # Number of steps in threshold search
+  default_threshold: 0.55  # Default threshold if optimization disabled
+  model_dir: "outputs/models"  # Directory to save/load models
+  save_model: true  # Save trained model to disk
+  load_model: true  # Load model from disk if available
+  diagnostics_dir: "outputs/results"  # Directory to save diagnostics
+  save_diagnostics: true  # Save diagnostics to file
+
 # Strategy selection control
 strategies:
   enabled:
@@ -184,7 +223,8 @@ strategies:
     - "vol_adaptive_momentum"
     - "lightgbm_strategy"
     - "rf_ensemble_strategy"
-  # Available options: cross_asset_momentum, multi_asset_momentum, genetic_algorithm, vol_adaptive_momentum, lightgbm_strategy, rf_ensemble_strategy
+    - "logistic_regression_strategy"
+  # Available options: cross_asset_momentum, multi_asset_momentum, genetic_algorithm, vol_adaptive_momentum, lightgbm_strategy, rf_ensemble_strategy, logistic_regression_strategy
   run_all_by_default: true
 
 # Enhanced reporting configuration

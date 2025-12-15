@@ -1,0 +1,148 @@
+# Logistic Regression Strategy Configuration
+# Uses logistic regression with comprehensive feature engineering
+
+data:
+  file_path: "../market data pipeline/processed market data/cad_ig_er_index_data_for_backtest.csv"
+  date_column: "Date"
+  use_multi_index: false  # Simple CSV format (not multi-index)
+  multi_index_header_rows: 2
+  date_header_row: 2
+  
+  # Asset class filtering (not used for simple CSV)
+  asset_classes_include: null
+  asset_classes_exclude: null
+  
+  # Column filtering (not used for simple CSV - all columns are loaded directly)
+  columns_include: null
+  columns_exclude: null
+  
+  # Date range
+  resample_frequency: null # Use raw daily data
+  start_date: null
+  end_date: null
+  
+  # Missing data handling
+  missing_data_strategy: "forward_fill"
+  missing_data_fill_value: 0.0
+  
+  # Multi-index flattening
+  flatten_columns: true
+  
+  # Existing fields
+  benchmark_asset: "cad_ig_er_index"
+  trading_asset: "cad_ig_er_index"
+  assets: []  # Will be populated after flattening
+  required_columns: []
+
+portfolio:
+  initial_capital: 100
+  frequency: "D" # Daily frequency for calculations
+  fees: 0.0
+  slippage: 0.0
+  position_size: 1.0
+  leverage: 1.0
+
+reporting:
+  output_dir: "outputs/reports"
+  generate_html: true
+  generate_pdf: false
+  include_plots: true
+  metrics_precision: 4
+
+# Feature engineering configuration for TechnicalFeatureEngineer
+features:
+  # Primary asset
+  primary_asset: "cad_ig_er_index"
+  fill_na_value: 0.0
+  
+  # Momentum features (matching user script: 1, 5, 21 days)
+  momentum_periods: [1, 5, 21]
+  
+  # Volatility features
+  volatility_windows: [5, 10, 20]
+  
+  # SMA features
+  sma_windows: [20, 50, 200]
+  
+  # Technical indicators
+  include_macd: false
+  include_stochastic: false
+  include_rsi: false
+  include_bollinger: false
+  
+  # OAS and VIX features
+  include_oas_features: false
+  
+  # New features for logistic regression
+  include_zscore_features: true
+  zscore_columns: ["cad_oas", "vix", "us_3m_10y"]
+  zscore_window: 252
+  
+  # Equity index returns
+  include_equity_index_features: true
+  equity_index_columns: ["tsx", "s&p_500"]
+  equity_index_periods: [1, 5, 21]
+  
+  # Daily changes for OAS, VIX, yield curve
+  include_daily_change_features: true
+  daily_change_columns: ["cad_oas", "vix", "us_3m_10y"]
+  
+  # Macro surprise indicators
+  include_macro_surprise_features: true
+  macro_surprise_columns:
+    - "us_growth_surprises"
+    - "us_inflation_surprises"
+    - "us_hard_data_surprises"
+    - "us_equity_revisions"
+    - "us_lei_yoy"
+
+# Logistic Regression Strategy Configuration
+logistic_regression_strategy:
+  # Trading parameters
+  trading_asset: "cad_ig_er_index"
+  benchmark_asset: "cad_ig_er_index"
+  
+  # Model parameters
+  prediction_horizon: 5  # Days ahead to predict (5-day forward returns)
+  train_test_split: 0.7  # 70% train, 30% test
+  random_seed: 42
+  
+  # Logistic regression hyperparameters
+  max_iter: 1000  # Maximum iterations for convergence
+  C: 1.0  # Regularization strength (inverse of regularization)
+  
+  # Threshold optimization parameters
+  optimize_threshold: true  # Enable threshold optimization
+  threshold_range: [0.45, 0.65]  # Range to search for optimal threshold
+  threshold_steps: 20  # Number of steps in threshold search
+  default_threshold: 0.55  # Default threshold if optimization disabled
+  
+  # Model persistence
+  model_dir: "outputs/models"  # Directory to save/load models
+  save_model: true  # Save trained model to disk
+  load_model: true  # Load model from disk if available
+  
+  # Diagnostics
+  diagnostics_dir: "outputs/results"  # Directory to save diagnostics
+  save_diagnostics: true  # Save diagnostics to file
+
+# Strategy selection control
+strategies:
+  enabled:
+    - "logistic_regression_strategy"
+  run_all_by_default: false
+
+# Enhanced reporting configuration
+enhanced_reporting:
+  generate_detailed_stats_file: true
+  stats_file_name: "logistic_regression_strategy_report.txt"
+  include_vectorbt_stats: true
+  include_quantstats_metrics: true
+  include_manual_calculations: true
+  include_drawdown_analysis: true
+
+# Common settings
+random_seed: 42
+verbose: true
+log_level: "INFO"
+

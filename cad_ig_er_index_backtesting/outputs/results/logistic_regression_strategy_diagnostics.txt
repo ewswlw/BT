@@ -1,0 +1,71 @@
+================================================================================
+LOGISTIC REGRESSION DIAGNOSTICS
+================================================================================
+Generated: 2025-12-15 12:17:22
+Strategy: logistic_regression_strategy
+Prediction Horizon: 5 days
+Optimal Threshold: 0.524
+================================================================================
+
+### 1. FEATURE IMPORTANCE (Top 15)
+   (Positive coef → increases probability of positive return)
+
+               feature  coefficient  abs_coef
+                 vix_z    -0.450934  0.450934
+            sma_50_dev    -0.378562  0.378562
+                 mom_5     0.361740  0.361740
+   us_growth_surprises     0.335591  0.335591
+               cad_oas     0.309406  0.309406
+           tsx_ret_21d     0.287229  0.287229
+        s&p_500_ret_1d     0.249272  0.249272
+                vol_10    -0.246840  0.246840
+           sma_200_dev     0.196410  0.196410
+                vol_20     0.159722  0.159722
+           us_3m_10y_z    -0.150409  0.150409
+                mom_21     0.146480  0.146480
+                 mom_1    -0.141200  0.141200
+us_hard_data_surprises    -0.135250  0.135250
+      us_3m_10y_chg_1d     0.134308  0.134308
+
+### 2. CLASSIFICATION METRICS
+
+TRAIN SET (threshold=0.524):
+  Accuracy  : 0.7051
+  Precision : 0.7190
+  Recall    : 0.8537
+  F1-Score  : 0.7806
+  ROC-AUC   : 0.7527
+
+TEST SET (threshold=0.524):
+  Accuracy  : 0.6431
+  Precision : 0.7053
+  Recall    : 0.7955
+  F1-Score  : 0.7477
+  ROC-AUC   : 0.6125
+
+TEST SET (default threshold=0.5, for comparison):
+  Accuracy  : 0.6516
+  Precision : 0.7037
+  Recall    : 0.8222
+  F1-Score  : 0.7583
+
+### 3. CONFUSION MATRICES
+
+TRAIN SET Confusion Matrix (threshold=0.524):
+              Predicted
+              Neg   Pos
+Actual Neg     737   837
+       Pos     367  2142
+
+TEST SET Confusion Matrix (threshold=0.524):
+              Predicted
+              Neg   Pos
+Actual Neg     200   387
+       Pos     238   926
+
+### 4. LABEL DISTRIBUTION
+
+TRAIN SET: Negative=1574 (38.55%), Positive=2509 (61.45%)
+TEST SET:  Negative=587 (33.52%), Positive=1164 (66.48%)
+
+================================================================================
