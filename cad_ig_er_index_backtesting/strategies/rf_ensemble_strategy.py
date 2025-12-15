@@ -17,6 +17,13 @@ except ImportError:
     SKLEARN_AVAILABLE = False
     print("Warning: scikit-learn not available. Please install: pip install scikit-learn")
 
+# Import validation (optional)
+try:
+    from core.validation import ValidationFramework, ValidationConfig
+    VALIDATION_AVAILABLE = True
+except ImportError:
+    VALIDATION_AVAILABLE = False
+
 from .base_strategy import BaseStrategy
 
 
@@ -182,13 +189,65 @@ class RFEnsembleStrategy(BaseStrategy):
         X = features[valid_idx].copy()
         y = target[valid_idx].copy()
 
-        # Time-series aware train/test split
-        split_idx = int(len(X) * self.train_test_split)
-        X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
-        y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
+        # Use purged CV if validation config available, otherwise simple split
+        use_purged_cv = (VALIDATION_AVAILABLE and 
+                        self.validation_config and 
+                        self.validation_config.cv_method in ["purged_kfold", "cpcv"])
+        
+        if use_purged_cv:
+            # Prepare samples_info_sets for purged CV
+            samples_info_sets = self._prepare_samples_info_sets(data, prediction_horizon=7)
+            
+            # Use purged CV for train/test split
+            from core.validation.purged_cv import PurgedKFold
+            cv = PurgedKFold(
+                n_splits=self.validation_config.n_splits,
+                samples_info_sets=samples_info_sets,
+                pct_embargo=self.validation_config.embargo_pct
+            )
+            
+            # Get first fold for training (use last fold as test)
+            cv_splits = list(cv.split(X, y))
+            if cv_splits:
+                # Use last fold as test set, all previous folds as train
+                train_indices = np.concatenate([train_idx for train_idx, _ in cv_splits[:-1]])
+                test_indices = cv_splits[-1][1]
+                
+                X_train, X_test = X.iloc[train_indices], X.iloc[test_indices]
+                y_train, y_test = y.iloc[train_indices], y.iloc[test_indices]
+            else:
+                # Fallback to simple split
+                split_idx = int(len(X) * self.train_test_split)
+                X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
+                y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
+        else:
+            # Time-series aware train/test split (original method)
+            split_idx = int(len(X) * self.train_test_split)
+            X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
+            y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
 
         print(f"  Training samples: {len(X_train)}, Test samples: {len(X_test)}")
         print(f"  Positive class ratio: {y_train.mean():.2%}")
+        
+        # Calculate sample weights if validation enabled
+        sample_weights_train = None
+        if (VALIDATION_AVAILABLE and 
+            self.validation_config and 
+            self.validation_config.use_sample_weights):
+            try:
+                samples_info_sets = self._prepare_samples_info_sets(data, prediction_horizon=7)
+                if samples_info_sets:
+                    from core.validation.sample_weights import (
+                        compute_label_uniqueness,
+                        compute_sample_weights
+                    )
+                    price_index = X.index
+                    uniqueness = compute_label_uniqueness(samples_info_sets, price_index)
+                    weights = compute_sample_weights(uniqueness)
+                    sample_weights_train = weights.iloc[X_train.index].values
+                    print(f"  Sample weights calculated (mean: {sample_weights_train.mean():.4f})")
+            except Exception as e:
+                print(f"  Warning: Sample weight calculation failed: {e}")
 
         # Train each model
         trained_models = []
@@ -201,7 +260,12 @@ class RFEnsembleStrategy(BaseStrategy):
 
             # Create and train Random Forest
             rf = RandomForestClassifier(**model_config, n_jobs=-1)
-            rf.fit(X_train, y_train)
+            
+            # Use sample weights if available
+            if sample_weights_train is not None:
+                rf.fit(X_train, y_train, sample_weight=sample_weights_train)
+            else:
+                rf.fit(X_train, y_train)
 
             # Evaluate on test set
             y_pred_proba = rf.predict_proba(X_test)[:, 1]

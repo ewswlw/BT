@@ -14,6 +14,17 @@ except ImportError:
     QUANTSTATS_AVAILABLE = False
     print("Warning: quantstats not available, using manual calculations")
 
+# Import validation metrics (optional)
+try:
+    from .validation.deflated_metrics import (
+        deflated_sharpe_ratio,
+        probabilistic_sharpe_ratio as psr_validation,
+        min_backtest_length
+    )
+    VALIDATION_METRICS_AVAILABLE = True
+except ImportError:
+    VALIDATION_METRICS_AVAILABLE = False
+
 
 class MetricsCalculator:
     """Comprehensive performance metrics calculator."""
@@ -180,6 +191,11 @@ class MetricsCalculator:
     def _calculate_probabilistic_sharpe(self, returns: pd.Series) -> float:
         """Calculate Probabilistic Sharpe Ratio."""
         try:
+            # Use validation module if available (more accurate)
+            if VALIDATION_METRICS_AVAILABLE:
+                return psr_validation(returns, benchmark_sr=0.0, annual_factor=self.annual_factor)
+            
+            # Fallback to original implementation
             sr = (returns.mean() * self.annual_factor) / (returns.std() * np.sqrt(self.annual_factor))
             n = len(returns)
             
@@ -199,6 +215,60 @@ class MetricsCalculator:
             return psr
         except:
             return 0.5
+    
+    def calculate_deflated_sharpe(
+        self,
+        returns: pd.Series,
+        n_trials: int = 100
+    ) -> float:
+        """
+        Calculate Deflated Sharpe Ratio.
+        
+        Args:
+            returns: Series of returns
+            n_trials: Number of strategies tested
+            
+        Returns:
+            Deflated Sharpe ratio (probability that SR is genuine)
+        """
+        if not VALIDATION_METRICS_AVAILABLE:
+            return 0.5  # Neutral if validation module not available
+        
+        try:
+            sr = (returns.mean() * self.annual_factor) / (returns.std() * np.sqrt(self.annual_factor))
+            n = len(returns)
+            skew = returns.skew()
+            kurt = returns.kurtosis() + 3  # scipy returns excess kurtosis
+            
+            return deflated_sharpe_ratio(sr, n_trials, n, skew, kurt)
+        except:
+            return 0.5
+    
+    def calculate_min_backtest_length(
+        self,
+        returns: pd.Series,
+        target_sharpe: float = 1.5
+    ) -> int:
+        """
+        Calculate minimum backtest length.
+        
+        Args:
+            returns: Series of returns
+            target_sharpe: Target Sharpe ratio
+            
+        Returns:
+            Minimum backtest length in periods
+        """
+        if not VALIDATION_METRICS_AVAILABLE:
+            return len(returns)  # Return current length if validation not available
+        
+        try:
+            sr = (returns.mean() * self.annual_factor) / (returns.std() * np.sqrt(self.annual_factor))
+            n = len(returns)
+            
+            return min_backtest_length(target_sharpe, sr, n)
+        except:
+            return len(returns)
     
     def _calculate_longest_drawdown_duration(self, returns: pd.Series) -> int:
         """Calculate longest drawdown duration in periods."""

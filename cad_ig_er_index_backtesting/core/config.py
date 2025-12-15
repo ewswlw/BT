@@ -7,6 +7,14 @@ from typing import Dict, List, Optional, Union, Any
 import yaml
 from pathlib import Path
 
+# Import validation config (with try/except for backward compatibility)
+try:
+    from .validation.validation_config import ValidationConfig
+    VALIDATION_AVAILABLE = True
+except ImportError:
+    VALIDATION_AVAILABLE = False
+    ValidationConfig = None
+
 
 @dataclass
 class DataConfig:
@@ -105,6 +113,7 @@ class BaseConfig:
     portfolio: PortfolioConfig
     reporting: ReportingConfig
     optimization: Optional[OptimizationConfig] = None
+    validation: Optional[Any] = None  # ValidationConfig, but using Any for backward compatibility
     random_seed: Optional[int] = 42
     verbose: bool = True
     log_level: str = "INFO"
@@ -132,11 +141,18 @@ def create_config_from_dict(config_dict: Dict[str, Any]) -> BaseConfig:
     if 'optimization' in config_dict:
         optimization_config = OptimizationConfig(**config_dict['optimization'])
     
+    validation_config = None
+    if VALIDATION_AVAILABLE and 'validation' in config_dict:
+        validation_dict = config_dict.get('validation', {})
+        validation_config = ValidationConfig(**validation_dict)
+        validation_config.validate()
+    
     return BaseConfig(
         data=data_config,
         portfolio=portfolio_config,
         reporting=reporting_config,
         optimization=optimization_config,
+        validation=validation_config,
         random_seed=config_dict.get('random_seed', 42),
         verbose=config_dict.get('verbose', True),
         log_level=config_dict.get('log_level', 'INFO')
@@ -156,6 +172,9 @@ def save_config(config: BaseConfig, output_path: str):
     
     if config.optimization:
         config_dict['optimization'] = config.optimization.__dict__
+    
+    if config.validation:
+        config_dict['validation'] = config.validation.__dict__
     
     with open(output_path, 'w') as f:
         yaml.dump(config_dict, f, default_flow_style=False, indent=2) 

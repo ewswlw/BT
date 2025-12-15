@@ -374,7 +374,53 @@ enhanced_reporting:
   include_drawdown_analysis: true
 
 # ============================================================================
-# SECTION 8: COMMON SETTINGS
+# SECTION 8: VALIDATION CONFIGURATION
+# ============================================================================
+# Validation framework settings based on López de Prado methodologies
+# ============================================================================
+validation:
+  # Cross-validation settings
+  cv_method: "purged_kfold"  # Options: "purged_kfold", "cpcv", "walk_forward"
+  n_splits: 5
+  embargo_pct: 0.01  # 1% embargo period
+  
+  # CPCV settings
+  n_test_groups: 2  # Number of groups for test set in CPCV
+  
+  # Sample weights
+  use_sample_weights: true
+  weight_method: "uniqueness"  # Options: "uniqueness", "time_decay", "sequential_bootstrap"
+  time_decay_factor: 0.01
+  
+  # Deflated Sharpe Ratio
+  n_trials: 100  # Number of strategies tested (for deflated SR)
+  
+  # PBO settings
+  calculate_pbo: true
+  n_configurations: 50  # Number of configurations for PBO calculation
+  
+  # Walk-forward settings
+  walk_forward_train_period: 252  # Days
+  walk_forward_test_period: 63   # Days
+  walk_forward_step: 21           # Days
+  
+  # Synthetic data testing (disabled by default - use actual strategy data)
+  synthetic_test_enabled: false
+  n_simulations: 1000
+  
+  # Minimum backtest length
+  min_backtest_length_enabled: true
+  target_sharpe: 1.5
+  
+  # Output settings
+  output_dir: "outputs/validation"
+  generate_report: true
+  
+  # Auto-run validation during normal strategy execution
+  auto_run: true  # Set to false to disable automatic validation
+
+# ============================================================================
+# SECTION 9: COMMON SETTINGS
 # ============================================================================
 # Global settings applied across all strategies
 # ============================================================================

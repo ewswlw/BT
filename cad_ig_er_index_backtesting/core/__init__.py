@@ -9,6 +9,16 @@ from .portfolio import PortfolioEngine, BacktestResult
 from .metrics import MetricsCalculator
 from .reporting import ReportGenerator
 
+# Import validation module (optional, for backward compatibility)
+try:
+    from .validation import ValidationFramework, ValidationConfig, ValidationReportGenerator
+    VALIDATION_AVAILABLE = True
+except ImportError:
+    VALIDATION_AVAILABLE = False
+    ValidationFramework = None
+    ValidationConfig = None
+    ValidationReportGenerator = None
+
 __all__ = [
     "DataConfig",
     "PortfolioConfig", 
@@ -25,4 +35,11 @@ __all__ = [
     "BacktestResult",
     "MetricsCalculator",
     "ReportGenerator",
-] 
+]
+
+if VALIDATION_AVAILABLE:
+    __all__.extend([
+        "ValidationFramework",
+        "ValidationConfig",
+        "ValidationReportGenerator",
+    ]) 

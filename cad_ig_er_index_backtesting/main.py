@@ -45,6 +45,16 @@ from core import (
 )
 from strategies import StrategyFactory
 
+# Import validation (optional)
+try:
+    from core.validation import ValidationFramework, ValidationConfig, ValidationReportGenerator
+    VALIDATION_AVAILABLE = True
+except ImportError:
+    VALIDATION_AVAILABLE = False
+    ValidationFramework = None
+    ValidationConfig = None
+    ValidationReportGenerator = None
+
 
 def print_usage_examples():
     """Print comprehensive usage examples for all strategies."""
@@ -607,7 +617,12 @@ def extract_last_3_trades(result, strategy_name):
         last_trades['Entry Timestamp'] = pd.to_datetime(last_trades['Entry Timestamp'])
         last_trades['Exit Timestamp'] = pd.to_datetime(last_trades['Exit Timestamp'])
         last_timestamp = result.returns.index[-1]
-        last_trades['Days in Trade'] = (last_trades['Exit Timestamp'].fillna(last_timestamp) - last_trades['Entry Timestamp']).dt.days
+        # Calculate days in trade: use exit timestamp if available, otherwise use last available date
+        last_trades['Days in Trade'] = (
+            (last_trades['Exit Timestamp'].fillna(last_timestamp) - last_trades['Entry Timestamp']).dt.days
+        )
+        # Ensure non-negative days for open positions
+        last_trades['Days in Trade'] = last_trades['Days in Trade'].clip(lower=0)
         
         # Formatting
         last_trades['Return'] = last_trades['Return'].astype(float).map('{:.2%}'.format)
@@ -1026,8 +1041,78 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
         print("Running backtest...")
         result = strategy.backtest(data, features, base_config.portfolio, base_config.data.benchmark_asset)
         
+        # Run validation if enabled in config
+        if (VALIDATION_AVAILABLE and 
+            base_config.validation and 
+            base_config.validation.auto_run):
+            print("\n" + "="*80)
+            print("RUNNING VALIDATION FRAMEWORK")
+            print("="*80)
+            try:
+                benchmark_data = data[base_config.data.benchmark_asset]
+                benchmark_returns = benchmark_data.pct_change().dropna()
+                
+                # Prepare data for validation
+                if hasattr(strategy, 'create_target'):
+                    target = strategy.create_target(data)
+                else:
+                    # Default: predict positive returns
+                    returns = benchmark_data.pct_change().shift(-1)
+                    target = (returns > 0).astype(int)
+                
+                # Align data
+                common_idx = features.index.intersection(target.index).intersection(benchmark_returns.index)
+                X = features.loc[common_idx]
+                y = target.loc[common_idx]
+                returns_aligned = benchmark_returns.loc[common_idx]
+                
+                # Prepare samples_info_sets for purged CV
+                # Use default prediction horizon of 7 days
+                samples_info_sets = strategy._prepare_samples_info_sets(data.loc[common_idx], prediction_horizon=7)
+                
+                # Run validation
+                validation_framework = ValidationFramework(base_config.validation)
+                validation_results = validation_framework.validate(
+                    X, y, returns_aligned, samples_info_sets
+                )
+                validation_results.strategy_name = strategy_name
+                
+                # Generate validation report
+                if base_config.validation.generate_report:
+                    report_generator = ValidationReportGenerator(base_config.validation.output_dir)
+                    report_path = report_generator.generate_report(
+                        strategy_name,
+                        validation_results,
+                        config_dict.get('validation', {})
+                    )
+                    print(f"\n✓ Validation report saved to: {report_path}")
+                
+                # Print validation summary
+                print("\nValidation Summary:")
+                if validation_results.deflated_sharpe is not None:
+                    print(f"  Deflated Sharpe Ratio: {validation_results.deflated_sharpe:.4f}")
+                if validation_results.probabilistic_sharpe is not None:
+                    print(f"  Probabilistic Sharpe Ratio: {validation_results.probabilistic_sharpe:.4f}")
+                if validation_results.cv_scores:
+                    print(f"  CV Mean: {validation_results.cv_mean:.4f} (std: {validation_results.cv_std:.4f})")
+                if validation_results.pbo is not None:
+                    print(f"  PBO: {validation_results.pbo:.2%}")
+                if validation_results.min_backtest_length:
+                    adequate = "✓" if validation_results.current_length >= validation_results.min_backtest_length else "✗"
+                    print(f"  Min Backtest Length: {adequate} ({validation_results.current_length}/{validation_results.min_backtest_length} periods)")
+                
+                # Store validation results in strategy
+                strategy.validation_results = validation_results
+                
+            except Exception as e:
+                print(f"[WARNING] Validation failed: {e}")
+                import traceback
+                traceback.print_exc()
+        
         # Generate report
-        print("Generating report...")
+        print("\n" + "="*80)
+        print("GENERATING STRATEGY REPORT")
+        print("="*80)
         report_generator = ReportGenerator(base_config.reporting.output_dir)
         benchmark_data = data[base_config.data.benchmark_asset]
         
@@ -1058,6 +1143,118 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
         print(f"Error running strategy {strategy_name}: {e}")
         import traceback
         traceback.print_exc()
+
+
+def run_validation(strategy_names: list, config_dict: dict):
+    """
+    Run comprehensive validation framework on strategies.
+    
+    Args:
+        strategy_names: List of strategy names to validate
+        config_dict: Configuration dictionary
+    """
+    if not VALIDATION_AVAILABLE:
+        print("Validation framework not available. Please ensure validation module is installed.")
+        return
+    
+    print("\n" + "="*100)
+    print("RUNNING COMPREHENSIVE VALIDATION FRAMEWORK")
+    print("="*100)
+    
+    # Get validation config
+    validation_config_dict = config_dict.get('validation', {})
+    if not validation_config_dict:
+        print("Warning: No validation configuration found. Using defaults.")
+        validation_config = ValidationConfig()
+    else:
+        validation_config = ValidationConfig(**validation_config_dict)
+        validation_config.validate()
+    
+    # Load data
+    base_config = create_config_from_dict(config_dict)
+    data_loader = DataLoader(CSVDataProvider())
+    data = data_loader.load_and_prepare(base_config.data)
+    
+    # Get benchmark asset
+    benchmark_asset = base_config.data.benchmark_asset
+    if benchmark_asset not in data.columns:
+        benchmark_asset = data.columns[0]
+    
+    benchmark_data = data[benchmark_asset]
+    benchmark_returns = benchmark_data.pct_change().dropna()
+    
+    # Validate each strategy
+    for strategy_name in strategy_names:
+        print(f"\n{'='*100}")
+        print(f"VALIDATING STRATEGY: {strategy_name.upper()}")
+        print(f"{'='*100}")
+        
+        try:
+            # Create strategy
+            strategy_config = config_dict.get(strategy_name.lower(), {})
+            strategy_config['type'] = strategy_name
+            strategy_config['name'] = strategy_name
+            strategy_config['validation'] = validation_config_dict
+            
+            strategy = StrategyFactory.create_strategy(strategy_config)
+            
+            # Generate features
+            feature_engineer = TechnicalFeatureEngineer()
+            feature_config = config_dict.get('features', {})
+            features = feature_engineer.create_features(data, feature_config)
+            
+            # Prepare data for validation
+            # For ML strategies, we need targets
+            if hasattr(strategy, 'create_target'):
+                target = strategy.create_target(data)
+            else:
+                # Default: predict positive returns
+                returns = benchmark_data.pct_change().shift(-1)
+                target = (returns > 0).astype(int)
+            
+            # Align data
+            common_idx = features.index.intersection(target.index).intersection(benchmark_returns.index)
+            X = features.loc[common_idx]
+            y = target.loc[common_idx]
+            returns_aligned = benchmark_returns.loc[common_idx]
+            
+            # Prepare samples_info_sets for purged CV
+            samples_info_sets = strategy._prepare_samples_info_sets(data.loc[common_idx], prediction_horizon=7)
+            
+            # Run validation
+            validation_framework = ValidationFramework(validation_config)
+            validation_results = validation_framework.validate(
+                X, y, returns_aligned, samples_info_sets
+            )
+            
+            # Generate validation report
+            report_generator = ValidationReportGenerator(validation_config.output_dir)
+            report_path = report_generator.generate_report(
+                strategy_name,
+                validation_results,
+                validation_config_dict
+            )
+            
+            print(f"\n✓ Validation completed for {strategy_name}")
+            print(f"  Report saved to: {report_path}")
+            
+            # Print summary
+            if validation_results.deflated_sharpe:
+                print(f"  Deflated Sharpe Ratio: {validation_results.deflated_sharpe:.4f}")
+            if validation_results.pbo is not None:
+                print(f"  PBO: {validation_results.pbo:.2%}")
+            if validation_results.cv_scores:
+                print(f"  CV Mean: {validation_results.cv_mean:.4f} (std: {validation_results.cv_std:.4f})")
+            
+        except Exception as e:
+            print(f"✗ Validation failed for {strategy_name}: {e}")
+            import traceback
+            traceback.print_exc()
+            continue
+    
+    print(f"\n{'='*100}")
+    print("VALIDATION COMPLETE")
+    print(f"{'='*100}\n")
 
 
 def run_strategy_comparison(strategy_names: list, config_dict: dict):
@@ -1123,6 +1320,54 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
                 
                 # Run backtest
                 result = strategy.backtest(data, features, base_config.portfolio, base_config.data.benchmark_asset)
+                
+                # Run validation if enabled in config
+                if (VALIDATION_AVAILABLE and 
+                    base_config.validation and 
+                    base_config.validation.auto_run):
+                    try:
+                        benchmark_data = data[base_config.data.benchmark_asset]
+                        benchmark_returns = benchmark_data.pct_change().dropna()
+                        
+                        # Prepare data for validation
+                        if hasattr(strategy, 'create_target'):
+                            target = strategy.create_target(data)
+                        else:
+                            returns = benchmark_data.pct_change().shift(-1)
+                            target = (returns > 0).astype(int)
+                        
+                        # Align data
+                        common_idx = features.index.intersection(target.index).intersection(benchmark_returns.index)
+                        X = features.loc[common_idx]
+                        y = target.loc[common_idx]
+                        returns_aligned = benchmark_returns.loc[common_idx]
+                        
+                        # Prepare samples_info_sets
+                        samples_info_sets = strategy._prepare_samples_info_sets(data.loc[common_idx], prediction_horizon=7)
+                        
+                        # Run validation
+                        validation_framework = ValidationFramework(base_config.validation)
+                        validation_results = validation_framework.validate(
+                            X, y, returns_aligned, samples_info_sets
+                        )
+                        validation_results.strategy_name = strategy_name
+                        
+                        # Generate validation report
+                        if base_config.validation.generate_report:
+                            report_generator = ValidationReportGenerator(base_config.validation.output_dir)
+                            report_path = report_generator.generate_report(
+                                strategy_name,
+                                validation_results,
+                                config_dict.get('validation', {})
+                            )
+                            print(f"  Validation report: {report_path}")
+                        
+                        # Store validation results
+                        strategy.validation_results = validation_results
+                        
+                    except Exception as e:
+                        print(f"  [WARNING] Validation failed: {e}")
+                
                 results[strategy_name] = result
                 
                 print(f"[OK] {strategy_name} completed")
@@ -1208,6 +1453,11 @@ def main():
         action='store_true',
         help='Show comprehensive usage examples with all command options.'
     )
+    parser.add_argument(
+        '--run-validation',
+        action='store_true',
+        help='Run comprehensive validation framework on strategies.'
+    )
 
     args = parser.parse_args()
 
@@ -1245,6 +1495,11 @@ def main():
         print("No strategies enabled in config or provided via arguments. Exiting.")
         return
 
+    # Run validation if requested
+    if args.run_validation and VALIDATION_AVAILABLE:
+        run_validation(enabled_strategies, config_dict)
+        return
+    
     if len(enabled_strategies) > 1:
         run_strategy_comparison(enabled_strategies, config_dict)
     elif len(enabled_strategies) == 1:
