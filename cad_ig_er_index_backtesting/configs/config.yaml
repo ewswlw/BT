@@ -341,6 +341,17 @@ logistic_regression_strategy:
   diagnostics_dir: "outputs/results"  # Directory to save diagnostics
   save_diagnostics: true  # Save diagnostics to file
 
+# --- Strategy 5.8: TSX/S&P 500 Momentum ---
+# Weekly rebalancing strategy using 3 momentum signals
+tsx_spx_momentum:
+  tsx_column: "tsx"
+  spx_column: "s&p_500"
+  trading_asset: "cad_ig_er_index"
+  tsx_4week_days: 20  # 4 weeks * 5 trading days
+  spx_4week_days: 20  # 4 weeks * 5 trading days
+  tsx_8week_days: 40  # 8 weeks * 5 trading days
+  min_confirmations: 2  # At least 2 out of 3 signals must be positive
+
 # ============================================================================
 # SECTION 6: STRATEGY SELECTION CONTROL
 # ============================================================================
@@ -352,13 +363,12 @@ strategies:
     - "multi_asset_momentum"
     - "genetic_algorithm"
     - "vol_adaptive_momentum"
-    - "lightgbm_strategy"
     - "rf_ensemble_strategy"
-    - "logistic_regression_strategy"
+    - "tsx_spx_momentum"
   # Available options: cross_asset_momentum, multi_asset_momentum, genetic_algorithm, 
   #                    vol_adaptive_momentum, lightgbm_strategy, rf_ensemble_strategy, 
-  #                    logistic_regression_strategy
-  run_all_by_default: true
+  #                    logistic_regression_strategy, tsx_spx_momentum
+  run_all_by_default: false
 
 # ============================================================================
 # SECTION 7: ENHANCED REPORTING CONFIGURATION
@@ -368,10 +378,26 @@ strategies:
 enhanced_reporting:
   generate_detailed_stats_file: true
   stats_file_name: "comprehensive_strategy_comparison.txt"
-  include_vectorbt_stats: true
-  include_quantstats_metrics: true
+  include_vectorbt_stats: false  # Disable for faster execution
+  include_quantstats_metrics: false  # Disable for faster execution
   include_manual_calculations: true
   include_drawdown_analysis: true
+  generate_individual_reports: false  # Skip individual HTML reports for faster execution
+  generate_trade_blotter: false  # Skip trade blotter for faster execution
+
+# ============================================================================
+# SECTION 7.5: FAST MODE CONFIGURATION
+# ============================================================================
+# Performance optimizations for faster execution
+# ============================================================================
+fast_mode:
+  enabled: true  # Enable fast mode optimizations
+  cache_features: true  # Cache features between strategies (biggest speedup)
+  skip_individual_reports: true  # Skip individual HTML reports
+  skip_trade_blotter: true  # Skip trade blotter generation
+  skip_vectorbt_stats: true  # Skip VectorBT calculations
+  skip_quantstats_metrics: true  # Skip QuantStats calculations
+  skip_comprehensive_stats: false  # Keep summary stats file
 
 # ============================================================================
 # SECTION 8: VALIDATION CONFIGURATION
@@ -396,7 +422,7 @@ validation:
   n_trials: 1  # Number of strategies tested (for deflated SR) - Reduced from 100 to improve DSR
   
   # PBO settings
-  calculate_pbo: true
+  calculate_pbo: false  # Disabled for faster execution
   n_configurations: 50  # Number of configurations for PBO calculation
   
   # Walk-forward settings
@@ -409,15 +435,15 @@ validation:
   n_simulations: 1000
   
   # Minimum backtest length
-  min_backtest_length_enabled: true
+  min_backtest_length_enabled: false  # Disabled for faster execution
   target_sharpe: 0.7  # Reduced from 1.5 to realistic target to improve MinBTL validation
   
   # Output settings
   output_dir: "outputs/validation"
-  generate_report: true
+  generate_report: false  # Disabled - set to true if running validation separately
   
   # Auto-run validation during normal strategy execution
-  auto_run: true  # Set to false to disable automatic validation
+  auto_run: false  # DISABLED - Set to true to enable automatic validation (slows down execution)
 
 # ============================================================================
 # SECTION 9: COMMON SETTINGS

@@ -11,6 +11,7 @@ from .vol_adaptive_momentum import VolAdaptiveMomentumStrategy
 from .lightgbm_strategy import LightGBMStrategy
 from .rf_ensemble_strategy import RFEnsembleStrategy
 from .logistic_regression_strategy import LogisticRegressionStrategy
+from .tsx_spx_momentum import TSXSPXMomentumStrategy
 
 
 class StrategyFactory:
@@ -24,6 +25,7 @@ class StrategyFactory:
         'lightgbm_strategy': LightGBMStrategy,
         'rf_ensemble_strategy': RFEnsembleStrategy,
         'logistic_regression_strategy': LogisticRegressionStrategy,
+        'tsx_spx_momentum': TSXSPXMomentumStrategy,
     }
     
     @classmethod

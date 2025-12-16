@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Main execution script for the modular backtesting framework.
 This script can be run from any directory.
@@ -11,6 +12,13 @@ import os
 from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
+
+# Fix Windows console encoding issues
+if sys.platform == 'win32':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -107,6 +115,9 @@ def print_usage_examples():
     print("\n# 6. Vol Adaptive Momentum")
     print("poetry run python main.py --config configs/config.yaml --strategies vol_adaptive_momentum")
 
+    print("\n# 7. TSX/S&P 500 Momentum")
+    print("poetry run python main.py --config configs/config.yaml --strategies tsx_spx_momentum")
+
     print("\n" + "-"*100)
     print("MULTIPLE STRATEGIES - COMPARISON RUNS:")
     print("-"*100)
@@ -121,13 +132,13 @@ def print_usage_examples():
     print("poetry run python main.py --config configs/config.yaml --strategies rf_ensemble_strategy cross_asset_momentum")
 
     print("\n# Compare All Momentum Strategies")
-    print("poetry run python main.py --config configs/config.yaml --strategies cross_asset_momentum multi_asset_momentum vol_adaptive_momentum")
+    print("poetry run python main.py --config configs/config.yaml --strategies cross_asset_momentum multi_asset_momentum vol_adaptive_momentum tsx_spx_momentum")
 
     print("\n# Run 4 Strategies (Mixed Comparison)")
     print("poetry run python main.py --config configs/config.yaml --strategies rf_ensemble_strategy lightgbm_strategy cross_asset_momentum vol_adaptive_momentum")
 
-    print("\n# Run ALL 6 Strategies (Full Benchmark)")
-    print("poetry run python main.py --config configs/config.yaml --strategies cross_asset_momentum multi_asset_momentum genetic_algorithm vol_adaptive_momentum lightgbm_strategy rf_ensemble_strategy")
+    print("\n# Run ALL 7 Strategies (Full Benchmark)")
+    print("poetry run python main.py --config configs/config.yaml --strategies cross_asset_momentum multi_asset_momentum genetic_algorithm vol_adaptive_momentum lightgbm_strategy rf_ensemble_strategy tsx_spx_momentum")
 
     print("\n" + "-"*100)
     print("UTILITY COMMANDS:")
@@ -177,8 +188,22 @@ def load_config(config_path: str) -> dict:
         sys.exit(1)
 
 
-def calculate_comprehensive_stats(result, benchmark_data, strategy_name):
+def calculate_comprehensive_stats(result, benchmark_data, strategy_name, config_dict=None):
     """Calculate comprehensive statistics for a strategy."""
+    # Get fast mode and enhanced reporting config
+    fast_mode = config_dict.get('fast_mode', {}) if config_dict else {}
+    enhanced_config = config_dict.get('enhanced_reporting', {}) if config_dict else {}
+    
+    # Check if fast mode is enabled
+    fast_mode_enabled = fast_mode.get('enabled', False)
+    skip_vectorbt = fast_mode_enabled and fast_mode.get('skip_vectorbt_stats', True)
+    skip_quantstats = fast_mode_enabled and fast_mode.get('skip_quantstats_metrics', True)
+    
+    # Override with enhanced_reporting flags if they exist
+    if enhanced_config.get('include_vectorbt_stats') is False:
+        skip_vectorbt = True
+    if enhanced_config.get('include_quantstats_metrics') is False:
+        skip_quantstats = True
     # Use benchmark-aligned dates for reporting (ensuring all strategies report same period)
     benchmark_start = benchmark_data.index[0].strftime('%Y-%m-%d')
     benchmark_end = benchmark_data.index[-1].strftime('%Y-%m-%d')
@@ -264,11 +289,11 @@ def calculate_comprehensive_stats(result, benchmark_data, strategy_name):
     stats['cvar'] = strategy_returns[strategy_returns <= stats['daily_var'] * 5].mean() / 5  # Expected shortfall
     stats['benchmark_cvar'] = benchmark_returns[benchmark_returns <= stats['benchmark_daily_var'] * 5].mean() / 5
     
-    # Calculate VectorBT stats if available
+    # Calculate VectorBT stats if available and not skipped
     vectorbt_stats = {}
     vectorbt_returns_stats = {}
     
-    if VECTORBT_AVAILABLE and hasattr(result, 'portfolio') and result.portfolio is not None:
+    if not skip_vectorbt and VECTORBT_AVAILABLE and hasattr(result, 'portfolio') and result.portfolio is not None:
         try:
             vectorbt_stats = result.portfolio.stats().to_dict()
             vectorbt_returns_stats = result.portfolio.returns().vbt.returns.stats().to_dict()
@@ -283,9 +308,9 @@ def calculate_comprehensive_stats(result, benchmark_data, strategy_name):
         except Exception as e:
             print(f"Warning: Could not calculate VectorBT stats: {e}")
     
-    # Calculate QuantStats metrics if available
+    # Calculate QuantStats metrics if available and not skipped
     quantstats_metrics = {}
-    if QUANTSTATS_AVAILABLE:
+    if not skip_quantstats and QUANTSTATS_AVAILABLE:
         qs_strategy_returns = strategy_returns.dropna()
         qs_benchmark_returns = benchmark_returns.dropna()
 
@@ -587,6 +612,45 @@ PARAMETERS:
 - Features: Comprehensive technical and macro indicators
 """
     
+    elif strategy_name.lower() == 'tsx_spx_momentum':
+        tsx_col = strategy_config.get('tsx_column', 'tsx')
+        spx_col = strategy_config.get('spx_column', 's&p_500')
+        trading_asset = strategy_config.get('trading_asset', 'cad_ig_er_index')
+        tsx_4week = strategy_config.get('tsx_4week_days', 20)
+        spx_4week = strategy_config.get('spx_4week_days', 20)
+        tsx_8week = strategy_config.get('tsx_8week_days', 40)
+        min_conf = strategy_config.get('min_confirmations', 2)
+        
+        return f"""TSX/S&P 500 Momentum Strategy (Weekly Rebalance)
+
+TRADING RULES:
+1. Data & Frequency:
+   - This strategy operates on DAILY data but only makes trading decisions once per week.
+   - Rebalancing Day: Monday.
+
+2. Momentum Signals (Monday Only):
+   - Signal 1: {tsx_col} {tsx_4week}-day (4-week) momentum > 0
+   - Signal 2: {spx_col} {spx_4week}-day (4-week) momentum > 0
+   - Signal 3: {tsx_col} {tsx_8week}-day (8-week) momentum > 0
+
+3. Entry Condition (Monday Only):
+   - A LONG position is entered in '{trading_asset}' if at least {min_conf} out of 3 signals are positive.
+   - Entry Threshold: >= {min_conf} positive momentum signals
+
+4. Position Management:
+   - If the entry condition is met on Monday, the position is held for the entire week.
+   - The position is exited on the next Monday if the entry condition is no longer met.
+   - Otherwise, hold cash.
+
+PARAMETERS:
+- Trading Asset: {trading_asset}
+- TSX 4-week Lookback: {tsx_4week} trading days
+- S&P 500 4-week Lookback: {spx_4week} trading days
+- TSX 8-week Lookback: {tsx_8week} trading days
+- Minimum Confirmations: {min_conf} out of 3 signals
+- Rebalancing Frequency: Weekly (Monday)
+"""
+    
     else:
         return f"""Strategy: {strategy_name.upper()}
 
@@ -671,10 +735,15 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
         # Calculate comprehensive stats for all strategies
         all_stats = {}
         for strategy_name, result in results.items():
-            all_stats[strategy_name] = calculate_comprehensive_stats(result, benchmark_data, strategy_name)
+            all_stats[strategy_name] = calculate_comprehensive_stats(result, benchmark_data, strategy_name, config_dict)
         
         # 1. VECTORBT PORTFOLIO STATS SECTION
-        if enhanced_config.get('include_vectorbt_stats', True):
+        fast_mode = config_dict.get('fast_mode', {})
+        fast_mode_enabled = fast_mode.get('enabled', False)
+        skip_vectorbt = (fast_mode_enabled and fast_mode.get('skip_vectorbt_stats', True)) or \
+                       (enhanced_config.get('include_vectorbt_stats') is False)
+        
+        if not skip_vectorbt and enhanced_config.get('include_vectorbt_stats', True):
             f.write("="*100 + "\n")
             f.write("1. VECTORBT PORTFOLIO STATS (pf.stats())\n")
             f.write("="*100 + "\n")
@@ -699,7 +768,7 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
             f.write("\n")
         
         # 2. VECTORBT RETURNS STATS SECTION  
-        if enhanced_config.get('include_vectorbt_stats', True):
+        if not skip_vectorbt and enhanced_config.get('include_vectorbt_stats', True):
             f.write("="*100 + "\n")
             f.write("2. VECTORBT RETURNS STATS (pf.vbt.returns.stats())\n")
             f.write("="*100 + "\n")
@@ -753,84 +822,88 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
                 f.write(f"\n")
             
         # 4. QUANTSTATS STYLE COMPARISON
-        f.write("="*100 + "\n")
-        f.write("4. QUANTSTATS STYLE COMPREHENSIVE COMPARISON\n")
-        f.write("="*100 + "\n")
+        skip_quantstats = (fast_mode_enabled and fast_mode.get('skip_quantstats_metrics', True)) or \
+                         (enhanced_config.get('include_quantstats_metrics') is False)
         
-        # Create comparison table for all strategies
-        benchmark_stats = all_stats[list(all_stats.keys())[0]]['basic_stats']  # Use first strategy's benchmark data
-        
-        for strategy_name, stats in all_stats.items():
-            basic = stats['basic_stats']
-            qs_metrics = stats['quantstats_metrics']
+        if not skip_quantstats:
+            f.write("="*100 + "\n")
+            f.write("4. QUANTSTATS STYLE COMPREHENSIVE COMPARISON\n")
+            f.write("="*100 + "\n")
             
-            f.write(f"\n{'-'*80}\n")
-            f.write(f"{strategy_name.upper()} vs BENCHMARK\n")
-            f.write(f"{'-'*80}\n")
-            f.write(f"{'Metric':<35} {'Benchmark':<15} {'Strategy':<15}\n")
-            f.write(f"{'-'*65}\n")
+            # Create comparison table for all strategies
+            benchmark_stats = all_stats[list(all_stats.keys())[0]]['basic_stats']  # Use first strategy's benchmark data
             
-            # Time period info
-            f.write(f"{'Start Period':<35} {basic['start_period']:<15} {basic['start_period']:<15}\n")
-            f.write(f"{'End Period':<35} {basic['end_period']:<15} {basic['end_period']:<15}\n")
-            f.write(f"{'Risk-Free Rate':<35} {'0.0%':<15} {'0.0%':<15}\n")
-            time_in_market_str = f"{basic['time_in_market']:.1%}"
-            f.write(f"{'Time in Market':<35} {'100.0%':<15} {time_in_market_str:<15}\n")
-            f.write(f"\n")
-            
-            # Returns
-            f.write(f"{'Cumulative Return':<35} {basic['benchmark_total_return']:>14.2%} {basic['total_return']:>14.2%}\n")
-            f.write(f"{'CAGR%':<35} {basic['benchmark_cagr']:>14.2%} {basic['cagr']:>14.2%}\n")
-            f.write(f"\n")
-            
-            # Risk-adjusted metrics
-            f.write(f"{'Sharpe':<35} {basic['benchmark_sharpe']:>14.2f} {basic['sharpe']:>14.2f}\n")
-            
-            if qs_metrics:
-                f.write(f"{'Prob. Sharpe Ratio':<35} {qs_metrics.get('benchmark_prob_sharpe_ratio', 0)*100:>13.2f}% {qs_metrics.get('prob_sharpe_ratio', 0)*100:>13.2f}%\n")
-                f.write(f"{'Smart Sharpe':<35} {qs_metrics.get('benchmark_smart_sharpe', 0):>14.2f} {qs_metrics.get('smart_sharpe', 0):>14.2f}\n")
-            
-            f.write(f"{'Sortino':<35} {basic['benchmark_sortino']:>14.2f} {basic['sortino']:>14.2f}\n")
-            
-            if qs_metrics:
-                f.write(f"{'Smart Sortino':<35} {qs_metrics.get('benchmark_smart_sortino', 0):>14.2f} {qs_metrics.get('smart_sortino', 0):>14.2f}\n")
-                f.write(f"{'Omega':<35} {qs_metrics.get('benchmark_omega', 0):>14.2f} {qs_metrics.get('omega', 0):>14.2f}\n")
-            
-            f.write(f"\n")
-            
-            # Risk metrics
-            f.write(f"{'Max Drawdown':<35} {basic['benchmark_max_drawdown']:>14.2%} {basic['max_drawdown']:>14.2%}\n")
-            
-            if qs_metrics:
-                f.write(f"{'Longest DD Days':<35} {qs_metrics.get('benchmark_longest_dd_days', 0):>14.0f} {qs_metrics.get('longest_dd_days', 0):>14.0f}\n")
-            
-            f.write(f"{'Volatility (ann.)':<35} {basic['benchmark_volatility']:>14.2%} {basic['volatility']:>14.2%}\n")
-            
-            if qs_metrics:
-                f.write(f"{'Calmar':<35} {qs_metrics.get('benchmark_calmar', 0):>14.2f} {qs_metrics.get('calmar', 0):>14.2f}\n")
-            
-            f.write(f"{'Skew':<35} {basic['benchmark_skew']:>14.2f} {basic['skew']:>14.2f}\n")
-            f.write(f"{'Kurtosis':<35} {basic['benchmark_kurtosis']:>14.2f} {basic['kurtosis']:>14.2f}\n")
-            f.write(f"\n")
-            
-            # Expected returns
-            f.write(f"{'Expected Daily %':<35} {basic['benchmark_expected_daily']:>14.2%} {basic['expected_daily']:>14.2%}\n")
-            f.write(f"{'Expected Weekly %':<35} {basic['benchmark_expected_weekly']:>14.2%} {basic['expected_weekly']:>14.2%}\n")
-            f.write(f"{'Expected Monthly %':<35} {basic['benchmark_expected_monthly']:>14.2%} {basic['expected_monthly']:>14.2%}\n")
-            f.write(f"{'Expected Yearly %':<35} {basic['benchmark_expected_yearly']:>14.2%} {basic['expected_yearly']:>14.2%}\n")
-            f.write(f"{'Daily Value-at-Risk':<35} {basic['benchmark_daily_var']:>14.2%} {basic['daily_var']:>14.2%}\n")
-            f.write(f"{'Expected Shortfall (cVaR)':<35} {basic['benchmark_cvar']:>14.2%} {basic['cvar']:>14.2%}\n")
-            f.write(f"\n")
-            
-            # Additional metrics from QuantStats
-            if qs_metrics:
-                f.write(f"{'Gain/Pain Ratio':<35} {qs_metrics.get('benchmark_gain_pain_ratio', 0):>14.2f} {qs_metrics.get('gain_pain_ratio', 0):>14.2f}\n")
-                f.write(f"{'Payoff Ratio':<35} {qs_metrics.get('benchmark_payoff_ratio', 0):>14.2f} {qs_metrics.get('payoff_ratio', 0):>14.2f}\n")
-                f.write(f"{'Profit Factor':<35} {qs_metrics.get('benchmark_profit_factor', 0):>14.2f} {qs_metrics.get('profit_factor', 0):>14.2f}\n")
-                f.write(f"{'Common Sense Ratio':<35} {qs_metrics.get('benchmark_common_sense_ratio', 0):>14.2f} {qs_metrics.get('common_sense_ratio', 0):>14.2f}\n")
-                f.write(f"{'Tail Ratio':<35} {qs_metrics.get('benchmark_tail_ratio', 0):>14.1f} {qs_metrics.get('tail_ratio', 0):>14.1f}\n")
-            
-            f.write(f"\n")
+            for strategy_name, stats in all_stats.items():
+                basic = stats['basic_stats']
+                qs_metrics = stats['quantstats_metrics']
+                
+                f.write(f"\n{'-'*80}\n")
+                f.write(f"{strategy_name.upper()} vs BENCHMARK\n")
+                f.write(f"{'-'*80}\n")
+                f.write(f"{'Metric':<35} {'Benchmark':<15} {'Strategy':<15}\n")
+                f.write(f"{'-'*65}\n")
+                
+                # Time period info
+                f.write(f"{'Start Period':<35} {basic['start_period']:<15} {basic['start_period']:<15}\n")
+                f.write(f"{'End Period':<35} {basic['end_period']:<15} {basic['end_period']:<15}\n")
+                f.write(f"{'Risk-Free Rate':<35} {'0.0%':<15} {'0.0%':<15}\n")
+                time_in_market_str = f"{basic['time_in_market']:.1%}"
+                f.write(f"{'Time in Market':<35} {'100.0%':<15} {time_in_market_str:<15}\n")
+                f.write(f"\n")
+                
+                # Returns
+                f.write(f"{'Cumulative Return':<35} {basic['benchmark_total_return']:>14.2%} {basic['total_return']:>14.2%}\n")
+                f.write(f"{'CAGR%':<35} {basic['benchmark_cagr']:>14.2%} {basic['cagr']:>14.2%}\n")
+                f.write(f"\n")
+                
+                # Risk-adjusted metrics
+                f.write(f"{'Sharpe':<35} {basic['benchmark_sharpe']:>14.2f} {basic['sharpe']:>14.2f}\n")
+                
+                if qs_metrics:
+                    f.write(f"{'Prob. Sharpe Ratio':<35} {qs_metrics.get('benchmark_prob_sharpe_ratio', 0)*100:>13.2f}% {qs_metrics.get('prob_sharpe_ratio', 0)*100:>13.2f}%\n")
+                    f.write(f"{'Smart Sharpe':<35} {qs_metrics.get('benchmark_smart_sharpe', 0):>14.2f} {qs_metrics.get('smart_sharpe', 0):>14.2f}\n")
+                
+                f.write(f"{'Sortino':<35} {basic['benchmark_sortino']:>14.2f} {basic['sortino']:>14.2f}\n")
+                
+                if qs_metrics:
+                    f.write(f"{'Smart Sortino':<35} {qs_metrics.get('benchmark_smart_sortino', 0):>14.2f} {qs_metrics.get('smart_sortino', 0):>14.2f}\n")
+                    f.write(f"{'Omega':<35} {qs_metrics.get('benchmark_omega', 0):>14.2f} {qs_metrics.get('omega', 0):>14.2f}\n")
+                
+                f.write(f"\n")
+                
+                # Risk metrics
+                f.write(f"{'Max Drawdown':<35} {basic['benchmark_max_drawdown']:>14.2%} {basic['max_drawdown']:>14.2%}\n")
+                
+                if qs_metrics:
+                    f.write(f"{'Longest DD Days':<35} {qs_metrics.get('benchmark_longest_dd_days', 0):>14.0f} {qs_metrics.get('longest_dd_days', 0):>14.0f}\n")
+                
+                f.write(f"{'Volatility (ann.)':<35} {basic['benchmark_volatility']:>14.2%} {basic['volatility']:>14.2%}\n")
+                
+                if qs_metrics:
+                    f.write(f"{'Calmar':<35} {qs_metrics.get('benchmark_calmar', 0):>14.2f} {qs_metrics.get('calmar', 0):>14.2f}\n")
+                
+                f.write(f"{'Skew':<35} {basic['benchmark_skew']:>14.2f} {basic['skew']:>14.2f}\n")
+                f.write(f"{'Kurtosis':<35} {basic['benchmark_kurtosis']:>14.2f} {basic['kurtosis']:>14.2f}\n")
+                f.write(f"\n")
+                
+                # Expected returns
+                f.write(f"{'Expected Daily %':<35} {basic['benchmark_expected_daily']:>14.2%} {basic['expected_daily']:>14.2%}\n")
+                f.write(f"{'Expected Weekly %':<35} {basic['benchmark_expected_weekly']:>14.2%} {basic['expected_weekly']:>14.2%}\n")
+                f.write(f"{'Expected Monthly %':<35} {basic['benchmark_expected_monthly']:>14.2%} {basic['expected_monthly']:>14.2%}\n")
+                f.write(f"{'Expected Yearly %':<35} {basic['benchmark_expected_yearly']:>14.2%} {basic['expected_yearly']:>14.2%}\n")
+                f.write(f"{'Daily Value-at-Risk':<35} {basic['benchmark_daily_var']:>14.2%} {basic['daily_var']:>14.2%}\n")
+                f.write(f"{'Expected Shortfall (cVaR)':<35} {basic['benchmark_cvar']:>14.2%} {basic['cvar']:>14.2%}\n")
+                f.write(f"\n")
+                
+                # Additional metrics from QuantStats
+                if qs_metrics:
+                    f.write(f"{'Gain/Pain Ratio':<35} {qs_metrics.get('benchmark_gain_pain_ratio', 0):>14.2f} {qs_metrics.get('gain_pain_ratio', 0):>14.2f}\n")
+                    f.write(f"{'Payoff Ratio':<35} {qs_metrics.get('benchmark_payoff_ratio', 0):>14.2f} {qs_metrics.get('payoff_ratio', 0):>14.2f}\n")
+                    f.write(f"{'Profit Factor':<35} {qs_metrics.get('benchmark_profit_factor', 0):>14.2f} {qs_metrics.get('profit_factor', 0):>14.2f}\n")
+                    f.write(f"{'Common Sense Ratio':<35} {qs_metrics.get('benchmark_common_sense_ratio', 0):>14.2f} {qs_metrics.get('common_sense_ratio', 0):>14.2f}\n")
+                    f.write(f"{'Tail Ratio':<35} {qs_metrics.get('benchmark_tail_ratio', 0):>14.1f} {qs_metrics.get('tail_ratio', 0):>14.1f}\n")
+                
+                f.write(f"\n")
         
         # Summary comparison table of all strategies
         f.write("="*100 + "\n")
@@ -994,18 +1067,22 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
         
         # Load and prepare data
         print("Loading data...")
+        import time
+        data_start = time.time()
         # Use appropriate data provider based on config
         if base_config.data.use_multi_index:
             data_loader = DataLoader(MultiIndexCSVDataProvider())
         else:
             data_loader = DataLoader(CSVDataProvider())
         data = data_loader.load_and_prepare(base_config.data)
+        data_time = time.time() - data_start
         
         print(f"Data loaded. Period: {data.index[0]} to {data.index[-1]}")
-        print(f"Total periods: {len(data)}")
+        print(f"Total periods: {len(data)} (loaded in {data_time:.2f} seconds)")
         
         # Create features based on strategy type
         print("Engineering features...")
+        feature_start = time.time()
         if strategy_name.lower() == 'cross_asset_momentum':
             feature_engineer = CrossAssetFeatureEngineer()
             feature_config = {
@@ -1023,7 +1100,8 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
             feature_config = config_dict.get('features', {})
         
         features = feature_engineer.create_features(data, feature_config)
-        print(f"Features created: {len(features.columns)} features")
+        feature_time = time.time() - feature_start
+        print(f"Features created: {len(features.columns)} features in {feature_time:.2f} seconds")
         
         # Create strategy
         strategy_config = {
@@ -1039,7 +1117,11 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
         
         # Run backtest
         print("Running backtest...")
+        import time
+        start_time = time.time()
         result = strategy.backtest(data, features, base_config.portfolio, base_config.data.benchmark_asset)
+        backtest_time = time.time() - start_time
+        print(f"Backtest completed in {backtest_time:.2f} seconds")
         
         # Run validation if enabled in config
         if (VALIDATION_AVAILABLE and 
@@ -1048,6 +1130,8 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
             print("\n" + "="*80)
             print("RUNNING VALIDATION FRAMEWORK")
             print("="*80)
+            print("Note: Validation can be slow. Set 'auto_run: false' in config to skip.")
+            validation_start = time.time()
             try:
                 # Use strategy returns from backtest result, not benchmark returns
                 strategy_returns = result.returns.dropna()
@@ -1072,11 +1156,14 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
                 samples_info_sets = strategy._prepare_samples_info_sets(data.loc[common_idx], prediction_horizon=7)
                 
                 # Run validation with strategy-specific returns
+                print("  Running cross-validation...")
                 validation_framework = ValidationFramework(base_config.validation)
                 validation_results = validation_framework.validate(
                     X, y, returns_aligned, samples_info_sets
                 )
                 validation_results.strategy_name = strategy_name
+                validation_time = time.time() - validation_start
+                print(f"  Validation completed in {validation_time:.2f} seconds")
                 
                 # Generate validation report
                 if base_config.validation.generate_report:
@@ -1086,7 +1173,7 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
                         validation_results,
                         config_dict.get('validation', {})
                     )
-                    print(f"\n✓ Validation report saved to: {report_path}")
+                    print(f"\n[OK] Validation report saved to: {report_path}")
                 
                 # Print validation summary
                 print("\nValidation Summary:")
@@ -1099,7 +1186,7 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
                 if validation_results.pbo is not None:
                     print(f"  PBO: {validation_results.pbo:.2%}")
                 if validation_results.min_backtest_length:
-                    adequate = "✓" if validation_results.current_length >= validation_results.min_backtest_length else "✗"
+                    adequate = "[OK]" if validation_results.current_length >= validation_results.min_backtest_length else "[FAIL]"
                     print(f"  Min Backtest Length: {adequate} ({validation_results.current_length}/{validation_results.min_backtest_length} periods)")
                 
                 # Store validation results in strategy
@@ -1110,35 +1197,58 @@ def run_single_strategy(strategy_name: str, config_dict: dict):
                 import traceback
                 traceback.print_exc()
         
-        # Generate report
-        print("\n" + "="*80)
-        print("GENERATING STRATEGY REPORT")
-        print("="*80)
-        report_generator = ReportGenerator(base_config.reporting.output_dir)
-        benchmark_data = data[base_config.data.benchmark_asset]
+        # Generate report (skip if fast mode enabled)
+        fast_mode = config_dict.get('fast_mode', {})
+        enhanced_config = config_dict.get('enhanced_reporting', {})
+        fast_mode_enabled = fast_mode.get('enabled', False)
         
-        report_text, html_path = report_generator.generate_strategy_report(
-            result, benchmark_data, base_config.reporting.generate_html
-        )
+        skip_individual_reports = (fast_mode_enabled and fast_mode.get('skip_individual_reports', True)) or \
+                                  (enhanced_config.get('generate_individual_reports') is False)
         
-        # Print report
-        print(report_text)
-        
-        # Save artifacts
-        artifacts = report_generator.save_artifacts(result)
-        print(f"\nArtifacts saved:")
-        for artifact_type, path in artifacts.items():
-            print(f"  {artifact_type}: {path}")
-        
-        if html_path:
-            print(f"\nHTML Report: {html_path}")
+        if not skip_individual_reports:
+            print("\n" + "="*80)
+            print("GENERATING STRATEGY REPORT")
+            print("="*80)
+            report_generator = ReportGenerator(base_config.reporting.output_dir)
+            benchmark_data = data[base_config.data.benchmark_asset]
+            
+            report_text, html_path = report_generator.generate_strategy_report(
+                result, benchmark_data, base_config.reporting.generate_html
+            )
+            
+            # Print report
+            print(report_text)
+            
+            # Save artifacts
+            artifacts = report_generator.save_artifacts(result)
+            print(f"\nArtifacts saved:")
+            for artifact_type, path in artifacts.items():
+                print(f"  {artifact_type}: {path}")
+            
+            if html_path:
+                print(f"\nHTML Report: {html_path}")
+        else:
+            print(f"\n[INFO] Skipping individual report generation (fast mode)")
+            # Still print basic metrics
+            print(f"\nBasic Metrics:")
+            print(f"  Total Return: {result.metrics['total_return']:.2%}")
+            print(f"  Sharpe Ratio: {result.metrics['sharpe_ratio']:.3f}")
+            print(f"  Max Drawdown: {result.metrics['max_drawdown']:.2%}")
+            print(f"  Trades: {result.trades_count}")
 
-        # Generate trade blotter
-        try:
-            results_path = Path(base_config.reporting.output_dir).parent / 'results'
-            generate_trade_blotter({strategy_name: result}, results_path)
-        except Exception as e:
-            print(f"[ERROR] Error generating trade blotter: {e}")
+        # Generate trade blotter (skip if fast mode enabled)
+        skip_trade_blotter = (fast_mode_enabled and fast_mode.get('skip_trade_blotter', True)) or \
+                            (enhanced_config.get('generate_trade_blotter') is False)
+        
+        if not skip_trade_blotter:
+            try:
+                results_path = Path(base_config.reporting.output_dir).parent / 'results'
+                generate_trade_blotter({strategy_name: result}, results_path)
+                print(f"[OK] Trade blotter saved")
+            except Exception as e:
+                print(f"[ERROR] Error generating trade blotter: {e}")
+        else:
+            print(f"[INFO] Skipping trade blotter generation (fast mode)")
             
     except Exception as e:
         print(f"Error running strategy {strategy_name}: {e}")
@@ -1241,7 +1351,7 @@ def run_validation(strategy_names: list, config_dict: dict):
                 validation_config_dict
             )
             
-            print(f"\n✓ Validation completed for {strategy_name}")
+            print(f"\n[OK] Validation completed for {strategy_name}")
             print(f"  Report saved to: {report_path}")
             
             # Print summary
@@ -1253,7 +1363,7 @@ def run_validation(strategy_names: list, config_dict: dict):
                 print(f"  CV Mean: {validation_results.cv_mean:.4f} (std: {validation_results.cv_std:.4f})")
             
         except Exception as e:
-            print(f"✗ Validation failed for {strategy_name}: {e}")
+            print(f"[ERROR] Validation failed for {strategy_name}: {e}")
             import traceback
             traceback.print_exc()
             continue
@@ -1265,6 +1375,8 @@ def run_validation(strategy_names: list, config_dict: dict):
 
 def run_strategy_comparison(strategy_names: list, config_dict: dict):
     """Run and compare multiple strategies."""
+    import time
+    
     print(f"\n{'='*100}")
     print(f"RUNNING STRATEGY COMPARISON")
     print(f"Strategies: {', '.join(strategy_names)}")
@@ -1288,30 +1400,65 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
         
         results = {}
         
+        # Feature caching for performance
+        fast_mode = config_dict.get('fast_mode', {})
+        cache_features = fast_mode.get('cache_features', True)
+        feature_cache = {}
+        
+        print(f"\n[INFO] Will run {len(strategy_names)} strategies: {', '.join(strategy_names)}")
+        print(f"[INFO] Config enabled strategies: {config_dict.get('strategies', {}).get('enabled', [])}")
+        if cache_features:
+            print(f"[INFO] Feature caching enabled - features will be reused between strategies")
+        
         for strategy_name in strategy_names:
             print(f"\n{'-'*60}")
             print(f"Running {strategy_name}...")
             print(f"{'-'*60}")
             
             try:
-                # Create features based on strategy type
+                # Create features based on strategy type (with caching)
                 if strategy_name.lower() == 'cross_asset_momentum':
-                    feature_engineer = CrossAssetFeatureEngineer()
-                    feature_config = {
-                        **config_dict.get('features', {}),
-                        **config_dict.get('cross_asset_momentum', {})
-                    }
+                    cache_key = 'cross_asset'
+                    if cache_features and cache_key in feature_cache:
+                        features = feature_cache[cache_key]
+                        print(f"[INFO] Using cached features for {cache_key}")
+                    else:
+                        feature_engineer = CrossAssetFeatureEngineer()
+                        feature_config = {
+                            **config_dict.get('features', {}),
+                            **config_dict.get('cross_asset_momentum', {})
+                        }
+                        features = feature_engineer.create_features(data, feature_config)
+                        if cache_features:
+                            feature_cache[cache_key] = features
+                            print(f"[INFO] Cached features for {cache_key}")
                 elif strategy_name.lower() == 'multi_asset_momentum':
-                    feature_engineer = MultiAssetFeatureEngineer()
-                    feature_config = {
-                        **config_dict.get('features', {}),
-                        **config_dict.get('multi_asset_momentum', {})
-                    }
+                    cache_key = 'multi_asset'
+                    if cache_features and cache_key in feature_cache:
+                        features = feature_cache[cache_key]
+                        print(f"[INFO] Using cached features for {cache_key}")
+                    else:
+                        feature_engineer = MultiAssetFeatureEngineer()
+                        feature_config = {
+                            **config_dict.get('features', {}),
+                            **config_dict.get('multi_asset_momentum', {})
+                        }
+                        features = feature_engineer.create_features(data, feature_config)
+                        if cache_features:
+                            feature_cache[cache_key] = features
+                            print(f"[INFO] Cached features for {cache_key}")
                 else:
-                    feature_engineer = TechnicalFeatureEngineer()
-                    feature_config = config_dict.get('features', {})
-                
-                features = feature_engineer.create_features(data, feature_config)
+                    cache_key = 'technical'
+                    if cache_features and cache_key in feature_cache:
+                        features = feature_cache[cache_key]
+                        print(f"[INFO] Using cached features for {cache_key}")
+                    else:
+                        feature_engineer = TechnicalFeatureEngineer()
+                        feature_config = config_dict.get('features', {})
+                        features = feature_engineer.create_features(data, feature_config)
+                        if cache_features:
+                            feature_cache[cache_key] = features
+                            print(f"[INFO] Cached features for {cache_key}")
                 
                 # Create strategy
                 strategy_config = {
@@ -1353,11 +1500,15 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
                         samples_info_sets = strategy._prepare_samples_info_sets(data.loc[common_idx], prediction_horizon=7)
                         
                         # Run validation with strategy-specific returns
+                        print("  Running cross-validation...")
+                        validation_start = time.time()
                         validation_framework = ValidationFramework(base_config.validation)
                         validation_results = validation_framework.validate(
                             X, y, returns_aligned, samples_info_sets
                         )
                         validation_results.strategy_name = strategy_name
+                        validation_time = time.time() - validation_start
+                        print(f"  Validation completed in {validation_time:.2f} seconds")
                         
                         # Generate validation report
                         if base_config.validation.generate_report:
@@ -1390,6 +1541,7 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
             # Generate comparison report
             print(f"\n{'='*80}")
             print("STRATEGY COMPARISON SUMMARY")
+            print(f"[INFO] Comparing {len(results)} strategies: {', '.join(results.keys())}")
             print(f"{'='*80}")
             
             report_generator = ReportGenerator(base_config.reporting.output_dir)
@@ -1402,7 +1554,11 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
             
             # Generate comprehensive statistics file if enabled
             enhanced_config = config_dict.get('enhanced_reporting', {})
-            if enhanced_config.get('generate_detailed_stats_file', True):
+            fast_mode = config_dict.get('fast_mode', {})
+            fast_mode_enabled = fast_mode.get('enabled', False)
+            skip_comprehensive_stats = fast_mode_enabled and fast_mode.get('skip_comprehensive_stats', False)
+            
+            if enhanced_config.get('generate_detailed_stats_file', True) and not skip_comprehensive_stats:
                 try:
                     stats_file_path = generate_comprehensive_stats_file(results, benchmark_data, config_dict)
                     print(f"\n[OK] Comprehensive statistics saved to: {stats_file_path}")
@@ -1411,23 +1567,40 @@ def run_strategy_comparison(strategy_names: list, config_dict: dict):
                     import traceback
                     traceback.print_exc()
             
-            # Generate trade blotter
-            try:
-                results_path = Path(base_config.reporting.output_dir).parent / 'results'
-                generate_trade_blotter(results, results_path)
-            except Exception as e:
-                print(f"[ERROR] Error generating trade blotter: {e}")
-
-            # Save individual reports
-            for strategy_name, result in results.items():
+            # Generate trade blotter (skip if fast mode enabled)
+            fast_mode = config_dict.get('fast_mode', {})
+            enhanced_config = config_dict.get('enhanced_reporting', {})
+            fast_mode_enabled = fast_mode.get('enabled', False)
+            
+            skip_trade_blotter = (fast_mode_enabled and fast_mode.get('skip_trade_blotter', True)) or \
+                                 (enhanced_config.get('generate_trade_blotter') is False)
+            
+            if not skip_trade_blotter:
                 try:
-                    report_text, html_path = report_generator.generate_strategy_report(
-                        result, benchmark_data, base_config.reporting.generate_html
-                    )
-                    artifacts = report_generator.save_artifacts(result)
-                    print(f"\n[OK] {strategy_name} reports saved")
+                    results_path = Path(base_config.reporting.output_dir).parent / 'results'
+                    generate_trade_blotter(results, results_path)
+                    print(f"[OK] Trade blotter saved")
                 except Exception as e:
-                    print(f"[ERROR] Error saving {strategy_name} reports: {e}")
+                    print(f"[ERROR] Error generating trade blotter: {e}")
+            else:
+                print(f"[INFO] Skipping trade blotter generation (fast mode)")
+
+            # Save individual reports (skip if fast mode enabled)
+            skip_individual_reports = (fast_mode_enabled and fast_mode.get('skip_individual_reports', True)) or \
+                                     (enhanced_config.get('generate_individual_reports') is False)
+            
+            if not skip_individual_reports:
+                for strategy_name, result in results.items():
+                    try:
+                        report_text, html_path = report_generator.generate_strategy_report(
+                            result, benchmark_data, base_config.reporting.generate_html
+                        )
+                        artifacts = report_generator.save_artifacts(result)
+                        print(f"\n[OK] {strategy_name} reports saved")
+                    except Exception as e:
+                        print(f"[ERROR] Error saving {strategy_name} reports: {e}")
+            else:
+                print(f"[INFO] Skipping individual reports generation (fast mode)")
                     
     except Exception as e:
         print(f"Error in strategy comparison: {e}")
@@ -1492,11 +1665,20 @@ def main():
     if args.strategies:
         # User has specified strategies via command line
         enabled_strategies = args.strategies
-        print(f"Running user-specified strategies: {', '.join(enabled_strategies)}")
+        print(f"[INFO] Running user-specified strategies: {', '.join(enabled_strategies)}")
     else:
         # Use strategies from the config file
-        enabled_strategies = config_dict.get('strategies', {}).get('enabled', [])
-        print(f"Running enabled strategies from config: {', '.join(enabled_strategies)}")
+        strategies_config = config_dict.get('strategies', {})
+        enabled_strategies = strategies_config.get('enabled', [])
+        run_all_by_default = strategies_config.get('run_all_by_default', False)
+        
+        # If run_all_by_default is True and no strategies are enabled, run all available
+        if run_all_by_default and not enabled_strategies:
+            available_strategies = list(StrategyFactory.get_available_strategies().keys())
+            enabled_strategies = available_strategies
+            print(f"[INFO] run_all_by_default=True, running all {len(enabled_strategies)} available strategies")
+        else:
+            print(f"[INFO] Running {len(enabled_strategies)} enabled strategies from config: {', '.join(enabled_strategies)}")
 
     if not enabled_strategies:
         print("No strategies enabled in config or provided via arguments. Exiting.")
