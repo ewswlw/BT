@@ -610,7 +610,7 @@ class UltraAdvancedStrategy(BaseStrategy):
         print(f"   Test period:  {X_test.index[0]} to {X_test.index[-1]} ({len(X_test)} samples)")
 
         # Step 5: Train ensemble of models
-        ensemble_predictions = pd.DataFrame(index=X.index)
+        print(f"\n🤖 Training {sum([self.use_lightgbm, self.use_xgboost, self.use_rf, self.use_gb])} models...")
 
         # Model 1: LightGBM
         if self.use_lightgbm and LIGHTGBM_AVAILABLE:
@@ -634,14 +634,8 @@ class UltraAdvancedStrategy(BaseStrategy):
                     'seed': 42
                 }
                 lgb_model = lgb.train(lgb_params, lgb_train, num_boost_round=200)
-
-                # Predict on test set
-                lgb_pred_test = lgb_model.predict(X_test)
-                ensemble_predictions.loc[X_test.index, 'lightgbm'] = lgb_pred_test
-
-                # Store model
                 self.models['lightgbm'] = lgb_model
-                print(f"      ✓ LightGBM trained. Test AUC score available in validation.")
+                print(f"      ✓ LightGBM trained successfully")
 
             except Exception as e:
                 print(f"      ✗ LightGBM failed: {e}")
@@ -663,12 +657,8 @@ class UltraAdvancedStrategy(BaseStrategy):
                     use_label_encoder=False
                 )
                 xgb_model.fit(X_train, y_train)
-
-                xgb_pred_test = xgb_model.predict_proba(X_test)[:, 1]
-                ensemble_predictions.loc[X_test.index, 'xgboost'] = xgb_pred_test
-
                 self.models['xgboost'] = xgb_model
-                print(f"      ✓ XGBoost trained.")
+                print(f"      ✓ XGBoost trained successfully")
 
             except Exception as e:
                 print(f"      ✗ XGBoost failed: {e}")
@@ -687,12 +677,8 @@ class UltraAdvancedStrategy(BaseStrategy):
                     n_jobs=-1
                 )
                 rf_model.fit(X_train, y_train)
-
-                rf_pred_test = rf_model.predict_proba(X_test)[:, 1]
-                ensemble_predictions.loc[X_test.index, 'random_forest'] = rf_pred_test
-
                 self.models['random_forest'] = rf_model
-                print(f"      ✓ Random Forest trained.")
+                print(f"      ✓ Random Forest trained successfully")
 
             except Exception as e:
                 print(f"      ✗ Random Forest failed: {e}")
@@ -711,19 +697,15 @@ class UltraAdvancedStrategy(BaseStrategy):
                     random_state=42
                 )
                 gb_model.fit(X_train, y_train)
-
-                gb_pred_test = gb_model.predict_proba(X_test)[:, 1]
-                ensemble_predictions.loc[X_test.index, 'gradient_boosting'] = gb_pred_test
-
                 self.models['gradient_boosting'] = gb_model
-                print(f"      ✓ Gradient Boosting trained.")
+                print(f"      ✓ Gradient Boosting trained successfully")
 
             except Exception as e:
                 print(f"      ✗ Gradient Boosting failed: {e}")
                 self.model_weights['gradient_boosting'] = 0
 
-        # Step 6: Combine ensemble predictions
-        print("\n🎼 Combining ensemble predictions...")
+        # Step 6: Generate predictions on TEST SET ONLY (avoid look-ahead bias)
+        print("\n🎼 Generating predictions on out-of-sample test data...")
 
         # Normalize weights
         total_weight = sum(self.model_weights.values())
@@ -731,13 +713,32 @@ class UltraAdvancedStrategy(BaseStrategy):
             raise ValueError("No models were successfully trained!")
 
         normalized_weights = {k: v/total_weight for k, v in self.model_weights.items() if v > 0}
-        print(f"   Normalized weights: {normalized_weights}")
+        print(f"   Model weights: {normalized_weights}")
 
-        # Weighted average
-        ensemble_proba = pd.Series(0.0, index=X_test.index)
+        # Generate predictions ONLY on test set (out-of-sample)
+        test_predictions = pd.DataFrame(index=X_test.index)
+
         for model_name, weight in normalized_weights.items():
-            if model_name in ensemble_predictions.columns:
-                ensemble_proba += ensemble_predictions[model_name] * weight
+            if model_name in self.models:
+                model = self.models[model_name]
+                # Predict ONLY on test data (out-of-sample)
+                if model_name == 'lightgbm':
+                    # LightGBM Booster uses predict() not predict_proba()
+                    test_predictions[model_name] = model.predict(X_test)
+                else:
+                    # Sklearn-style models use predict_proba()
+                    test_predictions[model_name] = model.predict_proba(X_test)[:, 1]
+                print(f"   ✓ {model_name}: predictions generated for {len(X_test)} out-of-sample points")
+
+        # Weighted ensemble average (only on test set)
+        ensemble_proba = pd.Series(0.0, index=data.index)
+        test_ensemble = pd.Series(0.0, index=X_test.index)
+        for model_name, weight in normalized_weights.items():
+            if model_name in test_predictions.columns:
+                test_ensemble += test_predictions[model_name] * weight
+
+        # Assign to full index (training period will remain 0 = cash)
+        ensemble_proba.loc[test_ensemble.index] = test_ensemble
 
         # Step 7: Apply threshold to generate signals
         print(f"\n🎯 Applying threshold: {self.probability_threshold}")
