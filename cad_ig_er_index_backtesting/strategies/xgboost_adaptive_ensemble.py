@@ -660,7 +660,7 @@ class XGBoostAdaptiveEnsemble(BaseStrategy):
 
         # Calculate position size scalar
         vol_scalar = self.target_volatility / realized_vol.clip(lower=0.02)
-        vol_scalar = vol_scalar.clip(upper=2.0)  # Max 2x leverage
+        vol_scalar = vol_scalar.clip(upper=1.0)  # No leverage - max 100% capital
 
         # Apply to signals
         sized_signals = raw_signals * vol_scalar
