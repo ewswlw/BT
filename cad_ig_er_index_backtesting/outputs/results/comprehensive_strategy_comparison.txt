@@ -1,7 +1,7 @@
 ====================================================================================================
 COMPREHENSIVE STRATEGY COMPARISON REPORT
 ====================================================================================================
-Generated: 2025-12-16 15:27:48
+Generated: 2026-01-06 14:22:28
 Total Strategies Analyzed: 6
 Benchmark Asset: cad_ig_er_index
 ====================================================================================================
@@ -60,17 +60,17 @@ Metric                         Strategy        Benchmark
 Start Period                   2003-11-18      2003-11-18     
 End Period                     2025-12-12      2025-12-12     
 Total Periods                  5834            5834           
-Time in Market                 60.28%          100.0%         
-Total Trades                   102             N/A            
+Time in Market                 74.01%          100.0%         
+Total Trades                   95              N/A            
 
-Total Return                   0.7037          0.3457         
-CAGR                           2.33%           1.29%          
-Volatility (ann.)              0.0085          0.0145         
-Sharpe Ratio                   2.7046          0.8899         
-Sortino Ratio                  2.5880          0.8348         
-Max Drawdown                   -0.0189         -0.1548        
-Skewness                       1.6638          -2.8318        
-Kurtosis                       32.1663         56.6969        
+Total Return                   0.7928          0.3457         
+CAGR                           2.55%           1.29%          
+Volatility (ann.)              0.0097          0.0145         
+Sharpe Ratio                   2.6181          0.8899         
+Sortino Ratio                  2.8730          0.8348         
+Max Drawdown                   -0.0184         -0.1548        
+Skewness                       1.7216          -2.8318        
+Kurtosis                       28.5808         56.6969        
 
 
 ------------------------------------------------------------
@@ -140,3 +140,262 @@ Kurtosis                       29.3982         56.6969
 ====================================================================================================
 Strategy                  Total Return    CAGR       Sharpe     Sortino    Max DD       Volatility  
 ----------------------------------------------------------------------------------------------
+BENCHMARK                         34.57%     1.29%      0.89      0.83     -15.48%       1.45%
+CROSS_ASSET_MOMENTUM              80.60%     2.59%      2.72      2.75      -3.11%       0.94%
+MULTI_ASSET_MOMENTUM              74.41%     2.43%      2.61      2.78      -2.68%       0.92%
+GENETIC_ALGORITHM                 79.28%     2.55%      2.62      2.87      -1.84%       0.97%
+VOL_ADAPTIVE_MOMENTUM             72.52%     2.38%      3.10      3.28      -1.23%       0.76%
+RF_ENSEMBLE_STRATEGY             129.55%     3.65%      3.77      4.41      -0.95%       0.95%
+TSX_SPX_MOMENTUM                  68.51%     2.28%      2.47      2.56      -2.98%       0.91%
+
+====================================================================================================
+6. DYNAMIC TRADING RULES
+====================================================================================================
+Detailed trading rules and parameters for each strategy (extracted dynamically from code):
+
+--------------------------------------------------------------------------------
+CROSS_ASSET_MOMENTUM TRADING RULES
+--------------------------------------------------------------------------------
+Cross-Asset 10-Day Momentum Strategy (Weekly Rebalance)
+
+TRADING RULES:
+1. Data & Frequency:
+   - This strategy operates on DAILY data but only makes trading decisions once per week.
+   - Rebalancing Day: Monday.
+
+2. Signal Universe:
+   - A basket of 3 diverse assets is monitored to gauge market breadth.
+   - Assets: cad_ig_er_index, tsx, s&p_500
+
+3. Momentum Calculation (Monday Only):
+   - For each asset, a 10-day momentum is calculated on Monday.
+   - Momentum = (Monday's Price / Price 10 trading days ago) - 1.
+
+4. Entry Condition (Monday Only):
+   - A position is entered in 'cad_ig_er_index' if enough assets show positive momentum.
+   - Entry Threshold: LONG when >= 2 of the 3 assets have positive momentum.
+
+5. Position Management:
+   - If the entry condition is met on Monday, the position is held for the entire week.
+   - The position is exited on the next Monday if the entry condition is no longer met.
+
+PARAMETERS:
+- Trading Asset: cad_ig_er_index
+- Momentum Lookback: 10 trading days
+- Confirmation Threshold: 2 out of 3 assets
+- Rebalancing Frequency: Weekly (Monday)
+
+
+--------------------------------------------------------------------------------
+CROSS_ASSET_MOMENTUM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.3164      2025-04-21        133.3505     2025-10-13       136.5841            175 4.26  2.42%       0.00      0.00
+            0      Long Closed 1.3168      2025-10-27        136.5450     2025-11-17       136.7415             21 0.26  0.14%       0.00      0.00
+            0      Long   Open 1.3170      2025-12-01        136.7161     2025-12-12       137.1297             11 0.54  0.30%       0.00      0.00
+
+--------------------------------------------------------------------------------
+MULTI_ASSET_MOMENTUM TRADING RULES
+--------------------------------------------------------------------------------
+Multi-Asset 20-Day Combined Momentum (Weekly Rebalance)
+
+TRADING RULES:
+1. Data & Frequency:
+   - This strategy operates on DAILY data but only makes trading decisions once per week.
+   - Rebalancing Day: Monday.
+
+2. Combined Momentum (Monday Only):
+   - On Monday, a 20-day momentum is calculated for 3 assets.
+   - These are averaged into a single composite momentum signal for the market trend.
+
+3. Entry Condition (Monday Only):
+   - A LONG position is entered in 'cad_ig_er_index' if the composite signal is positive.
+   - Entry Signal: Combined Momentum > -0.0050
+
+4. Exit Condition (Time-Based):
+   - Once entered, the position is held for a fixed number of days.
+   - Holding Period: 5 trading days.
+   - The position is exited after the holding period, regardless of the momentum signal.
+
+PARAMETERS:
+- Trading Asset: cad_ig_er_index
+- Momentum Lookback: 20 trading days
+- Entry Threshold: > -0.0050
+- Exit Holding Period: 5 trading days
+- Rebalancing Frequency: Weekly (Monday)
+
+
+--------------------------------------------------------------------------------
+MULTI_ASSET_MOMENTUM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.2710      2025-06-02        135.1445     2025-08-31       136.0849             90 1.20  0.70%       0.00      0.00
+            0      Long Closed 1.2710      2025-09-01        136.0849     2025-11-17       136.7415             77 0.83  0.48%       0.00      0.00
+            0      Long   Open 1.2718      2025-11-24        136.6495     2025-12-12       137.1297             18 0.61  0.35%       0.00      0.00
+
+--------------------------------------------------------------------------------
+GENETIC_ALGORITHM TRADING RULES
+--------------------------------------------------------------------------------
+Genetic Algorithm Evolved Strategy (Weekly Rebalance)
+
+TRADING RULES:
+1. Data & Frequency:
+   - This strategy uses a genetic algorithm to find rules using DAILY data features.
+   - The final, evolved rule is only applied once per week on Monday.
+   - Rebalancing Day: Monday.
+
+2. Feature Engineering (The Gene Pool):
+   - A wide range of daily technical indicators (momentum, volatility, etc.) are created.
+   - These daily features serve as the building blocks for the evolutionary process.
+
+3. Rule Evolution Process:
+   - An initial population of 120 random rules is evolved over 120 generations.
+   - Rules are selected based on historical fitness (profitability vs. risk).
+
+4. Fitness Function (Survival of the Fittest):
+   - Fitness = Total Return - (0.1 * Max Drawdown).
+   - This guides the evolution towards high-return, low-risk rules.
+
+5. Final Rule Execution (Monday Only):
+   - The single best-performing rule is applied every Monday to the daily features.
+   - If the rule is TRUE on Monday, a LONG position is entered and held for the week.
+   - If FALSE, the position is exited.
+
+PARAMETERS FOR EVOLUTION:
+- Population Size: 120 rules per generation
+- Max Generations: 120 iterations
+- Drawdown Penalty Factor: 0.1
+- Rebalancing Frequency: Weekly (Monday)
+
+
+--------------------------------------------------------------------------------
+GENETIC_ALGORITHM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.3092      2025-04-21        133.3505     2025-08-25       136.0883            126 3.58  2.05%       0.00      0.00
+            0      Long Closed 1.3080      2025-09-22        136.2103     2025-11-24       136.6495             63 0.57  0.32%       0.00      0.00
+            0      Long   Open 1.3074      2025-12-01        136.7161     2025-12-12       137.1297             11 0.54  0.30%       0.00      0.00
+
+--------------------------------------------------------------------------------
+VOL_ADAPTIVE_MOMENTUM TRADING RULES
+--------------------------------------------------------------------------------
+Volatility-Adaptive 20-Day Momentum Strategy
+
+TRADING RULES:
+1. Core Indicators:
+   - Price Series: cad_ig_er_index
+   - Volatility Index: vix
+   - Momentum: 20-day percentage change of the price series.
+   - Realized Volatility: 20-day rolling standard deviation of daily returns.
+   - Volatility Filter: 252-day z-score of the VIX index.
+
+2. Volatility Regime Detection:
+   - A "High Volatility" regime is active if the current 20-day realized volatility is
+     greater than its long-run median value.
+   - Otherwise, a "Calm" regime is active.
+
+3. Entry Conditions:
+   - The primary entry signal is the VIX z-score falling below a certain threshold.
+   - In Calm Regimes: Enter LONG if VIX z-score <= 0.60 AND 20-day momentum is positive.
+   - In High-Vol Regimes: Enter LONG if VIX z-score <= 0.00 (stricter threshold). The
+     momentum filter is bypassed in high-volatility regimes.
+
+4. Position Management (Adaptive Holding Period):
+   - Upon entry, the holding period ('k') is dynamically calculated.
+   - k = 1 + (Positive Momentum / 0.005)
+   - The holding period is capped at a maximum of 10 days.
+   - The position is held for 'k' days, after which the entry conditions are re-evaluated.
+   - This allows the strategy to hold positions longer during strong momentum trends.
+
+PARAMETERS:
+- Momentum Lookback: 20 days
+- Realized Volatility Lookback: 20 days
+- VIX Z-Score Lookback: 252 days
+- Calm Vol Threshold (VIX z-score): 0.60
+- High Vol Threshold (VIX z-score): 0.00
+- Max Holding Period: 10 days
+- Momentum Scale for Holding: 0.005
+
+
+--------------------------------------------------------------------------------
+VOL_ADAPTIVE_MOMENTUM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade  PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.2571      2025-09-18        136.1656     2025-10-16       136.4446             28 0.35  0.20%       0.00      0.00
+            0      Long Closed 1.2573      2025-10-17        136.4237     2025-11-17       136.7415             31 0.40  0.23%       0.00      0.00
+            0      Long   Open 1.2581      2025-11-24        136.6495     2025-12-12       137.1297             18 0.60  0.35%       0.00      0.00
+
+--------------------------------------------------------------------------------
+RF_ENSEMBLE_STRATEGY TRADING RULES
+--------------------------------------------------------------------------------
+Strategy: RF_ENSEMBLE_STRATEGY
+
+TRADING RULES:
+Configuration-based strategy implementation.
+Parameters: {'trading_asset': 'cad_ig_er_index', 'benchmark_asset': 'cad_ig_er_index', 'momentum_windows': [2, 3, 5, 7, 10, 12, 15, 20, 25, 30, 40, 50, 60, 90, 120], 'zscore_windows': [5, 10, 20, 40, 60, 120, 252], 'macro_windows': [3, 5, 10, 20, 40, 60, 90], 'models': [{'n_estimators': 600, 'max_depth': 15, 'min_samples_leaf': 5, 'max_features': 0.4, 'random_state': 42}, {'n_estimators': 700, 'max_depth': 12, 'min_samples_leaf': 8, 'max_features': 0.5, 'random_state': 42}, {'n_estimators': 500, 'max_depth': 18, 'min_samples_leaf': 5, 'max_features': 0.3, 'random_state': 123}, {'n_estimators': 800, 'max_depth': 10, 'min_samples_leaf': 10, 'max_features': 0.4, 'random_state': 456}], 'ensemble_weights': [0.3, 0.3, 0.25, 0.15], 'probability_threshold': 0.55, 'holding_period_days': 7, 'train_test_split': 0.7}
+
+Note: Detailed trading rules not available for this strategy type.
+Please check the strategy implementation for specific logic.
+
+--------------------------------------------------------------------------------
+RF_ENSEMBLE_STRATEGY - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade   PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.6753      2025-11-12        136.7892     2025-11-21       136.6401              9 -0.25 -0.11%       0.00      0.00
+            0      Long Closed 1.6747      2025-11-26        136.6893     2025-12-05       136.8428              9  0.26  0.11%       0.00      0.00
+            0      Long   Open 1.6740      2025-12-08        136.8986     2025-12-12       137.1297              4  0.39  0.17%       0.00      0.00
+
+--------------------------------------------------------------------------------
+TSX_SPX_MOMENTUM TRADING RULES
+--------------------------------------------------------------------------------
+TSX/S&P 500 Momentum Strategy (Weekly Rebalance)
+
+TRADING RULES:
+1. Data & Frequency:
+   - This strategy operates on DAILY data but only makes trading decisions once per week.
+   - Rebalancing Day: Monday.
+
+2. Momentum Signals (Monday Only):
+   - Signal 1: tsx 20-day (4-week) momentum > 0
+   - Signal 2: s&p_500 20-day (4-week) momentum > 0
+   - Signal 3: tsx 40-day (8-week) momentum > 0
+
+3. Entry Condition (Monday Only):
+   - A LONG position is entered in 'cad_ig_er_index' if at least 2 out of 3 signals are positive.
+   - Entry Threshold: >= 2 positive momentum signals
+
+4. Position Management:
+   - If the entry condition is met on Monday, the position is held for the entire week.
+   - The position is exited on the next Monday if the entry condition is no longer met.
+   - Otherwise, hold cash.
+
+PARAMETERS:
+- Trading Asset: cad_ig_er_index
+- TSX 4-week Lookback: 20 trading days
+- S&P 500 4-week Lookback: 20 trading days
+- TSX 8-week Lookback: 40 trading days
+- Minimum Confirmations: 2 out of 3 signals
+- Rebalancing Frequency: Weekly (Monday)
+
+
+--------------------------------------------------------------------------------
+TSX_SPX_MOMENTUM - LAST 3 TRADES
+--------------------------------------------------------------------------------
+ Asset/Params Direction Status   Size Entry Timestamp Avg Entry Price Exit Timestamp Avg Exit Price  Days in Trade   PnL Return Entry Fees Exit Fees
+            0      Long Closed 1.2301      2025-03-24        133.9302     2025-03-31       133.8931              7 -0.05 -0.03%       0.00      0.00
+            0      Long Closed 1.2280      2025-05-05        134.1187     2025-11-17       136.7415            196  3.22  1.96%       0.00      0.00
+            0      Long   Open 1.2288      2025-11-24        136.6495     2025-12-12       137.1297             18  0.59  0.35%       0.00      0.00
+
+====================================================================================================
+IMPORTANT NOTES
+====================================================================================================
+* Because risk-free rate is assumed at 0% to be conservative, Sharpe ratio is
+  really just a measure of absolute return per unit of risk.
+* All calculations assume weekly rebalancing on Friday close.
+* No transaction costs, slippage, or taxes are included in calculations.
+* Results represent theoretical performance and may not be achievable in practice.
+* Past performance does not guarantee future results.
+
+====================================================================================================
+END OF COMPREHENSIVE STRATEGY COMPARISON REPORT
+====================================================================================================

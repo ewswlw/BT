@@ -910,17 +910,23 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
         f.write("5. STRATEGY SUMMARY COMPARISON\n")
         f.write("="*100 + "\n")
         
-        f.write(f"{'Strategy':<25} {'Total Return':<15} {'CAGR':<10} {'Sharpe':<10} {'Sortino':<10} {'Max DD':<12} {'Volatility':<12}\n")
-        f.write(f"{'-'*94}\n")
-        
-        # Benchmark row
-        bench_stats = benchmark_stats
-        f.write(f"{'BENCHMARK':<25} {bench_stats['benchmark_total_return']:>14.2%} {bench_stats['benchmark_cagr']:>9.2%} {bench_stats['benchmark_sharpe']:>9.2f} {bench_stats['benchmark_sortino']:>9.2f} {bench_stats['benchmark_max_drawdown']:>11.2%} {bench_stats['benchmark_volatility']:>11.2%}\n")
-        
-        # Strategy rows
-        for strategy_name, stats in all_stats.items():
-            basic = stats['basic_stats']
-            f.write(f"{strategy_name.upper():<25} {basic['total_return']:>14.2%} {basic['cagr']:>9.2%} {basic['sharpe']:>9.2f} {basic['sortino']:>9.2f} {basic['max_drawdown']:>11.2%} {basic['volatility']:>11.2%}\n")
+        # Get benchmark stats from first strategy (all strategies use same benchmark)
+        if not all_stats:
+            f.write("No strategies to compare.\n")
+        else:
+            benchmark_stats = all_stats[list(all_stats.keys())[0]]['basic_stats']
+            
+            f.write(f"{'Strategy':<25} {'Total Return':<15} {'CAGR':<10} {'Sharpe':<10} {'Sortino':<10} {'Max DD':<12} {'Volatility':<12}\n")
+            f.write(f"{'-'*94}\n")
+            
+            # Benchmark row
+            bench_stats = benchmark_stats
+            f.write(f"{'BENCHMARK':<25} {bench_stats['benchmark_total_return']:>14.2%} {bench_stats['benchmark_cagr']:>9.2%} {bench_stats['benchmark_sharpe']:>9.2f} {bench_stats['benchmark_sortino']:>9.2f} {bench_stats['benchmark_max_drawdown']:>11.2%} {bench_stats['benchmark_volatility']:>11.2%}\n")
+            
+            # Strategy rows
+            for strategy_name, stats in all_stats.items():
+                basic = stats['basic_stats']
+                f.write(f"{strategy_name.upper():<25} {basic['total_return']:>14.2%} {basic['cagr']:>9.2%} {basic['sharpe']:>9.2f} {basic['sortino']:>9.2f} {basic['max_drawdown']:>11.2%} {basic['volatility']:>11.2%}\n")
         
         f.write(f"\n")
         
