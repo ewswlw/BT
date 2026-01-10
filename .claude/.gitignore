@@ -1,0 +1,16 @@
+# Ignore log files
+logs/*.log
+logs/*.txt
+
+# Ignore local configuration overrides
+config/local.json
+config/*.local.json
+
+# Ignore sensitive data
+config/secrets.json
+config/credentials.json
+
+# Keep directory structure
+!logs/.gitkeep
+!templates/
+!docs/

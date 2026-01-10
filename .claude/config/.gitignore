@@ -1,0 +1,11 @@
+# Ignore log files
+*.log
+
+# Ignore local overrides
+local.json
+*.local.json
+
+# Ignore sensitive settings
+secrets.json
+credentials.json
+.env.local

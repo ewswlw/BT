@@ -1,0 +1,138 @@
+{
+  "project": {
+    "name": "BT - Backtesting Framework",
+    "version": "1.0.0",
+    "description": "Quantitative trading strategy backtesting framework"
+  },
+  "claude": {
+    "default_model": "claude-sonnet-4-5",
+    "temperature": 0.1,
+    "max_tokens": 4096
+  },
+  "agents": {
+    "quantitative-analyst": {
+      "enabled": true,
+      "model": "claude-sonnet-4-5",
+      "temperature": 0.1,
+      "description": "Quantitative strategy analysis and development"
+    },
+    "risk-manager": {
+      "enabled": true,
+      "model": "claude-sonnet-4-5",
+      "temperature": 0.0,
+      "description": "Risk assessment and management"
+    },
+    "code-reviewer": {
+      "enabled": true,
+      "model": "claude-sonnet-4-5",
+      "temperature": 0.0,
+      "description": "Code quality and correctness review"
+    },
+    "data-engineer": {
+      "enabled": true,
+      "model": "claude-sonnet-4-5",
+      "temperature": 0.1,
+      "description": "Data pipeline and infrastructure"
+    }
+  },
+  "hooks": {
+    "enabled": true,
+    "session_start": {
+      "enabled": true,
+      "path": ".claude/hooks/session-start.sh",
+      "timeout": 30000
+    },
+    "prompt_submit": {
+      "enabled": true,
+      "path": ".claude/hooks/prompt-submit.sh",
+      "timeout": 5000,
+      "blocking": false
+    },
+    "tool_call": {
+      "enabled": true,
+      "path": ".claude/hooks/tool-call.sh",
+      "timeout": 5000,
+      "blocking": true,
+      "tools": ["Bash", "Write", "Edit", "WebFetch"]
+    }
+  },
+  "commands": {
+    "enabled": true,
+    "path": ".claude/commands",
+    "available": [
+      "backtest",
+      "analyze-strategy",
+      "optimize-params",
+      "review-code",
+      "risk-analysis",
+      "data-pipeline"
+    ]
+  },
+  "logging": {
+    "enabled": true,
+    "directory": ".claude/logs",
+    "level": "INFO",
+    "rotate": true,
+    "max_size_mb": 100
+  },
+  "safety": {
+    "block_dangerous_commands": true,
+    "require_confirmation": [
+      "git push --force",
+      "rm -rf",
+      "DROP DATABASE",
+      "DELETE FROM",
+      "TRUNCATE"
+    ],
+    "protected_files": [
+      "pyproject.toml",
+      "poetry.lock",
+      ".git/config",
+      ".env"
+    ]
+  },
+  "quality": {
+    "min_test_coverage": 80,
+    "max_code_complexity": 10,
+    "require_type_hints": true,
+    "require_docstrings": true
+  },
+  "backtesting": {
+    "default_universe": "SP500",
+    "default_start_date": "2020-01-01",
+    "transaction_cost_bps": 10,
+    "slippage_bps": 5,
+    "commission_per_trade": 0
+  },
+  "risk_limits": {
+    "max_position_pct": 10.0,
+    "max_sector_pct": 30.0,
+    "max_leverage": 2.0,
+    "max_drawdown_pct": 25.0,
+    "daily_var_95_pct": 2.0,
+    "min_sharpe_ratio": 1.0
+  },
+  "data": {
+    "cache_directory": "data/cache",
+    "processed_directory": "data/processed",
+    "raw_directory": "data/raw",
+    "format": "parquet",
+    "compression": "snappy"
+  },
+  "monitoring": {
+    "enabled": true,
+    "metrics": [
+      "sharpe_ratio",
+      "max_drawdown",
+      "win_rate",
+      "profit_factor",
+      "var_95"
+    ],
+    "alert_on": [
+      "drawdown_exceeded",
+      "data_quality_low",
+      "test_failure",
+      "limit_breach"
+    ]
+  }
+}
