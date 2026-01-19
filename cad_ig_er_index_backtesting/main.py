@@ -737,6 +737,12 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
         for strategy_name, result in results.items():
             all_stats[strategy_name] = calculate_comprehensive_stats(result, benchmark_data, strategy_name, config_dict)
         
+        # Get benchmark stats from first strategy (all strategies use same benchmark)
+        # Define this once before all sections that might need it
+        benchmark_stats = None
+        if all_stats:
+            benchmark_stats = all_stats[list(all_stats.keys())[0]]['basic_stats']
+        
         # 1. VECTORBT PORTFOLIO STATS SECTION
         fast_mode = config_dict.get('fast_mode', {})
         fast_mode_enabled = fast_mode.get('enabled', False)
@@ -831,7 +837,7 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
             f.write("="*100 + "\n")
             
             # Create comparison table for all strategies
-            benchmark_stats = all_stats[list(all_stats.keys())[0]]['basic_stats']  # Use first strategy's benchmark data
+            # benchmark_stats is already defined above
             
             for strategy_name, stats in all_stats.items():
                 basic = stats['basic_stats']
@@ -910,12 +916,10 @@ def generate_comprehensive_stats_file(results, benchmark_data, config_dict):
         f.write("5. STRATEGY SUMMARY COMPARISON\n")
         f.write("="*100 + "\n")
         
-        # Get benchmark stats from first strategy (all strategies use same benchmark)
-        if not all_stats:
+        # benchmark_stats is already defined above
+        if not all_stats or benchmark_stats is None:
             f.write("No strategies to compare.\n")
         else:
-            benchmark_stats = all_stats[list(all_stats.keys())[0]]['basic_stats']
-            
             f.write(f"{'Strategy':<25} {'Total Return':<15} {'CAGR':<10} {'Sharpe':<10} {'Sortino':<10} {'Max DD':<12} {'Volatility':<12}\n")
             f.write(f"{'-'*94}\n")
             
